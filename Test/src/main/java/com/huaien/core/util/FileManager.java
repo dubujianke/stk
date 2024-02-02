@@ -65,6 +65,7 @@ public class FileManager {
 		}
 		return files;
 	}
+
 	
 	public static String read3(String fileName) throws IOException {
 		StringBuffer sbf = new StringBuffer();
