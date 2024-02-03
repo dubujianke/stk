@@ -940,6 +940,8 @@ public class IsZhangting extends Stragety {
                 SelectAddColExcel.monthMa250Add(kline0Prev, row);
                 SelectAddColExcel.monthMa120Add(kline0Prev, row);
                 SelectAddColExcel.monthMa60Add(kline0Prev, row);
+
+                row.add(new Col("" + -1));
             }else {
                 row.add(new Col("" + -1));
                 row.add(new Col("" + -1));
@@ -952,6 +954,8 @@ public class IsZhangting extends Stragety {
                 row.add(new Col("" + -1));
                 row.add(new Col("" + -1));
                 row.add(new Col("" + -1));
+                row.add(new Col("" + -1));
+                //bottomUp
                 row.add(new Col("" + -1));
             }
         }catch (Exception e) {
@@ -1057,14 +1061,17 @@ public class IsZhangting extends Stragety {
         boolean ret = true;
         float firstMinuteZF = minuteLine.allLineList.get(0).getZF(kline0.prev());
         if (firstMinuteZF <= -0.8f) {
-            return;
+            ret = false;
         }
 
         float zf = minuteLine.getZF(kline0.prev());
         if (zf < StragetyZTBottom.pulsezf) {
-            return;
+            ret = false;
         }
         if(!minuteLine.hasMax(kline0.prev(), StragetyZTBottom.maxzf)) {
+            ret = false;
+        }
+        if(!ret) {
             return;
         }
         if (ret) {
@@ -1163,7 +1170,6 @@ public class IsZhangting extends Stragety {
 
         IsBottomUtil.NUM = 60;
 //        Log.log(file);
-        //right angle
         int len = 1;
         String key = getKey(file, date);
         for (int i = 0; i < len; i++) {
@@ -1237,6 +1243,18 @@ public class IsZhangting extends Stragety {
         Grid grid = stockDayMinuteLine.logVOLTJ(kline);
         return grid;
     }
+
+    public static boolean printDaysMinutesBottomUpTJ(String file, Kline kline, LineContext context) {
+        StockAllMinuteLine stockAllMinuteLine = context.getStockAllMinuteLine();
+        StockDayMinuteLine stockDayMinuteLine = stockAllMinuteLine.getStockDayMinuteLine(kline.getDate());
+        if (stockDayMinuteLine == null) {
+            int a = 0;
+        }
+        return stockDayMinuteLine.logBottomUpFlag(kline, context);
+    }
+
+
+
 
     public static TypeResult realRightAngleFilter(String file, Kline kline, StockDayMinuteLine stockDayMinuteLine, LineContext context) {
         TypeResult typeResult = null;

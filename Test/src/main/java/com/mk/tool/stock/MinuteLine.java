@@ -244,6 +244,94 @@ public class MinuteLine implements Serializable {
         return v <= 0.01f;
     }
 
+    public MinuteLine isBottomSppedUpFlag(Kline kline, LineContext context) {
+        MinuteLine first = getFirst();
+        MinuteLine cur = this;
+        if(cur.getTime().equalsIgnoreCase("1338")) {
+            int a = 0;
+        }
+        int time = Integer.parseInt(cur.getTime());
+        if(time<1300) {
+            return null;
+        }
+        //当前大于1
+        float frac = this.getZF(kline);
+        if(frac<1) {
+            return null;
+        }
+        //是否最高
+        boolean flag = cur.isABSMax();
+        if(!flag) {
+            return null;
+        }
+        MinuteLine min = getMinPrice(20);
+        MinuteLine temp = min.getMazPrice(20);
+
+        int vol = getTotalVol(20);
+
+        float fracMin = min.getZF(kline);
+        float fracTempMax = temp.getZF(kline);
+        float dltTotal = frac - fracMin;
+        float dltTotal2 = frac - fracTempMax;
+        int num = getIdx() - min.getIdx();
+        if(dltTotal2<2.5) {
+            return null;
+        }
+        if(dltTotal<4) {
+            return null;
+        }
+        int volPrev = min.getTotalVol(60);
+        if(vol<volPrev*1.6) {
+            return null;
+        }
+        return this;
+    }
+
+    public MinuteLine getMinPrice(int num) {
+        MinuteLine min = null;
+        float price = Integer.MAX_VALUE;
+        for (int i = 0; i < num; i++) {
+            MinuteLine minuteLine = prev(i);
+            if (minuteLine == null) {
+                break;
+            }
+            if (minuteLine.price < price) {
+                price = minuteLine.price;
+                min = minuteLine;
+            }
+        }
+        return min;
+    }
+
+    public MinuteLine getMazPrice(int num) {
+        MinuteLine min = null;
+        float price = -Integer.MAX_VALUE;
+        for (int i = 0; i < num; i++) {
+            MinuteLine minuteLine = prev(i);
+            if (minuteLine == null) {
+                break;
+            }
+            if (minuteLine.price > price) {
+                price = minuteLine.price;
+                min = minuteLine;
+            }
+        }
+        return min;
+    }
+
+    public int getTotalVol(int num) {
+        int vol = 0;
+        for (int i = 0; i < num; i++) {
+            MinuteLine minuteLine = prev(i);
+            if (minuteLine == null) {
+                break;
+            }
+            vol+=minuteLine.getVol();
+        }
+        return vol;
+    }
+
+
     public MinuteLine getFirstSpeedUp(Kline kline, int fracVolNum1, int fracVolNum2, int fracVolNum3, LineContext context) {
         MinuteLine first = getFirst();
         int specialHor = context.getInt("specialHor");
@@ -1338,7 +1426,7 @@ public class MinuteLine implements Serializable {
         if (timeSecond >= 1300 && timeSecond <= 1304) {
             return null;
         }
-        if (cur.getTime().equalsIgnoreCase("1051")) {
+        if (cur.getTime().equalsIgnoreCase("0954")) {
             int a = 0;
         }
 

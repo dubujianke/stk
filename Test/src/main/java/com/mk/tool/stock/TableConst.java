@@ -393,7 +393,7 @@ public class TableConst {
             //PrevMA60Month(0)  > -4.8 err
             //PrevMA60Month(1)  > -3.5 err
 
-
+            row.add(new Col("bottomup" ));
 
         } catch (Exception e) {
             e.printStackTrace();

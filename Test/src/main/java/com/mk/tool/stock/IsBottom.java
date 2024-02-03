@@ -215,6 +215,9 @@ public class IsBottom extends Stragety {
     }
 
     public static boolean catchFlag(Table table, Row row) {
+        return false;
+    }
+    public static boolean catchFlag_(Table table, Row row) {
         boolean catchF = false;
 
 //        if (row.getFloat(table.getColumn("上月z幅")) > 12.5) {
@@ -266,13 +269,14 @@ public class IsBottom extends Stragety {
 //            catchF = true;
 //        }
 
-        if(!catchF) {
-            if(tt1 && tt2) {
+        if (!catchF) {
+            if (tt1 && tt2) {
                 catchF = true;
             }
         }
         return catchF;
     }
+
     public static boolean filterRow1(String file, String INFO, String date, Kline kline0, MinuteLine minuteLine, String msg, LineContext context) {
         boolean flag1 = kline0.hasPrevZT(20);
         boolean flag2 = kline0.hasPrevZT2(20);
@@ -290,7 +294,7 @@ public class IsBottom extends Stragety {
         }
 
         float df = kline0.getPrevDF3(10);
-        if(df>5) {
+        if (df > 5) {
             return false;
         }
 
@@ -332,7 +336,7 @@ public class IsBottom extends Stragety {
         context.setType05(type5);
         boolean flag0 = false;
         if (type5 == 1) {
-            boolean flag =  StragetyBottom.aFilterTreeGraph.subProcess(table, 1);
+            boolean flag = StragetyBottom.aFilterTreeGraph.subProcess(table, 1);
             if (!flag) {
                 error(file, date, "net work error");
                 flag0 = false;
@@ -346,7 +350,7 @@ public class IsBottom extends Stragety {
             return false;
         }
 
-        boolean flag =  StragetyBottom.aFilterTreeGraph2.subProcess(table, 1);
+        boolean flag = StragetyBottom.aFilterTreeGraph2.subProcess(table, 1);
         if (!flag) {
             error(file, date, "net2 work error");
             flag0 = false;
@@ -397,7 +401,6 @@ public class IsBottom extends Stragety {
                 row.setCol(rowRaw.getTable().getColumn("分钟"), "" + rowRaw.getStr("分钟"));
             }
 
-
             try {
                 LineReport lineReport = report(file, nextN, context, context.isRealBottomFlag());
                 //加速天序号	加速天量	减速天序号	减速天量
@@ -418,6 +421,14 @@ public class IsBottom extends Stragety {
             } catch (Exception e) {
 //                e.printStackTrace();
             }
+            try {
+                boolean bottomUp = reportBottomUp(file, nextN, context, context.isRealBottomFlag());
+                int a = 0;
+                row.setCol(rowRaw.getTable().getColumn("bottomup"), "" + StringUtil.getInt(bottomUp));
+            } catch (Exception e) {
+//                e.printStackTrace();
+            }
+
 
             table.add(row);
 
@@ -509,6 +520,27 @@ public class IsBottom extends Stragety {
             ok(file, INFO, date, kline, null, kline, context.getMsg(), context);
             return;
         }
+    }
+
+    /**
+     * 当日20分钟从底部-2点以上拉上4个点以上，-2->4 放量
+     * 之前的1个小时没有量，
+     * 之前一直在水下1个小时 -1.8
+     */
+    public static boolean reportBottomUp(String file, Kline kline, LineContext context, boolean realBottomFlag) {
+        try {
+            StockAllMinuteLine stockAllMinuteLine = context.getStockAllMinuteLine();
+            LineReport lineReport = new LineReport();
+            lineReport.setCode(INFO);
+            lineReport.setFile(file);
+            lineReport.setStockAllMinuteLine(stockAllMinuteLine);
+            lineReport.setBottomFlag(realBottomFlag ? 2 : 0);
+            Kline item = kline.prev(0);
+            return IsZhangting.printDaysMinutesBottomUpTJ(file, item, context);
+        } catch (Exception e) {
+//            e.printStackTrace();
+        }
+        return false;
     }
 
     public static LineReport report(String file, Kline kline, LineContext context, boolean realBottomFlag) {

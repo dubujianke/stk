@@ -14,6 +14,15 @@ public class Grid {
     public Kline kline;
     private List<LineType> lineTypeList = new ArrayList<>();
 
+    public boolean isBottomUpFlag() {
+        return bottomUpFlag;
+    }
+
+    public void setBottomUpFlag(boolean bottomUpFlag) {
+        this.bottomUpFlag = bottomUpFlag;
+    }
+
+    private  boolean bottomUpFlag;
     private float prev;
     private float unitPercent;//1分钱对应的百分比
     private int unit;//1分钱对应的值
@@ -116,6 +125,24 @@ public class Grid {
         if(num>0) {
 //            Log.log("prsLines:" + kline.getDate());
         }
+    }
+
+    //cur
+    public boolean prsLinesBottomUp(Kline kline, LineContext context) {
+        float dltTotal = 0;
+        MinuteLine last = allLineList.get(allLineList.size()-1);
+        if(last.getZF(kline.prev())<0) {
+            return false;
+        }
+        for (MinuteLine minuteLine : allLineList) {
+            MinuteLine cur = minuteLine;
+            MinuteLine ret = cur.isBottomSppedUpFlag(kline, context);
+            if(ret!=null) {
+                return true;
+            }
+        }
+        return false;
+//        Log.log("prsLines:" + kline.getDate());
     }
 
     /**

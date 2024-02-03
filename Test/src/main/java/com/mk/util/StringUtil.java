@@ -8,6 +8,10 @@ public class StringUtil {
     public static String STR1 = "日线 前复权";
     public static String STR2 = "数据来源:通达信";
 
+    public static int getInt(boolean flag) {
+        return flag?1:0;
+    }
+
     public static boolean isNull(String v) {
         if (v == null) {
             return true;

@@ -12,8 +12,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-// FMWMQ-H8N8X-98WYT-GQVM8-TQ8DP
-public class StragetyBottom extends AbsStragety {
+/**
+ * 当日20分钟从底部-2点以上拉上4个点以上，-2->4 放量
+ * 之前的1个小时没有量，
+ * 之前一直在水下1个小时 -1.8
+ */
+public class StragetyDeepUpVol extends AbsStragety {
     public static StringBuffer resultBuffer = new StringBuffer();
     public static boolean isBottom;
     public static boolean useReport;
@@ -36,9 +40,6 @@ public class StragetyBottom extends AbsStragety {
         File file = new File(dir);
         File[] fs = file.listFiles();
         for (File fle : fs) {
-            if(fle.getName().contains("~")) {
-                continue;
-            }
             dates.add(fle.getName().replace(".xlsx", "").replace("ret_", ""));
         }
         return dates;
@@ -60,7 +61,7 @@ public class StragetyBottom extends AbsStragety {
 
     public static int ASTEP = 1;
 
-    public static int step = 0;
+    public static int step = 1;
     public static boolean flag = true;
     public static void main(String[] args) throws IOException, InterruptedException {
         if(ASTEP ==0){
@@ -73,10 +74,10 @@ public class StragetyBottom extends AbsStragety {
 
         if (flag) {
             List<String> dates = new ArrayList<>();
-            int year = 2023;
-            int month = 10;
+            int year = 2024;
+            int month = 2;
             int maxIdx = DateUtil.getDaysOfMonth(year, month);
-            for (int i = 20; i <= 20; i++) {
+            for (int i = 1; i <= 1; i++) {
                 String date = String.format(year+"/"+(month < 10 ? "0" + month : "" + month)+"/%s", i < 10 ? "0" + i : "" + i);
                 dates.add(date);
             }
@@ -175,6 +176,7 @@ public class StragetyBottom extends AbsStragety {
         }
 
         LineContext context = new LineContext();
+
         Stragety.isResult = true;
         if (kn == 1) {
             String apath = AbsStragety.BOTTOM_PATH + retx + ".xlsx";

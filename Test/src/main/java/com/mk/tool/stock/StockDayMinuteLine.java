@@ -178,7 +178,7 @@ public class StockDayMinuteLine {
         MinuteLine minuteLine = null;
         int specialHor = 0;
         specialHor = context.getInt("specialHor");
-        for (int i = 0; i < num; i++) {
+        for (int i = context.getFromIdx(); i < num; i++) {
             try {
                 minuteLine = allLineList.get(i);
                 if (minuteLine.getTime().equals("1034")) {
@@ -300,6 +300,14 @@ public class StockDayMinuteLine {
         grid.setAllLineList(allLineList);
         grid.prsLines(kline);
         return grid;
+    }
+
+    public boolean logBottomUpFlag(Kline kline, LineContext context) {
+        Grid grid = new Grid();
+        grid.kline = kline;
+        grid.setAllLineList(allLineList);
+        boolean flag = grid.prsLinesBottomUp(kline, context);
+        return flag;
     }
 
 
