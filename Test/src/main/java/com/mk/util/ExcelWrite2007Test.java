@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ExcelWrite2007Test {
-    public static String PATH = "res/bottom/";
+    public static String PATH = "D:\\stock\\Test\\res\\bottom\\";
 
 
     public static Table read(String path) {

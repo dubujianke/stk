@@ -432,8 +432,8 @@ public class IsZhangting extends Stragety {
         row.add(new Col("" + KlinePrev.getDeadCrossNum(30, 60)));
         row.add(new Col("" + KlinePrev.getDeadCrossNum(30, 120)));
         row.add(new Col("" + KlinePrev.getDeadCrossNum(30, 250)));
-        row.add(new Col("" + KlinePrev.getGoldCrossNum(60, 120)));
-        row.add(new Col("" + KlinePrev.getGoldCrossNum(60, 250)));
+        row.add(new Col("" + KlinePrev.getDeadCrossNum(60, 120)));
+        row.add(new Col("" + KlinePrev.getDeadCrossNum(60, 250)));
         row.add(new Col("" + KlinePrev.getDeadCrossNum(120, 250)));
 
         //60金叉120数	120金叉250数

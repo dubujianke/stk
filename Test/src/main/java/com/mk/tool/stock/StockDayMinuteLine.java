@@ -178,7 +178,7 @@ public class StockDayMinuteLine {
         MinuteLine minuteLine = null;
         int specialHor = 0;
         specialHor = context.getInt("specialHor");
-        for (int i = context.getFromIdx(); i < num; i++) {
+        for (int i = 0; i < num; i++) {
             try {
                 minuteLine = allLineList.get(i);
                 if (minuteLine.getTime().equals("1034")) {

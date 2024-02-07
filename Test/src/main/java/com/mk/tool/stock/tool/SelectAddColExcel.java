@@ -17,41 +17,6 @@ public class SelectAddColExcel {
     public static String defalutValue = "1000";
     public static String defalutValue_null = "";
 
-    public static void monthMa250(Kline kline0, Table table, Row row) {
-        Kline mklinePrev0 = kline0.monthKline;
-        Kline mklinePrev1 = mklinePrev0.prev();
-        Kline mklinePrev2 = mklinePrev0.prev(2);
-        int dir0 = 0;
-        int dir1 = 0;
-        int dir2 = 0;
-
-        float ma250Prev0 = mklinePrev0.getMA250();
-        float fracMa250Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma250Prev0);
-        if (mklinePrev0.close > ma250Prev0 && mklinePrev0.open < ma250Prev0) {
-            dir0 = 1;
-        } else if (mklinePrev0.open > ma250Prev0 && mklinePrev0.close < ma250Prev0) {
-            dir0 = 2;
-        }
-        row.setCol(table.getColumn("PrevMA250Month(0)"), "" + fracMa250Prev0 + " (" + dir0 + ")");
-
-        float ma250Prev1 = mklinePrev1.getMA250();
-        float fracMa250Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma250Prev1);
-        if (mklinePrev1.close > ma250Prev1 && mklinePrev1.open < ma250Prev1) {
-            dir1 = 1;
-        } else if (mklinePrev1.open > ma250Prev1 && mklinePrev1.close < ma250Prev1) {
-            dir1 = 2;
-        }
-        row.setCol(table.getColumn("PrevMA250Month(1)"), "" + fracMa250Prev1 + " (" + dir1 + ")");
-
-        float ma250Prev2 = mklinePrev2.getMA250();
-        float fracMa250Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma250Prev2);
-        if (mklinePrev2.close > ma250Prev2 && mklinePrev2.open < ma250Prev2) {
-            dir2 = 1;
-        } else if (mklinePrev2.open > ma250Prev2 && mklinePrev2.close < ma250Prev2) {
-            dir2 = 2;
-        }
-        row.setCol(table.getColumn("PrevMA250Month(2)"), "" + fracMa250Prev2 + " (" + dir2 + ")");
-    }
 
     public static void monthMa120(Kline kline0, Table table, Row row) {
         Kline mklinePrev0 = kline0.monthKline;
@@ -271,7 +236,7 @@ public class SelectAddColExcel {
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        String apath = AbsStragety.BOTTOM_PATH + "a11_.xlsx";
+        String apath = AbsStragety.BOTTOM_PATH + "a11_2.xlsx";
         Table table = ExcelWrite2007Test.read(apath);
         try {
             table.initIndex();
@@ -287,18 +252,17 @@ public class SelectAddColExcel {
 
                     String acode = row.getCol(0).data;
                     acode = acode.substring(0, acode.indexOf(" "));
-                    if (acode.equalsIgnoreCase("600662")) {
+                    if (acode.equalsIgnoreCase("002037")) {
                         int a = 0;
                     }
                     String adate = row.getCol(3).data;
                     SingleContext singleContext = AbsStragety.getContext(acode + ".txt", adate);
                     singleContext.getWeeks();
                     singleContext.getMoths();
-                    if (acode.equalsIgnoreCase("002238")) {
+                    if (acode.equalsIgnoreCase("002037")) {
                         int a = 0;
                         a++;
                     }
-
 
                     Log.log(acode);
                     int idx = AbsStragety.getIdx(singleContext.getDays(), adate);
@@ -306,17 +270,25 @@ public class SelectAddColExcel {
                         return true;
                     }
                     Kline kline0 = singleContext.getDays().get(idx);
-                    float fracDMa250 = KLineUtil.compareMaxSign(kline0.prev().getClose(), kline0.getMA250());
 
-                    SelectAddColExcel.monthMa250(kline0, table, row);
-                    SelectAddColExcel.monthMa120(kline0, table, row);
-                    SelectAddColExcel.monthMa60(kline0, table, row);
-                    SelectAddColExcel.monthZf(kline0, table, row);
+                    float price1 = kline0.prev().close*1.02f;
+                    float price2 = kline0.getMaxAfter(5);
+                    row.setCol(table.getColumn("60d120"), ""+ kline0.getDeadCrossNum(60, 120));
+                    row.setCol(table.getColumn("10d30"), ""+ kline0.getDeadCrossNum(10, 30));
+                    row.setCol(table.getColumn("10d60"), ""+ kline0.getDeadCrossNum(10, 60));
 
 
+                    row.setCol(table.getColumn("10g30"), ""+ kline0.getGoldCrossNum(10, 30));
+                    row.setCol(table.getColumn("10g60"), ""+ kline0.getGoldCrossNum(10, 60));
+                    row.setCol(table.getColumn("30g60"), ""+ kline0.getGoldCrossNum(30, 60));
+                    row.setCol(table.getColumn("30g120"), ""+ kline0.getGoldCrossNum(30, 120));
+                    row.setCol(table.getColumn("30g250"), ""+ kline0.getGoldCrossNum(30, 250));
+                    row.setCol(table.getColumn("60g120"), ""+ kline0.getGoldCrossNum(60, 120));
+                    row.setCol(table.getColumn("60g250"), ""+ kline0.getGoldCrossNum(60, 250));
+                    row.setCol(table.getColumn("120g250"), ""+ kline0.getGoldCrossNum(120, 250));
                     return true;
                 }
-            }, "a11_1", true);
+            }, "a11_3", true);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -12,7 +12,7 @@ public class TimeTJ {
     public static void  next() {
         t2 = System.currentTimeMillis();
         if(t2-t1>0) {
-            Log.log("time:"+(t2-t1));
+//            Log.log("time:"+(t2-t1));
         }
         t1 = t2;
     }

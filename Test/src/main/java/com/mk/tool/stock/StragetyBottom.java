@@ -58,7 +58,7 @@ public class StragetyBottom extends AbsStragety {
     }
 
 
-    public static int ASTEP = 1;
+    public static int ASTEP = 0;
 
     public static int step = 0;
     public static boolean flag = true;
@@ -74,9 +74,8 @@ public class StragetyBottom extends AbsStragety {
         if (flag) {
             List<String> dates = new ArrayList<>();
             int year = 2023;
-            int month = 10;
-            int maxIdx = DateUtil.getDaysOfMonth(year, month);
-            for (int i = 20; i <= 20; i++) {
+            int month = 12;
+            for (int i = 1; i <= 1; i++) {
                 String date = String.format(year+"/"+(month < 10 ? "0" + month : "" + month)+"/%s", i < 10 ? "0" + i : "" + i);
                 dates.add(date);
             }
