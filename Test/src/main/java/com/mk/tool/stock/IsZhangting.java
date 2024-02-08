@@ -429,12 +429,25 @@ public class IsZhangting extends Stragety {
         row.add(new Col("" + KLineUtil.prevWeekline(KlinePrev, 1).getWDeadCrossNum(120, 250)));
 
         //30d60	30d120	30d250	60d120	60d250	120d250
+        row.add(new Col("" + KlinePrev.getDeadCrossNum(10, 30)));
+        row.add(new Col("" + KlinePrev.getDeadCrossNum(10, 60)));
         row.add(new Col("" + KlinePrev.getDeadCrossNum(30, 60)));
         row.add(new Col("" + KlinePrev.getDeadCrossNum(30, 120)));
         row.add(new Col("" + KlinePrev.getDeadCrossNum(30, 250)));
         row.add(new Col("" + KlinePrev.getDeadCrossNum(60, 120)));
         row.add(new Col("" + KlinePrev.getDeadCrossNum(60, 250)));
         row.add(new Col("" + KlinePrev.getDeadCrossNum(120, 250)));
+
+
+        row.add(new Col("" + KlinePrev.getGoldCrossNum(10, 30)));
+        row.add(new Col("" + KlinePrev.getGoldCrossNum(10, 60)));
+        row.add(new Col("" + KlinePrev.getGoldCrossNum(30, 60)));
+        row.add(new Col("" + KlinePrev.getGoldCrossNum(30, 120)));
+        row.add(new Col("" + KlinePrev.getGoldCrossNum(30, 250)));
+        row.add(new Col("" + KlinePrev.getGoldCrossNum(60, 120)));
+        row.add(new Col("" + KlinePrev.getGoldCrossNum(60, 250)));
+        row.add(new Col("" + KlinePrev.getGoldCrossNum(120, 250)));
+
 
         //60金叉120数	120金叉250数
         row.add(new Col(""));

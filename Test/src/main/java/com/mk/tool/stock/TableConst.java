@@ -55,12 +55,25 @@ public class TableConst {
 
 
             //30d60	30d120	30d250	60d120	60d250	120d250
+            row.add(new Col("10d30"));
+            row.add(new Col("10d60"));
             row.add(new Col("30d60"));
             row.add(new Col("30d120"));
             row.add(new Col("30d250"));
             row.add(new Col("60d120"));
             row.add(new Col("60d250"));
             row.add(new Col("120d250"));
+
+
+            row.add(new Col("10g30"));
+            row.add(new Col("10g60"));
+            row.add(new Col("30g60"));
+            row.add(new Col("30g120"));
+            row.add(new Col("30g250"));
+            row.add(new Col("60g120"));
+            row.add(new Col("60g250"));
+            row.add(new Col("120g250"));
+
 
 
             row.add(new Col("60金叉120数"));
