@@ -61,7 +61,7 @@ public class MergeDirExcel {
             }
         }
         try {
-            ExcelWrite2007Test.PATH = "res/bottom/";
+//            ExcelWrite2007Test.PATH = "res/bottom/";
             ftable.sort = sort;
             ExcelWrite2007Test.main(ftable, new Table.Filter() {
                 @Override

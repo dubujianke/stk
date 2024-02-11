@@ -15,11 +15,11 @@ public class TreeNode {
             boolean ret = tag.equalsIgnoreCase("True");
             return ret;
         }
-        try {
-            float v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            float v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//        }
         float v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
         if (v <= value) {
             return left.process(row, rowIdx);

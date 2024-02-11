@@ -68,7 +68,7 @@ public class Row {
             return -999;
         }
 
-        String data = cols.get(table.getColumn(name)).data.replace("+", "");
+        String data = cols.get(table.getColumn(name)).data.replace("+", "").trim();
         if(data.contains(".")) {
             return (int) Float.parseFloat(data);
         }

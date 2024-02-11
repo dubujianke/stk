@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class TreeGraphZT {
     public static TreeGraphZT instance = new TreeGraphZT();
     static {
-        instance.read("D:\\py\\pythonProject\\zt_bottom.dot");
+        instance.read("D:\\py\\pythonProject\\bottom02_5.dot");
     }
     Map<String, TreeNode> map = new HashMap<>();
     TreeNode root;

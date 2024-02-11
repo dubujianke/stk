@@ -249,6 +249,10 @@ public class AbsStragety {
 
             SingleContext singleContext = getContext(file, singleDate);
             List<Kline> days = singleContext.getDays();
+            int idx = getIdx(days, singleDate);
+            if (idx == -1) {
+                return;
+            }
             context.setInfo(singleContext.getInfo());
             if (isTest) {
                 if (CTROL_LEN > 0) {

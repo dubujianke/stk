@@ -74,7 +74,7 @@ public class SelectFilterExcel {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        String apath = AbsStragety.BOTTOM_PATH + "a1" + ".xlsx";
+        String apath = AbsStragety.BOTTOM_PATH + "a11_" + ".xlsx";
         Table table = ExcelWrite2007Test.read(apath);
         try {
             table.initIndex();
@@ -99,6 +99,13 @@ public class SelectFilterExcel {
                     if (idx == -1) {
                         return true;
                     }
+
+                    if(row.getInt(table.getColumn("10g30"))==-1 && row.getInt(table.getColumn("10g60"))==-1) {
+                        row.setCol(table.getColumn("10ga"), "" +  "1");
+                    }else {
+                        row.setCol(table.getColumn("10ga"), "" +  "0");
+                    }
+
                     Kline kline0 = singleContext.getDays().get(idx);
                     row.setCol(table.getColumn("Test"), "" +  kline0.getNextZF(2));
                     return true;

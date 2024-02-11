@@ -7,7 +7,6 @@ import com.mk.tool.stock.model.KModel;
 import com.mk.tool.stock.tree.ReConstructTreeGraph;
 import com.mk.util.ExcelWrite2007Test;
 import com.mk.util.StringUtil;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -28,8 +27,8 @@ public class StragetyBottom extends AbsStragety {
     public static boolean allIsOK = false;
     public static String retx = "";
 
-    static ReConstructTreeGraph aFilterTreeGraph = ReConstructTreeGraph.instance("D:\\py\\pythonProject\\bottom_2024-01-03_2.dot");
-    static ReConstructTreeGraph aFilterTreeGraph2 = ReConstructTreeGraph.instance("D:\\py\\pythonProject\\bottom12_3.dot");
+//    static ReConstructTreeGraph aFilterTreeGraph = ReConstructTreeGraph.instance("D:\\py\\pythonProject\\bottom_2024-01-03_2.dot");
+//    static ReConstructTreeGraph aFilterTreeGraph2 = ReConstructTreeGraph.instance("D:\\py\\pythonProject\\bottom12_3.dot");
 
     public static List<String> getDates(String dir) {
         List<String> dates = new ArrayList<>();
@@ -58,7 +57,7 @@ public class StragetyBottom extends AbsStragety {
     }
 
 
-    public static int ASTEP = 0;
+    public static int ASTEP = 1;
 
     public static int step = 0;
     public static boolean flag = true;
@@ -74,11 +73,20 @@ public class StragetyBottom extends AbsStragety {
         if (flag) {
             List<String> dates = new ArrayList<>();
             int year = 2023;
-            int month = 12;
-            for (int i = 1; i <= 1; i++) {
-                String date = String.format(year+"/"+(month < 10 ? "0" + month : "" + month)+"/%s", i < 10 ? "0" + i : "" + i);
-                dates.add(date);
+            for (int m = 7; m <= 7; m++) {
+                int month = m;
+                int maxMonth = DateUtil.getDaysOfMonth(year, m);
+                for (int i = 20; i <= maxMonth; i++) {
+                    Date beginDate = DateUtil.stringToDate(year+"-"+(m < 10 ? "0" + m : "" + m)+"-"+(i < 10 ? "0" + i : "" + i));
+                    int weekIdx = DateUtil.getWeek(beginDate);
+                    if(weekIdx==6 || weekIdx==0) {
+                        continue;
+                    }
+                    String date = String.format(year+"/"+(month < 10 ? "0" + month : "" + month)+"/%s", i < 10 ? "0" + i : "" + i);
+                    dates.add(date);
+                }
             }
+
             for (String date : dates) {
                 int dateStr = DateUtil.getWeek(DateUtil.stringToDate(date));
                 if (dateStr == 6 || dateStr == 0) {
