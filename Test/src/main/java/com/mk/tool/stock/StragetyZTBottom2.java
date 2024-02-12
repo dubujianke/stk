@@ -95,6 +95,7 @@ public class StragetyZTBottom2 extends AbsStragety {
     public static float maxzf = 2.0f;
     public static float pulsezf = 1.8f;
     public static int step = 0;
+    public static boolean useTree = false;//last step
     public static String MONITOR_DATE = "";
 
     public static void main(String[] args) throws InterruptedException, IOException {
@@ -102,35 +103,43 @@ public class StragetyZTBottom2 extends AbsStragety {
         int kn1sub = 0;
         kn = 1;//validate xls
         kn1sub = 0;
-        System.out.print("2024-");
-        absPath = "D:\\stock\\Test\\res\\bottom\\ret1";
-        BOTTOM_PATH = absPath + "\\";
-        ExcelWrite2007Test.PATH = absPath + "_2" + "\\";
-        FileManager.mkdirs(ExcelWrite2007Test.PATH);
-        List<String> dates = getDates(BOTTOM_PATH);
-        for (int i = 0; i < dates.size(); i++) {
-            String date = dates.get(i);
-            DATE = date;//dates.get(0);
-            File file = new File(ExcelWrite2007Test.PATH + DATE + ".xlsx");
-            if (file.exists()) {
+        List<String> dirs = getDirs("");
+        for (String absPath : dirs) {
+            if (!absPath.endsWith("_2")) {
                 continue;
             }
-            StragetyZTBottom2.clear();
-            GlobalContext.clear();
-            IsZhangting.initTable();
-            AbsStragety.isMonitor = true;
-            AbsStragety.isNetProxy = true;
-            AbsStragety.isNetLocalProxy = true;
-            mainInstance(DATE, kn, kn1sub);
-            try {
-                System.out.println("END");
-                IsZhangting.table.sort();
-                ExcelWrite2007Test.main(IsZhangting.table, DATE + "");
-            } catch (Exception e) {
-                e.printStackTrace();
+            BOTTOM_PATH = absPath + "\\";
+            ExcelWrite2007Test.PATH = absPath + "_\\";
+            FileManager.mkdirs(ExcelWrite2007Test.PATH);
+            List<String> dates = getDates(BOTTOM_PATH);
+            for (int i = 0; i < dates.size(); i++) {
+                if (i < dates.size() - 1) {
+                    continue;
+                }
+                String date = dates.get(i);
+                DATE = date;
+                File file = new File(ExcelWrite2007Test.PATH + DATE + ".xlsx");
+                if (file.exists()) {
+                    continue;
+                }
+                StragetyZTBottom2.clear();
+                GlobalContext.clear();
+                IsZhangting.initTable();
+                AbsStragety.isMonitor = true;
+                AbsStragety.isNetProxy = true;
+                AbsStragety.isNetLocalProxy = true;
+                mainInstance(DATE, kn, kn1sub);
+                try {
+                    System.out.println("END");
+                    IsZhangting.table.sort();
+                    ExcelWrite2007Test.main(IsZhangting.table, DATE + "");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
+
 
     public void mainPrs(int from, int to, int kn, int kn1sub) {
         StockAllMinuteLine.useSingle = true;
@@ -180,6 +189,93 @@ public class StragetyZTBottom2 extends AbsStragety {
                 mainProcess(acode + ".txt", adate, "IsZhangting", 1, 1, context);
             }
 
+        } else if (kn == 9) {
+            AbsStragety.IDX_PROXY = -1;
+            AbsStragety.isMonitor = true;
+            AbsStragety.isNetProxy = false;
+            AbsStragety.isNetLocalProxy = false;
+            AbsStragety.printMinute = true;
+            AbsStragety.minuteDayLen = 1;
+            useMinute = true;
+            AbsStragety.use000 = true;
+            AbsStragety.use600 = true;
+            String dateMonitor = DATE;//"2023-12-04";
+            Table table = ExcelWrite2007Test.read(AbsStragety.BOTTOM_PATH + dateMonitor + ".xlsx");
+            table.initIndex();
+            int rows = table.rows.size();
+            boolean filterFlag = false;
+            PrsLog.total = rows;
+            for (int i = 1; i < rows; i++) {
+                Row row = table.rows.get(i);
+                String acode = row.getCol(0).data;
+                if (StringUtil.isNull(acode)) {
+                    continue;
+                }
+                acode = acode.substring(0, acode.indexOf(" "));
+                String adate = table.rows.get(i).getCol(2 + 1).data;
+                String test = table.rows.get(i).getCol(5).data;
+                if (StringUtil.isNull(adate)) {
+                    continue;
+                }
+                if (filterFlag && !StringUtil.eq(test.trim(), "1.0")) {
+                    continue;
+                }
+
+                LineContext context = new LineContext();
+                context.setUseMinute(0);
+                context.setUseMinute(1);
+                KModel kModel = new KModel();
+                kModel.setRow(row);
+                context.setkModel(kModel);
+                mainProcess(acode + ".txt", adate, "IsZhangting", 1, 1, context);
+                try {
+                    Thread.currentThread().sleep(100);
+                } catch (InterruptedException e) {
+                }
+            }
+        } else if (kn == 10) {
+            StockAllMinuteLine.useSingle = true;
+            AbsStragety.IDX_PROXY = -1;
+            AbsStragety.MONITOR_LEN = -1;
+            AbsStragety.isMonitor = true;
+            AbsStragety.isNetProxy = true;
+            AbsStragety.isNetLocalProxy = true;
+            AbsStragety.printMinute = false;
+            useMinute = true;
+            AbsStragety.use000 = true;
+            AbsStragety.use600 = true;
+            String dateMonitor = DATE;
+
+            Table table = ExcelWrite2007Test.read(AbsStragety.BOTTOM_PATH + dateMonitor + ".xlsx");
+            table.initIndex();
+            int rows = table.rows.size();
+            boolean filterFlag = false;
+            PrsLog.total = rows;
+            for (int i = 1; i < rows; i++) {
+                Row row = table.rows.get(i);
+                String acode = row.getCol(0).data;
+                if (StringUtil.isNull(acode)) {
+                    continue;
+                }
+                acode = acode.substring(0, acode.indexOf(" "));
+                String adate = table.rows.get(i).getCol(2 + 1).data;
+                String test = table.rows.get(i).getCol(5).data;
+                if (StringUtil.isNull(adate)) {
+                    continue;
+                }
+                if (filterFlag && !StringUtil.eq(test.trim(), "1.0")) {
+                    continue;
+                }
+
+                LineContext context = new LineContext();
+                context.setUseMinute(0);
+                context.setUseMinute(1);
+                KModel kModel = new KModel();
+                kModel.setRow(row);
+                context.setkModel(kModel);
+
+                mainProcess(acode + ".txt", adate, "IsZhangting", 1, 1, context);
+            }
         }
         mainResult();
 //        Log.log("TOTAL_OK:" + KN.CNT);

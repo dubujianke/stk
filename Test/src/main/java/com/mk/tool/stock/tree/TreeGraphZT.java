@@ -10,9 +10,10 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class TreeGraphZT {
+    public static boolean filterFalse = true;
     public static TreeGraphZT instance = new TreeGraphZT();
     static {
-        instance.read("D:\\py\\pythonProject\\bottom02_5.dot");
+        instance.read("D:\\py\\pythonProject\\bottom02_5_1.dot");
     }
     Map<String, TreeNode> map = new HashMap<>();
     TreeNode root;
@@ -77,6 +78,7 @@ public class TreeGraphZT {
                         }
                         String value = "";
                         TreeNode treeNode = new TreeNode();
+                        treeNode.filterFalse = filterFalse;
                         treeNode.setColumnName("");
                         treeNode.tag = tag;
                         treeNode.gini = gini;
@@ -88,6 +90,7 @@ public class TreeGraphZT {
                         String op = "<=";
                         String value = items[1].trim();
                         TreeNode treeNode = new TreeNode();
+                        treeNode.filterFalse = filterFalse;
                         treeNode.setColumnName(columnName);
                         treeNode.setOp(op);
                         treeNode.tag = tag;

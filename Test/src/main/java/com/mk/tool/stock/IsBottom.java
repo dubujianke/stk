@@ -168,9 +168,6 @@ public class IsBottom extends Stragety {
         } else if (StragetyBottom.step == 1) {
             return filterRow1(file, INFO, date, kline0, minuteLine, msg, context);
         }
-//        else if (StragetyBottom.step == 2) {
-//            return filterRow2(file, INFO, date, kline0, minuteLine, msg, context);
-//        }
         return false;
     }
 
@@ -285,69 +282,6 @@ public class IsBottom extends Stragety {
         return true;
     }
 
-//    public static boolean filterRow2(String file, String INFO, String date, Kline kline0, MinuteLine minuteLine, String msg, LineContext context) {
-//        boolean flag1 = kline0.hasPrevZT(20);
-//        boolean flag2 = kline0.hasPrevZT2(20);
-//        if (flag1 || flag2) {
-//            return false;
-//        }
-//
-//        //for safe
-//        if (kline0.getZhangfu() < -3.0) {
-//            return false;
-//        }
-//
-//        if (file.contains("002696")) {
-//            int a = 0;
-//        }
-//        Table table = getTable(file, INFO, date, kline0, minuteLine, context);
-//        table.initIndex();
-//        float v5 = table.rows.get(1).getFloat(table.getColumn("大涨幅度"));
-//        int v5Idx = table.rows.get(1).getInt(table.getColumn("大涨Idx"));
-//        int type5 = 0;
-//        if (v5 < 5) {
-//            type5 = 1;
-//        } else if (v5 < 7 && v5Idx > 20) {
-//            type5 = 1;
-//        }
-//        context.setType05(type5);
-//        boolean flag0 = false;
-//        if (type5 == 1) {
-//            boolean flag = StragetyBottom.aFilterTreeGraph.subProcess(table, 1);
-//            if (!flag) {
-//                error(file, date, "net work error");
-//                flag0 = false;
-//            } else {
-//                flag0 = true;
-//            }
-//        } else {
-//            flag0 = false;
-//        }
-//        if (!flag0) {
-//            return false;
-//        }
-//
-//        boolean flag = StragetyBottom.aFilterTreeGraph2.subProcess(table, 1);
-//        if (!flag) {
-//            error(file, date, "net2 work error");
-//            flag0 = false;
-//        } else {
-//            flag0 = true;
-//        }
-//        if (!flag0) {
-//            return false;
-//        }
-//
-//
-//        Boolean[] flag11 = Decision05.judge(table, 1);
-//        if (flag11[0] || flag11[1]) {
-//            context.setLft(flag11[0]);
-//            context.setRgt(flag11[1]);
-//            return true;
-//        }
-//
-//        return false;
-//    }
 
 
     public static void ok(String file, String INFO, String date, Kline kline0, Weekline weekline, Kline nextN, String msg, LineContext context) {

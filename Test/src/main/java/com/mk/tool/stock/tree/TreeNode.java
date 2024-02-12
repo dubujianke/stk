@@ -9,24 +9,56 @@ import java.util.List;
 
 public class TreeNode {
     static int mm = 0;
-
+    public boolean filterFalse = true;
     public boolean process(Table row, int rowIdx) {
+        if(filterFalse) {
+            return process__(row, rowIdx);
+        }
+        return process_(row, rowIdx);
+    }
+
+    public boolean process_(Table row, int rowIdx) {
         if (StringUtil.isNull(columnName)) {
             boolean ret = tag.equalsIgnoreCase("True");
             return ret;
         }
-//        try {
-//            float v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        float gini = this.getGini();
         float v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
         if (v <= value) {
             return left.process(row, rowIdx);
         } else {
             return right.process(row, rowIdx);
         }
+    }
 
+    public boolean process__(Table row, int rowIdx) {
+        float gini = this.getGini();
+        if (StringUtil.isNull(columnName)) {
+            boolean ret = tag.equalsIgnoreCase("True");
+            if(Math.abs(gini)<0.01 && !ret) {
+                return false;
+            }
+            return true;
+        }
+
+        float v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
+        if (v <= value) {
+            return left.process(row, rowIdx);
+        } else {
+            return right.process(row, rowIdx);
+        }
+    }
+
+
+    public float getGini() {
+        int idx = note.indexOf("gini");
+        if(idx<0) {
+            return 100;
+        }
+        String str = note.substring(idx+"gini".length());
+        int idx2 = str.indexOf("\\n");
+        str = str.substring(0, idx2).replace("=", "").trim();
+        return Float.parseFloat(str);
     }
 
     public boolean subProcess(Table row, int rowIdx) {
