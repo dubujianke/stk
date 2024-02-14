@@ -95,7 +95,7 @@ public class StragetyZTBottom extends AbsStragety {
 
     public static float maxzf = 2.0f;
     public static float pulsezf = 1.8f;
-    public static int step = 0;
+    public static int step = 1;
     public static boolean useTree = true;//last step
     public static String MONITOR_DATE = "";
 
@@ -107,7 +107,7 @@ public class StragetyZTBottom extends AbsStragety {
             kn1sub = 0;
         } else {
             kn = 9;
-            DATE = "2024-01-29";
+            DATE = "2024-02-08";
             MONITOR_DATE = DATE.replaceAll("-", "/");
             AbsStragety.isNetProxy = true;
             AbsStragety.BOTTOM_PATH = String.format("D:\\stock\\Test\\res\\bottom\\ret_%s_2\\", DATE+"");
@@ -320,9 +320,6 @@ public class StragetyZTBottom extends AbsStragety {
 
     public static void mainInstance(String adate, int kn, int kn1sub) throws InterruptedException, IOException {
         try {
-//            AbsStragety.isMonitor = true;
-//            AbsStragety.isNetProxy = true;
-//            AbsStragety.isNetLocalProxy = true;
             AbsStragety.printMinute = false;
             AbsStragety.MONITOR_LEN = 50;
             useMinute = true;
@@ -346,6 +343,17 @@ public class StragetyZTBottom extends AbsStragety {
             stragetyZTBottom.mainPrs(0, -1, kn, kn1sub);
         } else {
             while (true) {
+                long time = DateUtil.getCurMinute(new Date());
+                long amStartTime = DateUtil.getCurMinute(DateUtil.getStartTime());
+                long amEndTime = DateUtil.getCurMinute(DateUtil.getAMEndTime());
+                if(time>amEndTime) {
+                    IsZhangting.table.initIndex();
+                    break;
+                }
+                if(time<amStartTime) {
+                    StringUtil.sleep(1000);
+                    continue;
+                }
                 idx++;
                 StragetyZTBottom stragetyZTBottom = new StragetyZTBottom();
                 stragetyZTBottom.mainPrs(0, -1, kn, kn1sub);
@@ -355,7 +363,6 @@ public class StragetyZTBottom extends AbsStragety {
                 }
                 if (idx == 240 || AbsStragety.IDX_PROXY == -1) {
                     try {
-//                        IsZhangting.table.addFirst(StragetyZTBottom.headerRow);
                         IsZhangting.table.initIndex();
                         break;
                     } catch (Exception e) {

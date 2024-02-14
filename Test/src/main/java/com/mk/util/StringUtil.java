@@ -180,4 +180,12 @@ public class StringUtil {
         return num;
     }
 
+    public static void sleep(int v) {
+        try {
+            Thread.currentThread().sleep(v);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

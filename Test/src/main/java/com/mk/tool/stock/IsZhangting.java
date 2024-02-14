@@ -6,11 +6,14 @@ import com.mk.data.GetGuben;
 import com.mk.model.Col;
 import com.mk.model.Row;
 import com.mk.model.Table;
+import com.mk.msg.MsgSend;
 import com.mk.report.LineReport;
 import com.mk.tool.stock.decision.DecisionZT;
 import com.mk.tool.stock.model.PeriodPressure;
 import com.mk.tool.stock.tool.SelectAddColExcel;
 import com.mk.util.StringUtil;
+
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1059,6 +1062,13 @@ public class IsZhangting extends Stragety {
         return 0;
     }
 
+    public static void sendMsg(Row row) {
+        try {
+            MsgSend.sendMsg(row);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
     public static void ok(String file, String INFO, String date, Kline kline0, MinuteLine minuteLine, Weekline weekline, Kline nextN, String msg, LineContext context) {
         SingleContext.add(file);
         if (INFO.length() == 11) {
@@ -1105,6 +1115,7 @@ public class IsZhangting extends Stragety {
                             return;
                         }
                     }
+                    sendMsg(row);
                     table.add(row);
                     Log.logString(StragetyBottom.resultBuffer, IsBottom.getINFO(INFO) + " " + date + " " + minuteLine.getTime());
                 }
@@ -1121,6 +1132,7 @@ public class IsZhangting extends Stragety {
                             return;
                         }
                     }
+                    sendMsg(row);
                     table.add(row);
                     Log.logString(StragetyBottom.resultBuffer, IsBottom.getINFO(INFO) + " " + date + " " + minuteLine.getTime());
                 }
@@ -1136,23 +1148,6 @@ public class IsZhangting extends Stragety {
         return table;
     }
 
-//    static ReConstructTreeGraph aFilterTreeGraph = ReConstructTreeGraph.instance("D:\\py\\pythonProject\\all_nominute4.dot");
-
-//    public static boolean filter2(Table table, int rowNumber) {
-//        if (rowNumber == 0) {
-//            return false;
-//        }
-//        Row row = table.rows.get(rowNumber);
-//        if (row.isNull()) {
-//            return false;
-//        }
-//
-//        Boolean aFlag = aFilterTreeGraph.subProcess(table, rowNumber);
-//        if (!aFlag) {
-//            return false;
-//        }
-//        return true;
-//    }
 
     public static boolean filterZF(Kline kline, MinuteLine minuteLine) {
         if (minuteLine.prev(3) == null) {

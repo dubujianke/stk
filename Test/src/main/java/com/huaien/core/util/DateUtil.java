@@ -714,6 +714,16 @@ public class DateUtil {
         return date.getDate();
     }
 
+    public static long getCurTime() {
+        Date date = new Date();
+        return date.getTime();
+    }
+
+
+    public static long getCurMinute(Date date) {
+        return Integer.parseInt(DateUtil.dateTimeToTimeString(date));
+    }
+
     public static String getTransDate(String date) {
         if (date.contains("-")) {
             Date dt = DateUtil.stringToDate4(date);

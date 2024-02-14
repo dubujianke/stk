@@ -72,11 +72,11 @@ public class StragetyBottom extends AbsStragety {
 
         if (flag) {
             List<String> dates = new ArrayList<>();
-            int year = 2023;
-            for (int m = 7; m <= 7; m++) {
+            int year = 2024;
+            for (int m = 2; m <= 2; m++) {
                 int month = m;
                 int maxMonth = DateUtil.getDaysOfMonth(year, m);
-                for (int i = 20; i <= maxMonth; i++) {
+                for (int i = 5; i <=7; i++) {
                     Date beginDate = DateUtil.stringToDate(year+"-"+(m < 10 ? "0" + m : "" + m)+"-"+(i < 10 ? "0" + i : "" + i));
                     int weekIdx = DateUtil.getWeek(beginDate);
                     if(weekIdx==6 || weekIdx==0) {

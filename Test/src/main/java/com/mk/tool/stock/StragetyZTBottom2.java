@@ -95,7 +95,7 @@ public class StragetyZTBottom2 extends AbsStragety {
     public static float maxzf = 2.0f;
     public static float pulsezf = 1.8f;
     public static int step = 0;
-    public static boolean useTree = false;//last step
+    public static boolean useTree = true;//last step
     public static String MONITOR_DATE = "";
 
     public static void main(String[] args) throws InterruptedException, IOException {

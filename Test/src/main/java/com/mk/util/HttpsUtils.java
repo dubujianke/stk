@@ -368,6 +368,41 @@ public class HttpsUtils {
         }
     }
 
+    public static String sendMsgByHttp(String url, String param) {
+        CloseableHttpClient httpClient = null;
+        CloseableHttpResponse httpResponse = null;
+        try {
+            HttpGet httpPost = new HttpGet(url+"?"+param);
+            httpPost.addHeader("Accept", "*/*");
+            httpPost.addHeader("Accept-Encoding", "gzip, deflate, br");
+            httpPost.addHeader("Accept-Language", "zh-CN,zh;q=0.9");
+            httpPost.addHeader("Content-type", "application/json; charset=utf-8");
+            httpPost.addHeader("Connection", "keep-alive");
+            httpPost.addHeader("Content-type", "text/*, application/xml");
+            httpPost.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36");
+//            httpPost.setEntity(new StringEntity(jsonObject.toString(), Charset.forName("UTF-8")));
+            httpClient = HttpsUtils.createSSLClientDefault();
+            httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            if (httpEntity != null) {
+                String jsObject = EntityUtils.toString(httpEntity, "UTF-8");
+                return jsObject;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                httpResponse.close();
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         JSONObject jsonObject = new JSONObject();
 //        jsonObject.put("idCard","***");
