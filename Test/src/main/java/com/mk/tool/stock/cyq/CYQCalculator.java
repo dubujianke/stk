@@ -135,6 +135,7 @@ public class CYQCalculator {
     }
 
 
+
     /**
      * 获取指定筹码处的成本
      *
@@ -239,13 +240,12 @@ public class CYQCalculator {
                 return null;
             }
             double[] ps = new double[]{(1 - percent) / 2, (1 + percent) / 2};
-            double[] pr = new double[]{getCostByChip(totalChips * ps[0], param), getCostByChip(totalChips * ps[1], param)};
+            double[] pr = new double[]{ getCostByChip(totalChips * ps[0], param), getCostByChip(totalChips * ps[1], param)};
             map.put("priceRange", new Pair<Double, Double>(StringUtil.toFix(pr[0]), StringUtil.toFix(pr[1])));
             map.put("concentration", pr[0] + pr[1] == 0 ? 0 : toPrecision((pr[1] - pr[0]) / (pr[0] + pr[1]), 4));
             return map;
         }
 
-        ;
 
     }
 

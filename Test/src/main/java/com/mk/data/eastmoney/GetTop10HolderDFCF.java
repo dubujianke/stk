@@ -11,6 +11,7 @@ import com.mk.tool.stock.Kline;
 import com.mk.util.FileUtil;
 import com.mk.util.HttpsUtils;
 import com.mk.util.Log;
+import com.mk.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class GetTop10HolderDFCF {
     static String mode = "11";
-
+    static String subName = "top10holder";
     static String getFile(String code) {
         return "res/data/" + code + "_" + mode + ".txt";
     }
@@ -30,6 +31,32 @@ public class GetTop10HolderDFCF {
         return code;
     }
 
+    public static double retriveOrGetTop10Ratio(String code) {
+        String v = retriveOrGet(code);
+        JSONArray ret = JSONObject.parseArray(v);
+        int len = ret.size();
+        double total = 0;
+        for(int i=0; i<len; i++) {
+            JSONObject obj = ret.getJSONObject(i);
+//            System.out.println(obj.getFloat("FREE_HOLDNUM_RATIO"));
+            double ratio = obj.getFloat("FREE_HOLDNUM_RATIO");
+            total+=ratio;
+        }
+        return StringUtil.toFix(total/100);
+    }
+
+    public static double getDecendRatio(String code) {
+        double ratio = retriveOrGetTop10Ratio(code);
+        if(ratio<0.01) {
+            return 1;
+        }
+        if(ratio>1) {
+            return 1;
+        }
+        ratio = 1/(1-ratio);
+        return ratio;
+    }
+
     public static String retriveOrGetShizhi(String code, double v) {
         return retriveOrGet(code);
     }
@@ -37,7 +64,7 @@ public class GetTop10HolderDFCF {
     public static String retriveOrGet(String code) {
         try {
             try {
-                String v = FileManager.read(AbsStragety.resDir + "/res/code_concept/" + code + ".txt");
+                String v = FileManager.read(AbsStragety.resDir + "/res/"+subName+"/" + code + ".txt");
                 if (!StrUtil.isEmpty(v)) {
                     return v;
                 }
@@ -52,16 +79,13 @@ public class GetTop10HolderDFCF {
                 codeType = "SZ";
             }
 
+            String date = GetTop10HolderDateDFCF.retriveOrGet(code);
             JSONObject jsonObject = new JSONObject();
-            String cb = "jQuery112408751154292648391_1693092934833";
-
-            String url = "https://datacenter.eastmoney.com/securities/api/data/v1/get?reportName=RPT_F10_CORETHEME_BOARDTYPE&columns=SECUCODE%2CSECURITY_CODE%2CSECURITY_NAME_ABBR%2CNEW_BOARD_CODE%2CBOARD_NAME%2CSELECTED_BOARD_REASON%2CIS_PRECISE%2CBOARD_RANK%2CBOARD_YIELD%2CDERIVE_BOARD_CODE&quoteColumns=f3~05~NEW_BOARD_CODE~BOARD_YIELD" +
-                    "&filter=(SECUCODE%3D%22" + code + "." + codeType + "%22)(IS_PRECISE%3D%221%22)" +
-                    "&pageNumber=1&pageSize=&sortTypes=1&sortColumns=BOARD_RANK&source=HSF10&client=PC&v=0926345500976963";
+            String url = "https://datacenter.eastmoney.com/securities/api/data/v1/get?reportName=RPT_F10_EH_FREEHOLDERS&columns=SECUCODE%2CSECURITY_CODE%2CEND_DATE%2CHOLDER_RANK%2CHOLDER_NEW%2CHOLDER_NAME%2CHOLDER_TYPE%2CSHARES_TYPE%2CHOLD_NUM%2CFREE_HOLDNUM_RATIO%2CHOLD_NUM_CHANGE%2CCHANGE_RATIO&quoteColumns=&filter=(SECUCODE%3D%22" + code + "." + codeType + "%22)(END_DATE%3D%27"+date+"%27)&pageNumber=1&pageSize=&sortTypes=1&sortColumns=HOLDER_RANK&source=HSF10&client=PC&v=047999239711719377";//
             String str = HttpsUtils.sendByHttpDFCF2(url);
             JSONObject jsonObject2 = JSONObject.parseObject(str);
             JSONArray ret = jsonObject2.getJSONObject("result").getJSONArray("data");
-            FileManager.write(AbsStragety.resDir + "/res/code_concept/" + code + ".txt", "" + ret.toString());
+            FileManager.write(AbsStragety.resDir + "/res/"+subName+"/" + code + ".txt", "" + ret.toString());
             return ret.toJSONString();
         } catch (Exception e) {
         }
@@ -75,7 +99,6 @@ public class GetTop10HolderDFCF {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public static String append(String url, String param, String v) {
@@ -149,17 +172,17 @@ public class GetTop10HolderDFCF {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-//        File file = new File(AbsStragety.FILE);
-//        File fs[] = file.listFiles();
-//        for (File item : fs) {
-//            Thread.currentThread().sleep(10);
-//            String name = item.getName().replace(".txt", "");
-////            if (item.toString().contains("002269")) {
-////                int a = 0;
-////                com.mk.tool.stock.Log.log(item.toString());
-////            }
-//            String v = retriveOrGet(name);
-//        }
+        File file = new File(AbsStragety.FILE);
+        File fs[] = file.listFiles();
+        for (File item : fs) {
+            Thread.currentThread().sleep(10);
+            String name = item.getName().replace(".txt", "");
+//            if (item.toString().contains("002269")) {
+//                int a = 0;
+//                com.mk.tool.stock.Log.log(item.toString());
+//            }
+            String v = retriveOrGet(name);
+        }
 
     }
 }
