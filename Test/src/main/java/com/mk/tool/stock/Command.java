@@ -33,29 +33,29 @@ public class Command {
         return items;
     }
 
-    public static float getFloat(String code) {
+    public static double  getFloat(String code) {
         int idx = code.indexOf("(");
         int idx2 = code.indexOf(")");
         String item = code.substring(idx + 1, idx2);
-        float num = Integer.parseInt(item);
+        double num = Integer.parseInt(item);
         return num;
     }
 
-    public static float getMin(float minfrac, float frac) {
+    public static double getMin(double minfrac, double frac) {
         if(frac < minfrac) {
             minfrac = frac;
         }
         return minfrac;
     }
 
-    public float getValue(String code, Kline kLine, Table table, int rowIdx) {
+    public double getValue(String code, Kline kLine, Table table, int rowIdx) {
         code = code.trim();
         try {
-            return Float.parseFloat(code.trim());
+            return Double.parseDouble(code.trim());
         }catch (Exception e) {
             table.initIndex();
             Row row = table.rows.get(rowIdx);
-            float v5 = row.getFloat(table.getColumn(code));
+            double v5 = row.getFloat(table.getColumn(code));
             return v5;
         }
     }
@@ -69,20 +69,20 @@ public class Command {
             if(code.equalsIgnoreCase("false")) {
                 return "false";
             }
-            return ""+Float.parseFloat(code.trim());
+            return ""+Double.parseDouble(code.trim());
         }catch (Exception e) {
             table.initIndex();
             Row row = table.rows.get(rowIdx);
             String v5 = row.getStr(table.getColumn(code));
             try {
-                return ""+Float.parseFloat(v5);
+                return ""+Double.parseDouble(v5);
             }catch (Exception e2) {
             }
             return v5;
         }
     }
 
-//    public float getCoumputeValue(String code, Kline kline, Table weekline) {
+//    public double getCoumputeValue(String code, Kline kline, Table weekline) {
 //        if (containsSign(code)) {
 //            code = code.trim();
 ////            code = code.substring(1, code.length()-1);
@@ -118,32 +118,32 @@ public class Command {
             code = code.trim();
             if (code.contains(">=")) {
                 String[] codes = code.split(">=");
-                float v0 = getValue(codes[0], kLine, table, rowIdx);
-                float v1 = getValue(codes[1], kLine, table, rowIdx);
+                double v0 = getValue(codes[0], kLine, table, rowIdx);
+                double v1 = getValue(codes[1], kLine, table, rowIdx);
                 if (v0 >= v1) {
                     return true;
                 }
                 return false;
             } else if (code.contains("<=")) {
                 String[] codes = code.split("<=");
-                float v0 = getValue(codes[0], kLine, table, rowIdx);
-                float v1 = getValue(codes[1], kLine, table, rowIdx);
+                double v0 = getValue(codes[0], kLine, table, rowIdx);
+                double v1 = getValue(codes[1], kLine, table, rowIdx);
                 if (v0 <= v1) {
                     return true;
                 }
                 return false;
             }else if (code.contains(">")) {
                 String[] codes = code.split(">");
-                float v0 = getValue(codes[0], kLine, table, rowIdx);
-                float v1 = getValue(codes[1], kLine, table, rowIdx);
+                double v0 = getValue(codes[0], kLine, table, rowIdx);
+                double v1 = getValue(codes[1], kLine, table, rowIdx);
                 if (v0 > v1) {
                     return true;
                 }
                 return false;
             } else if (code.contains("<")) {
                 String[] codes = code.split("<");
-                float v0 = getValue(codes[0], kLine, table, rowIdx);
-                float v1 = getValue(codes[1], kLine, table, rowIdx);
+                double v0 = getValue(codes[0], kLine, table, rowIdx);
+                double v1 = getValue(codes[1], kLine, table, rowIdx);
                 if (v0 < v1) {
                     return true;
                 }
@@ -151,8 +151,8 @@ public class Command {
             }
             else if (code.contains("!=")) {
                 String[] codes = code.split("!=");
-                float v0 = getValue(codes[0], kLine, table, rowIdx);
-                float v1 = getValue(codes[1], kLine, table, rowIdx);
+                double v0 = getValue(codes[0], kLine, table, rowIdx);
+                double v1 = getValue(codes[1], kLine, table, rowIdx);
                 if (v0 != v1) {
                     return true;
                 }
@@ -169,8 +169,8 @@ public class Command {
             }
             else if (code.contains("=")) {
                 String[] codes = code.split("=");
-                float v0 = getValue(codes[0], kLine, table, rowIdx);
-                float v1 = getValue(codes[1], kLine, table, rowIdx);
+                double v0 = getValue(codes[0], kLine, table, rowIdx);
+                double v1 = getValue(codes[1], kLine, table, rowIdx);
                 if (v0 == v1) {
                     return true;
                 }

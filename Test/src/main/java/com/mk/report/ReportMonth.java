@@ -21,9 +21,9 @@ public class ReportMonth {
         if (weeks != null) {
             int monIdx = kline.getIdx();
             Kline current = weeks.get(kline.getIdx());
-            float prevZf = current.getPrevZF(6);
-            float ma60 = current.getMA60();
-            float temp2 = current.getMAXMA60Frac();
+            double prevZf = current.getPrevZF(6);
+            double ma60 = current.getMA60();
+            double temp2 = current.getMAXMA60Frac();
             int atype = 0;
             Kline prevMonth = mkline.prev();
             int trendType10 = prevMonth.getMA10TrendType(10);
@@ -81,7 +81,7 @@ public class ReportMonth {
         return list;
     }
 
-    public static int getZSLevel(float v) {
+    public static int getZSLevel(double v) {
         if (v < -10) {
             return 2;
         }
@@ -91,7 +91,7 @@ public class ReportMonth {
         return 0;
     }
 
-    public static int getBKLevel2(float v) {
+    public static int getBKLevel2(double v) {
         if (v > 5) {
             return 2;
         }
@@ -101,7 +101,7 @@ public class ReportMonth {
         return 0;
     }
 
-    public static int getBKLevel(float v) {
+    public static int getBKLevel(double v) {
         if (v < -5) {
             return 2;
         }
@@ -117,7 +117,7 @@ public class ReportMonth {
 //        Kline kline = KLineUtil.getLineByDate(weeks, date);
         Kline mkline = KLineUtil.getMonthLineByDate(months, date);
 //        prsIsN(code, date, kline, mkline, weeks, months);
-        float f = mkline.getZhangfu();
+        double f = mkline.getZhangfu();
         int flag = 0;
         if (code.startsWith("1A")) {
             flag = getZSLevel(f);

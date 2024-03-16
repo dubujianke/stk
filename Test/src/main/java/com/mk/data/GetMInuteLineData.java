@@ -136,9 +136,9 @@ public class GetMInuteLineData {
                 MinuteLine minuteLine = new MinuteLine();
                 JSONObject json = data.getJSONObject(i);
                 String time = json.getString("m");
-                float p = json.getFloat("p");
+                double p = json.getFloat("p");
                 int v = json.getInteger("v");
-                float avg_p = json.getFloat("avg_p");
+                double avg_p = json.getFloat("avg_p");
                 String date = DateUtil.dateToString3(new Date());
 
                 String time2 = DateUtil.trans(time, "HH:mm:ss", "HHmm");
@@ -269,9 +269,9 @@ public class GetMInuteLineData {
                 MinuteLine minuteLine = new MinuteLine();
                 JSONObject json = context.dataProxy.getJSONObject(i);
                 String time = json.getString("m");
-                float p = json.getFloat("p");
+                double p = json.getFloat("p");
                 int v = json.getInteger("v");
-                float avg_p = json.getFloat("avg_p");
+                double avg_p = json.getFloat("avg_p");
                 String date = DateUtil.dateToString3(new Date());
 
                 String time2 = DateUtil.trans(time, "HH:mm:ss", "HHmm");

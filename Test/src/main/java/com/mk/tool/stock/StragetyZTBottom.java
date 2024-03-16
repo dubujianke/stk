@@ -23,11 +23,11 @@ import java.util.*;
 public class StragetyZTBottom extends AbsStragety {
 
     public static String monitorMinute = "1051";
-    public static float MIN_3MINUTES_SMALLHAND_ZF = 1.21f;
-    public static float MIN_3MINUTES_LARGEHAND_ZF = 1.21f;
-    public static float MIN_3MINUTES_ZF = 1.21f;
-    public static float MIN_3MINUTES_ZF2 = 1.0f;
-    public static float MIN_ZF2 = 1.4f;
+    public static double MIN_3MINUTES_SMALLHAND_ZF = 1.21f;
+    public static double MIN_3MINUTES_LARGEHAND_ZF = 1.21f;
+    public static double MIN_3MINUTES_ZF = 1.21f;
+    public static double MIN_3MINUTES_ZF2 = 1.0f;
+    public static double MIN_ZF2 = 1.4f;
     public static boolean isTDX = true;
     public static String absPath = "";
 
@@ -93,10 +93,11 @@ public class StragetyZTBottom extends AbsStragety {
     }
 
 
-    public static float maxzf = 2.0f;
-    public static float pulsezf = 1.8f;
+    public static double maxzf = 2.0f;
+    public static double pulsezf = 1.8f;
     public static int step = 1;
     public static boolean useTree = true;//last step
+    public static boolean timeSkip = false;
     public static String MONITOR_DATE = "";
 
     public static void main(String[] args) throws InterruptedException, IOException {
@@ -107,10 +108,10 @@ public class StragetyZTBottom extends AbsStragety {
             kn1sub = 0;
         } else {
             kn = 9;
-            DATE = "2024-02-08";
+            DATE = "2024-02-20";
             MONITOR_DATE = DATE.replaceAll("-", "/");
             AbsStragety.isNetProxy = true;
-            AbsStragety.BOTTOM_PATH = String.format("D:\\stock\\Test\\res\\bottom\\ret_%s_2\\", DATE+"");
+            AbsStragety.BOTTOM_PATH = String.format("D:\\stock\\Test\\res\\bottom\\ret_%s_2\\", DATE + "");
             absPath = "D:\\stock\\Test\\res\\bottom\\ret_" + DATE + "_2\\" + DATE + "__.xlsx";
         }
         if (kn == 1) {
@@ -343,16 +344,18 @@ public class StragetyZTBottom extends AbsStragety {
             stragetyZTBottom.mainPrs(0, -1, kn, kn1sub);
         } else {
             while (true) {
-                long time = DateUtil.getCurMinute(new Date());
-                long amStartTime = DateUtil.getCurMinute(DateUtil.getStartTime());
-                long amEndTime = DateUtil.getCurMinute(DateUtil.getAMEndTime());
-                if(time>amEndTime) {
-                    IsZhangting.table.initIndex();
-                    break;
-                }
-                if(time<amStartTime) {
-                    StringUtil.sleep(1000);
-                    continue;
+                if (timeSkip){
+                    long time = DateUtil.getCurMinute(new Date());
+                    long amStartTime = DateUtil.getCurMinute(DateUtil.getStartTime());
+                    long amEndTime = DateUtil.getCurMinute(DateUtil.getAMEndTime());
+                    if (time > amEndTime) {
+                        IsZhangting.table.initIndex();
+                        break;
+                    }
+                    if (time < amStartTime) {
+                        StringUtil.sleep(1000);
+                        continue;
+                    }
                 }
                 idx++;
                 StragetyZTBottom stragetyZTBottom = new StragetyZTBottom();
@@ -384,22 +387,22 @@ public class StragetyZTBottom extends AbsStragety {
         String name = vs[0].trim();
         String value = vs[1].trim();
         if (name.equalsIgnoreCase("guben")) {
-            kModel.setGuben(Float.parseFloat(value));
+            kModel.setGuben(Double.parseDouble(value));
         }
         if (name.equalsIgnoreCase("space250")) {
-            kModel.setSpace250(Float.parseFloat(value));
+            kModel.setSpace250(Double.parseDouble(value));
         }
         if (name.equalsIgnoreCase("chgHands")) {
             String[] cvs = value.replace("[", "").replace("]", "").split(",");
             for (String cv : cvs) {
-                kModel.getChgHands().add(Float.parseFloat(cv));
+                kModel.getChgHands().add(Double.parseDouble(cv));
             }
         }
         if (name.equalsIgnoreCase("prevmon1")) {
-            kModel.setPrevmon1(Float.parseFloat(value));
+            kModel.setPrevmon1(Double.parseDouble(value));
         }
         if (name.equalsIgnoreCase("prevmon2")) {
-            kModel.setPrevmon2(Float.parseFloat(value));
+            kModel.setPrevmon2(Double.parseDouble(value));
         }
         if (name.equalsIgnoreCase("monTotal")) {
         }

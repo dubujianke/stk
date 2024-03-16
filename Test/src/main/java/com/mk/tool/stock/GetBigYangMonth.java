@@ -90,7 +90,7 @@
 //        }
 //
 //        if (flag) {
-//            float max = kline.getMaxBefore(20);
+//            double max = kline.getMaxBefore(20);
 //            if (max > kline.getOpen()) {
 //                if (Math.abs(max - kline.getOpen()) / kline.getOpen() * 100 > 3) {
 //                    flag = false;
@@ -100,8 +100,8 @@
 //        return flag;
 //    }
 //
-//    public static float getMax(List<Kline> days, int offset, int dayNum) {
-//        float max = 0;
+//    public static double getMax(List<Kline> days, int offset, int dayNum) {
+//        double max = 0;
 //        for (int i = offset; i >= offset - dayNum; i--) {
 //            Kline kline = days.get(i);
 //            if (kline.getMax() > max) {
@@ -111,14 +111,14 @@
 //        return max;
 //    }
 //
-//    public static float compareFraction(float src, float dst) {
-//        float v = 0;
+//    public static double compareFraction(double src, double dst) {
+//        double v = 0;
 //        v = 100 * (src - dst) / dst;
 //        return v;
 //    }
 //
 //
-//    public static boolean isIn(float src, float v1, float v2) {
+//    public static boolean isIn(double src, double v1, double v2) {
 //        return src > v1 && src < v2;
 //    }
 //
@@ -143,7 +143,7 @@
 //            MaxPoint latest = maxSection30.points.get(maxSection30.points.size() - 1);
 //
 //
-//            float fraction = kline.monthKline.getZhangfu();
+//            double fraction = kline.monthKline.getZhangfu();
 //            if (fraction > 45) {
 //                if (add(file)) {
 //                    if(code.startsWith("300")) {

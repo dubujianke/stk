@@ -32,7 +32,7 @@ public class LineContext {
     private int sIdx;
     private boolean is3MonthSmal;
     public Kline needForce;
-    private float totalV;
+    private double totalV;
     private MinuteLine lastMinuteLine;
     private String info;
 
@@ -242,11 +242,11 @@ public class LineContext {
         this.is3MonthSmal = is3MonthSmal;
     }
 
-    public float getTotalV() {
+    public double getTotalV() {
         return totalV;
     }
 
-    public void setTotalV(float totalV) {
+    public void setTotalV(double totalV) {
         this.totalV = totalV;
     }
 

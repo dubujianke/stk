@@ -50,7 +50,7 @@ public class KNStragety {
         }
 
         if (flag) {
-            float max = kline.getMaxBefore(20);
+            double max = kline.getMaxBefore(20);
             if (max > kline.getOpen()) {
                 if (Math.abs(max - kline.getOpen()) / kline.getOpen() * 100 > 3) {
                     flag = false;
@@ -61,8 +61,8 @@ public class KNStragety {
     }
 
 
-    public static float getMax(List<Kline> days, int offset, int dayNum) {
-        float max = 0;
+    public static double getMax(List<Kline> days, int offset, int dayNum) {
+        double max = 0;
         for (int i = offset; i >= offset - dayNum; i--) {
             Kline kline = days.get(i);
             if (kline.getMax() > max) {
@@ -72,14 +72,14 @@ public class KNStragety {
         return max;
     }
 
-    public static float compareFraction(float src, float dst) {
-        float v = 0;
+    public static double compareFraction(double src, double dst) {
+        double v = 0;
         v = 100 * (src - dst) / dst;
         return v;
     }
 
 
-    public static boolean isIn(float src, float v1, float v2) {
+    public static boolean isIn(double src, double v1, double v2) {
         return src > v1 && src < v2;
     }
 
@@ -104,11 +104,11 @@ public class KNStragety {
         if (next.isShadownUp(50)) {
             return;
         }
-        float ma120 = kline0.getMA120();
-        float ma30 = kline0.getMA30();
-        float ma60 = kline0.getMA60();
+        double ma120 = kline0.getMA120();
+        double ma30 = kline0.getMA30();
+        double ma60 = kline0.getMA60();
         if (ma30 > kline0.getOpen()) {
-            float tmp1 = KLineUtil.compareMax(ma30, kline0.getOpen());
+            double tmp1 = KLineUtil.compareMax(ma30, kline0.getOpen());
             if (tmp1 < 3) {
 
             } else {
@@ -116,7 +116,7 @@ public class KNStragety {
             }
         }
         if (ma60 > kline0.getOpen()) {
-            float tmp1 = KLineUtil.compareMax(ma60, kline0.getOpen());
+            double tmp1 = KLineUtil.compareMax(ma60, kline0.getOpen());
             if (tmp1 < 3) {
 
             } else {
@@ -124,11 +124,11 @@ public class KNStragety {
             }
         }
 
-        float frac = KLineUtil.compareMax(kline0.getOpen(), ma120);
-        float frac30 = KLineUtil.compareMax(kline0.getOpen(), ma30);
-        float frac60 = KLineUtil.compareMax(kline0.getOpen(), ma60);
-        float fracmin = KLineUtil.min(frac30, frac60);
-        float fracMa30 = KLineUtil.prevAndMa30(kline0);
+        double frac = KLineUtil.compareMax(kline0.getOpen(), ma120);
+        double frac30 = KLineUtil.compareMax(kline0.getOpen(), ma30);
+        double frac60 = KLineUtil.compareMax(kline0.getOpen(), ma60);
+        double fracmin = KLineUtil.min(frac30, frac60);
+        double fracMa30 = KLineUtil.prevAndMa30(kline0);
 //        Log.log(file + "=================>" + frac30 + "  " + fracmin);
 
         if (ma30 > kline0.getOpen() && frac30 > 1) {
@@ -145,7 +145,7 @@ public class KNStragety {
                 if (months.size() < 100) {
                     return;
                 }
-                float mopen = kline0.getMopen();
+                double mopen = kline0.getMopen();
                 MonthKline monthKline = kline0.monthKline;
                 MonthKline prevMonth = monthKline.prev();
 //                int len = kline0.isMonthEary();
@@ -166,8 +166,8 @@ public class KNStragety {
                         if (kline2 == null) {
                             return;
                         }
-                        float zhangfu = kline0.getZhangfu();
-                        float min = kline2.getMin();
+                        double zhangfu = kline0.getZhangfu();
+                        double min = kline2.getMin();
                         if (zhangfu > 9.6 && kline1.getZhangfu() < 0 && kline2.getZhangfu() < 0) {
                             if (KLineUtil.compareMax(min, kline0.getMax()) > 6.5 && min > kline0.getMin()) {
                                 Log.log("OK" + file + "	" + date + "  " + days.get(idx).getZhangfu() + " mamin:" + fracmin + " ma120:" + frac);
@@ -177,7 +177,7 @@ public class KNStragety {
 
                     }
                 }
-                float open = kline0.getOpen();
+                double open = kline0.getOpen();
 //                return;
             } else if (frac30 > 5) {
                 //有动力
@@ -211,14 +211,14 @@ public class KNStragety {
         if (kline2 == null) {
             return;
         }
-        float zhangfu = KLineUtil.prevNZhangfu(kline0, 2);
+        double zhangfu = KLineUtil.prevNZhangfu(kline0, 2);
         Kline touchMA10 = KLineUtil.nextNTouchMA10(kline0, 5);
-        float min = touchMA10.getMin();
+        double min = touchMA10.getMin();
         if (touchMA10 == null) {
             return;
         }
         if (kline0.getZhangfu() > 6 && zhangfu > 9.6 && touchMA10 != null) {
-            float AFRAC = (float) (5.6 * (kline0.getZhangfu() / 10.0f));
+            double AFRAC = (float) (5.6 * (kline0.getZhangfu() / 10.0f));
             if (KLineUtil.compareMax(min, kline0.getMax()) > AFRAC) {
                 Log.log("" + file + "	" + date + "  " + days.get(idx).getZhangfu() + " mamin:" + fracmin + " ma120:" + frac);
 //                if(ma30>ma60 && ma60>ma120) {

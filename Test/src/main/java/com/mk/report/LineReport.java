@@ -128,7 +128,7 @@ public class LineReport {
                         && minuteLine2.prev(1).getPrice() > minuteLine2.prev(2).getPrice()
                         && minuteLine2.prev(2).getPrice() > minuteLine2.prev(3).getPrice()
                 ) {
-                    float frac = KLineUtil.compareMaxSign(minuteLine2.price, item.prev().getClose());
+                    double frac = KLineUtil.compareMaxSign(minuteLine2.price, item.prev().getClose());
                     if (frac > 1.4) {
                         flag = true;
                     }

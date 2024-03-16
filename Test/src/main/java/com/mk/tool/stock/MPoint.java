@@ -24,7 +24,7 @@ public class MPoint {
     public List<Kline> list = new ArrayList<>();
     int period = 30;
 
-    public float getMAX(Kline kline) {
+    public double  getMAX(Kline kline) {
         if(period == 10) {
             return kline.getMA10();
         }

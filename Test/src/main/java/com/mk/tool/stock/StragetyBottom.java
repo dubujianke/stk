@@ -2,11 +2,15 @@ package com.mk.tool.stock;
 
 import com.huaien.core.util.DateUtil;
 import com.mk.data.GetAllBankuaiCode;
+import com.mk.data.eastmoney.GetConceptDFCF;
+import com.mk.model.ConceptDFCF;
+import com.mk.model.ScoreConcept;
 import com.mk.model.Table;
 import com.mk.tool.stock.model.KModel;
 import com.mk.tool.stock.tree.ReConstructTreeGraph;
 import com.mk.util.ExcelWrite2007Test;
 import com.mk.util.StringUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -27,15 +31,12 @@ public class StragetyBottom extends AbsStragety {
     public static boolean allIsOK = false;
     public static String retx = "";
 
-//    static ReConstructTreeGraph aFilterTreeGraph = ReConstructTreeGraph.instance("D:\\py\\pythonProject\\bottom_2024-01-03_2.dot");
-//    static ReConstructTreeGraph aFilterTreeGraph2 = ReConstructTreeGraph.instance("D:\\py\\pythonProject\\bottom12_3.dot");
-
     public static List<String> getDates(String dir) {
         List<String> dates = new ArrayList<>();
         File file = new File(dir);
         File[] fs = file.listFiles();
         for (File fle : fs) {
-            if(fle.getName().contains("~")) {
+            if (fle.getName().contains("~")) {
                 continue;
             }
             dates.add(fle.getName().replace(".xlsx", "").replace("ret_", ""));
@@ -57,15 +58,22 @@ public class StragetyBottom extends AbsStragety {
     }
 
 
-    public static int ASTEP = 1;
+    //modify 0, 1
+    public static int ASTEP = 0;
 
     public static int step = 0;
     public static boolean flag = true;
+    //    public static String method = "IsBottom";
+//    public static String method = "IsBottomDeep";
+    public static String method = "IsBottomHor";
+//    public static String method = "IsBottomGetNextZT";
     public static void main(String[] args) throws IOException, InterruptedException {
-        if(ASTEP ==0){
+        GetConceptDFCF.initAll();
+        List<ScoreConcept> ret = ConceptDFCF.getList("002049");
+        if (ASTEP == 0) {
             step = 0;
             flag = true;
-        }else if(ASTEP ==1) {
+        } else if (ASTEP == 1) {
             step = 1;
             flag = false;
         }
@@ -73,16 +81,16 @@ public class StragetyBottom extends AbsStragety {
         if (flag) {
             List<String> dates = new ArrayList<>();
             int year = 2024;
-            for (int m = 2; m <= 2; m++) {
+            for (int m = 3; m <= 3; m++) {
                 int month = m;
                 int maxMonth = DateUtil.getDaysOfMonth(year, m);
-                for (int i = 5; i <=7; i++) {
-                    Date beginDate = DateUtil.stringToDate(year+"-"+(m < 10 ? "0" + m : "" + m)+"-"+(i < 10 ? "0" + i : "" + i));
+                for (int i = 13; i <= 13; i++) {
+                    Date beginDate = DateUtil.stringToDate(year + "-" + (m < 10 ? "0" + m : "" + m) + "-" + (i < 10 ? "0" + i : "" + i));
                     int weekIdx = DateUtil.getWeek(beginDate);
-                    if(weekIdx==6 || weekIdx==0) {
+                    if (weekIdx == 6 || weekIdx == 0) {
                         continue;
                     }
-                    String date = String.format(year+"/"+(month < 10 ? "0" + month : "" + month)+"/%s", i < 10 ? "0" + i : "" + i);
+                    String date = String.format(year + "/" + (month < 10 ? "0" + month : "" + month) + "/%s", i < 10 ? "0" + i : "" + i);
                     dates.add(date);
                 }
             }
@@ -177,6 +185,7 @@ public class StragetyBottom extends AbsStragety {
         }
         try {
             GetAllBankuaiCode.read();
+            GetAllBankuaiCode.readSelect();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -225,12 +234,12 @@ public class StragetyBottom extends AbsStragety {
                 context.setkModel(kModel);
                 context.setUseMinute(1);
                 context.setUseMinuteLen(5);
-                mainProcess(acode, adate, "IsBottom", 1, 1, context);
+                mainProcess(acode, adate, method, 1, 1, context);
             }
         } else if (kn == 3) {
-            mainProcess("", "2023/08/10~2023/08/20", "IsBottom", 0, 0, context);
+            mainProcess("", "2023/08/10~2023/08/20", method, 0, 0, context);
         } else if (kn == 4) {
-            mainProcess("", "", "IsBottom", 1, 1, context);
+            mainProcess("", "", method, 1, 1, context);
         }
 
         if (!Stragety.isResult) {

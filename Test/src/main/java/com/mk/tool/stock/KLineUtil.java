@@ -25,7 +25,7 @@ public class KLineUtil {
 
     public static Kline getMaxBetween(List<Kline> days, int idx, int idx2) {
         int maxIdx = 0;
-        float max = 0;
+        double max = 0;
         for (int i = idx; i < idx2; i++) {
             Kline kline = days.get(i);
             if (kline.getMax() > max) {
@@ -38,7 +38,7 @@ public class KLineUtil {
 
     public static Kline getMinBetween(List<Kline> days, int idx, int idx2) {
         int aidx = 0;
-        float min = 99999;
+        double min = 99999;
         for (int i = idx; i < idx2; i++) {
             Kline kline = days.get(i);
             if (kline.getMin() < min) {
@@ -49,7 +49,7 @@ public class KLineUtil {
         return days.get(aidx);
     }
 
-    public static float compareMax(float v1, float v2) {
+    public static double compareMax(double v1, double v2) {
         if (Math.abs(v2) < 0.01) {
             return 0.0001f;
         }
@@ -60,7 +60,7 @@ public class KLineUtil {
         boolean flag = false;
         MonthKline prev = monthKline.prev();
         MonthKline prev2 = prev.prev();
-        float frac = 70;
+        double frac = 70;
         if (prev.isShadownUp(frac) && prev2.isShadownDown(frac)) {
             return true;
         }
@@ -70,26 +70,26 @@ public class KLineUtil {
         return false;
     }
 
-    public static float compareMaxSign5(float v1, float v2) {
+    public static double compareMaxSign5(double v1, double v2) {
         return Grid.BEISHU * v1 / v2;
     }
 
 
-    public static float compareMaxSign(float v1, float v2) {
+    public static double compareMaxSign(double v1, double v2) {
         return 100.0f * (v1 - v2) / v2;
     }
 
-    public static float compareMaxSign(float v1, float v2, float basse) {
+    public static double compareMaxSign(double v1, double v2, double basse) {
         return 100.0f * (v1 - v2) / basse;
     }
 
-    public static String compareMaxSignStr(float v1, float v2, float basse) {
+    public static String compareMaxSignStr(double v1, double v2, double basse) {
         return StringUtil.spaceString(StringUtil.format(compareMaxSign(v1, v2, basse), 1), 6);
     }
 
 
-    public static float getMin(float v1, float v2, float v3, float v4) {
-        float min = 999;
+    public static double getMin(double v1, double v2, double v3, double v4) {
+        double min = 999;
         if (v1 > 0 && v1 < min) {
             min = v1;
         }
@@ -106,16 +106,16 @@ public class KLineUtil {
     }
 
 
-    public static float compareMaxSign3(float v1, float v2) {
+    public static double compareMaxSign3(double v1, double v2) {
         return 100.0f * (v2 - v1) / v1;
     }
 
 
-    public static float compareMaxSign2(float v1, float v2) {
+    public static double compareMaxSign2(double v1, double v2) {
         return 100.0f * (v1 - v2) / v1;
     }
 
-    public static float compareMaxSign1(float v1, float v2) {
+    public static double compareMaxSign1(double v1, double v2) {
         return 100.0f * (v1) / v2;
     }
 
@@ -375,26 +375,26 @@ public class KLineUtil {
         });
     }
 
-    public static float getHigher(float v, float fr) {
+    public static double getHigher(double v, double fr) {
         return v * (100 + fr) / 100.0f;
     }
 
-    public static float min(float v1, float v2) {
+    public static double min(double v1, double v2) {
         if (v1 > v2) {
             return v2;
         }
         return v1;
     }
 
-    public static boolean abousNearest(float v1, float v2, float vv) {
-        float f = Math.abs(100.0f * (v1 - v2) / v2);
+    public static boolean abousNearest(double v1, double v2, double vv) {
+        double f = Math.abs(100.0f * (v1 - v2) / v2);
         if (f <= vv) {
             return true;
         }
         return false;
     }
 
-    public static boolean isBetween(int from, int to, List<Weekline> list, float min, float max) {
+    public static boolean isBetween(int from, int to, List<Weekline> list, double min, double max) {
         for (int i = from + 1; i < to; i++) {
             Weekline weekline = list.get(i);
             if (!weekline.touchEntity(min, max)) {
@@ -423,7 +423,7 @@ public class KLineUtil {
 
     static class Bottom {
         int idx;
-        float value;
+        double value;
         Weekline line1;
         Weekline line2;
 
@@ -441,16 +441,16 @@ public class KLineUtil {
         return cnt;
     }
 
-    public static float prevAndMa30(Kline kline) {
+    public static double prevAndMa30(Kline kline) {
         Kline item = kline.prev();
-        float frac = KLineUtil.compareMax(item.getOpen(), item.getMA30());
+        double frac = KLineUtil.compareMax(item.getOpen(), item.getMA30());
         return frac;
     }
 
-    public static float prevNZhangfu(Kline kline, int n) {
+    public static double prevNZhangfu(Kline kline, int n) {
         n = n - 1;
-        float max = kline.getClose();
-        float min = kline.prev().getClose();
+        double max = kline.getClose();
+        double min = kline.prev().getClose();
         for (int i = 0; i < n; i++) {
             Kline item = kline.prev(i + 1);
             if (item.getZhangfu() < 0) {
@@ -458,17 +458,17 @@ public class KLineUtil {
             }
             min = item.prev().getClose();
         }
-        float frac = KLineUtil.compareMax(max, min);
+        double frac = KLineUtil.compareMax(max, min);
         return frac;
     }
 
-    public static float prevNZhangfu(Kline kline, int n, boolean isFirstMax) {
+    public static double prevNZhangfu(Kline kline, int n, boolean isFirstMax) {
         n = n - 1;
-        float max = kline.getClose();
+        double max = kline.getClose();
         if (isFirstMax) {
             max = kline.getMax();
         }
-        float min = kline.prev().getClose();
+        double min = kline.prev().getClose();
         for (int i = 0; i < n; i++) {
             Kline item = kline.prev(i + 1);
             if (item.getZhangfu() < 0) {
@@ -476,14 +476,14 @@ public class KLineUtil {
             }
             min = item.prev().getClose();
         }
-        float frac = KLineUtil.compareMax(max, min);
+        double frac = KLineUtil.compareMax(max, min);
         return frac;
     }
 
-    public static float prevNZhangfu2(Kline kline, int n) {
+    public static double prevNZhangfu2(Kline kline, int n) {
         n = n - 1;
-        float max = kline.getClose();
-        float min = kline.prev().getClose();
+        double max = kline.getClose();
+        double min = kline.prev().getClose();
         for (int i = 0; i < n; i++) {
             Kline item = kline.prev(i + 1);
             if (item.getZhangfu() < 0) {
@@ -493,12 +493,12 @@ public class KLineUtil {
                 min = item.getClose();
             }
         }
-        float frac = KLineUtil.compareMax(max, min);
+        double frac = KLineUtil.compareMax(max, min);
         return frac;
     }
 
     public static Kline nextNTouchMA10(Kline kline, int n) {
-        float min = kline.getClose();
+        double min = kline.getClose();
         boolean flag = false;
         for (int i = 0; i < n; i++) {
             Kline item = kline.next(i + 1);
@@ -523,13 +523,13 @@ public class KLineUtil {
     }
 
 
-    public static boolean standOn(Kline kline, float ma, float upFrac) {
-        float vma = ma;
-        float max = kline.getMax();
-        float min = kline.getMin();
-        float upF = KLineUtil.compareMaxSign(max, vma);
-        float downF = KLineUtil.compareMaxSign(min, vma);
-        float downFAbs = KLineUtil.compareMax(min, vma);
+    public static boolean standOn(Kline kline, double ma, double upFrac) {
+        double vma = ma;
+        double max = kline.getMax();
+        double min = kline.getMin();
+        double upF = KLineUtil.compareMaxSign(max, vma);
+        double downF = KLineUtil.compareMaxSign(min, vma);
+        double downFAbs = KLineUtil.compareMax(min, vma);
         if (downFAbs < 1) {
             return false;
         }
@@ -545,8 +545,8 @@ public class KLineUtil {
         return false;
     }
 
-    public static float getMAX(float a, float b, float c) {
-        float max = 0;
+    public static double getMAX(double a, double b, double c) {
+        double max = 0;
         if (a > max) {
             max = a;
         }
@@ -559,8 +559,8 @@ public class KLineUtil {
         return max;
     }
 
-    public static float getMIN(float a, float b, float c) {
-        float v = 99999;
+    public static double getMIN(double a, double b, double c) {
+        double v = 99999;
         if (a < v) {
             v = a;
         }
@@ -573,14 +573,14 @@ public class KLineUtil {
         return v;
     }
 
-    public static float getMaxSpace(float a, float b, float c) {
-        float v1 = KLineUtil.compareMax(a, b);
-        float v2 = KLineUtil.compareMax(a, c);
-        float v3 = KLineUtil.compareMax(c, b);
+    public static double getMaxSpace(double a, double b, double c) {
+        double v1 = KLineUtil.compareMax(a, b);
+        double v2 = KLineUtil.compareMax(a, c);
+        double v3 = KLineUtil.compareMax(c, b);
         return getMAX(v1, v2, v3);
     }
 
-    public static boolean isExist(List<Kline> list, int from, int to, float zf) {
+    public static boolean isExist(List<Kline> list, int from, int to, double zf) {
         for (int i = from; i <= to; i++) {
             Kline item = list.get(i);
             if (item.getZhangfu() > zf) {
@@ -590,11 +590,11 @@ public class KLineUtil {
         return false;
     }
 
-    public static boolean isExistNoShadow(List<Kline> list, int from, int to, float zf) {
+    public static boolean isExistNoShadow(List<Kline> list, int from, int to, double zf) {
         for (int i = from; i <= to; i++) {
             Kline item = list.get(i);
             boolean isShadow = item.isShadownDown(60) || item.isShadownUp(60);
-            float zfv = item.getZhangfu();
+            double zfv = item.getZhangfu();
             if (zfv > zf && !isShadow) {
                 return true;
             }
@@ -602,7 +602,7 @@ public class KLineUtil {
         return false;
     }
 
-    public static Kline standOnAndNextNFallDown(Kline kline, float ma, int ma2, int n, float upFrac) {
+    public static Kline standOnAndNextNFallDown(Kline kline, double ma, int ma2, int n, double upFrac) {
         boolean flag = standOn(kline, ma, upFrac);
         if (!flag) {
             return null;
@@ -617,12 +617,12 @@ public class KLineUtil {
             num++;
             if (flag2) {
                 if (num > 5) {
-                    float ma10 = item.getMA10();
-                    float ma30 = item.getMA30();
-                    float ma60 = item.getMA60();
-                    float mSpace = getMaxSpace(ma10, ma30, ma60);
+                    double ma10 = item.getMA10();
+                    double ma30 = item.getMA30();
+                    double ma60 = item.getMA60();
+                    double mSpace = getMaxSpace(ma10, ma30, ma60);
 
-                    float touchSpace = item.getTouch(ma60);
+                    double touchSpace = item.getTouch(ma60);
                     return item;
                 }
             }
@@ -631,20 +631,20 @@ public class KLineUtil {
         return null;
     }
 
-    public static float standOnSpance(Kline kline, float ma) {
-        float vma = ma;
-        float min = kline.getMin();
-        float downFAbs = KLineUtil.compareMax(min, vma);
+    public static double standOnSpance(Kline kline, double ma) {
+        double vma = ma;
+        double min = kline.getMin();
+        double downFAbs = KLineUtil.compareMax(min, vma);
         return downFAbs;
     }
 
-    public static boolean isMonthBottom(MonthKline monthKline, float v) {
-        float min = monthKline.getMin();
-        float ma60 = monthKline.getMA60();
-        float ma120 = monthKline.getMA120();
-        float frac60 = compareMax(min, ma60);
-        float frac120 = compareMax(min, ma120);
-        float frac = min(frac60, frac120);
+    public static boolean isMonthBottom(MonthKline monthKline, double v) {
+        double min = monthKline.getMin();
+        double ma60 = monthKline.getMA60();
+        double ma120 = monthKline.getMA120();
+        double frac60 = compareMax(min, ma60);
+        double frac120 = compareMax(min, ma120);
+        double frac = min(frac60, frac120);
         if (frac > v) {
             return false;
         }
@@ -658,7 +658,7 @@ public class KLineUtil {
             recents.add(kline.prev(i));
         }
         KLineUtil.sortDesc(recents);
-        float min = Integer.MAX_VALUE;
+        double min = Integer.MAX_VALUE;
         int minIdx = 0;
         for (int i = 0; i < num; i++) {
             Kline item = kline.prev(i);
@@ -670,7 +670,7 @@ public class KLineUtil {
         if (minIdx == kline.getIdx()) {
             return true;
         } else {
-            float tmp = KLineUtil.compareMax(min, kline.getMin());
+            double tmp = KLineUtil.compareMax(min, kline.getMin());
             if (num <= 4 && tmp < 2) {
                 return true;
             }
@@ -682,7 +682,7 @@ public class KLineUtil {
     }
 
     public static boolean isPrevIsShadow(Kline kline, int num) {
-        float min = Integer.MAX_VALUE;
+        double min = Integer.MAX_VALUE;
         int minIdx = 0;
         Kline item = kline.prev(1);
         if (item.getZhenfu() > 0 && item.isShadownDown(70)) {
@@ -724,20 +724,20 @@ public class KLineUtil {
 //            if(points.size()>1) {
 //                Kline minMonth2 = (Kline) points.get(1).kline;
 //                if(monIdx == minMonth2.idx) {
-//                    float frac = KLineUtil.compareMax(minMonth.min, minMonth2.min);
+//                    double frac = KLineUtil.compareMax(minMonth.min, minMonth2.min);
 //                    if(frac<10) {
 //                        flag = true;
 //                    }
 //                    if(minMonth2.touch(minMonth2.getMA60())) {
 //                        flag = true;
 //                    }
-//                    float frac2 = KLineUtil.compareMax(minMonth2.min, minMonth2.getMA60());
+//                    double frac2 = KLineUtil.compareMax(minMonth2.min, minMonth2.getMA60());
 //                    if(minMonth2.min<minMonth2.getMA60() && frac2<18) {
 //                        flag = true;
 //                    }
 //
 //                    if(minMonth2.idx > minMonth.idx) {
-//                        float tfrac = KLineUtil.compareMax(minMonth.min, minMonth2.min);
+//                        double tfrac = KLineUtil.compareMax(minMonth.min, minMonth2.min);
 //                        if(frac<20) {
 //                            flag = true;
 //                        }
@@ -897,9 +897,9 @@ public class KLineUtil {
         return flag;
     }
 
-    public static void getStockState_250LARGE(Kline kLine, StockState stockState, float matop, float mabottom) {
+    public static void getStockState_250LARGE(Kline kLine, StockState stockState, double matop, double mabottom) {
         if (kLine.getOpen() >= matop) {
-            float fraction = KLineUtil.compareMax(kLine.getOpen(), matop);
+            double fraction = KLineUtil.compareMax(kLine.getOpen(), matop);
             if (fraction > 3) {
                 stockState.dayPos = ONE;
             } else {
@@ -911,8 +911,8 @@ public class KLineUtil {
         boolean flag = kLine.isTouchUp(mabottom, 1);//stand mabottom or cross
         if (flag) {
             if (kLine.getOpen() < matop && kLine.getClose() > matop) {
-                float downLen = matop - kLine.getOpen();
-                float upLen = kLine.getClose() - matop;
+                double downLen = matop - kLine.getOpen();
+                double upLen = kLine.getClose() - matop;
                 if (upLen / downLen >= 2) {
                     stockState.dayPos = ZERO_BOTTOM_STANDMA120_TOP_CROSSMA250_UPENTITY_LARGER;
                 } else if (downLen / upLen >= 2) {
@@ -921,7 +921,7 @@ public class KLineUtil {
                     stockState.dayPos = ZERO_BOTTOM_STANDMA120_TOP_CROSSMA250_ENTITY_EQUAL;
                 }
             } else if (kLine.getOpen() < matop && kLine.getClose() <= matop) {
-                float fraction = KLineUtil.compareMax(kLine.getClose(), matop);
+                double fraction = KLineUtil.compareMax(kLine.getClose(), matop);
                 if (fraction > 7) {
                     stockState.dayPos = ZERO_BOTTOM_STANDMA120_TOP_DOWNMA250_SPACE_LARGER;
                 } else {
@@ -931,8 +931,8 @@ public class KLineUtil {
                 stockState.dayPos = ONE;
             }
         } else if (kLine.getOpen() <= matop && kLine.getClose() > matop) {
-            float downLen = matop - kLine.getOpen();
-            float upLen = kLine.getClose() - matop;
+            double downLen = matop - kLine.getOpen();
+            double upLen = kLine.getClose() - matop;
             if (upLen / downLen >= 2) {
                 stockState.dayPos = ZERO_STAND_MA250_UPENTITY_LARGER;
             } else if (downLen / upLen >= 2) {
@@ -941,14 +941,14 @@ public class KLineUtil {
                 stockState.dayPos = ZERO_MA250;
             }
         } else if (kLine.getClose() < mabottom) {
-            float fraction = KLineUtil.compareMax(kLine.getClose(), mabottom);
+            double fraction = KLineUtil.compareMax(kLine.getClose(), mabottom);
             if (fraction > 5) {
                 stockState.dayPos = DOWNMA250_DOWN_MA120LARGER;
             } else {
                 stockState.dayPos = DOWNMA250_DOWN_MA120SMALLER;
             }
         } else if (kLine.getOpen() > mabottom) {
-            float fraction = KLineUtil.compareMax(kLine.getClose(), mabottom);
+            double fraction = KLineUtil.compareMax(kLine.getClose(), mabottom);
             if (fraction > 5) {
                 stockState.dayPos = UP_MA120_DOWN_MA250LARGER;
             } else {
@@ -959,9 +959,9 @@ public class KLineUtil {
         }
     }
 
-    public static void getStockState_120LARGE(Kline kLine, StockState stockState, float matop, float mabottom) {
+    public static void getStockState_120LARGE(Kline kLine, StockState stockState, double matop, double mabottom) {
         if (kLine.getOpen() >= matop) {
-            float fraction = KLineUtil.compareMax(kLine.getOpen(), matop);
+            double fraction = KLineUtil.compareMax(kLine.getOpen(), matop);
             if (fraction > 3) {
                 stockState.dayPos = ONE;
             } else {
@@ -973,8 +973,8 @@ public class KLineUtil {
         boolean flag = kLine.isTouchUp(mabottom, 1);//stand mabottom or cross
         if (flag) {
             if (kLine.getOpen() < matop && kLine.getClose() > matop) {
-                float downLen = matop - kLine.getOpen();
-                float upLen = kLine.getClose() - matop;
+                double downLen = matop - kLine.getOpen();
+                double upLen = kLine.getClose() - matop;
                 if (upLen / downLen >= 2) {
                     stockState.dayPos = ZERO_BOTTOM_STANDMA250_TOP_CROSSMA120_UPENTITY_LARGER;
                 } else if (downLen / upLen >= 2) {
@@ -984,7 +984,7 @@ public class KLineUtil {
                     stockState.dayPos = ZERO_BOTTOM_STANDMA250_TOP_CROSSMA120_ENTITY_EQUAL;
                 }
             } else if (kLine.getOpen() < matop && kLine.getClose() <= matop) {
-                float fraction = KLineUtil.compareMax(kLine.getClose(), matop);
+                double fraction = KLineUtil.compareMax(kLine.getClose(), matop);
                 if (fraction > 5) {
                     stockState.dayPos = ZERO_BOTTOM_STANDMA250_TOP_DOWNMA120_SPACE_LARGER;
                 } else {
@@ -994,8 +994,8 @@ public class KLineUtil {
                 stockState.dayPos = ONE;
             }
         } else if (kLine.getOpen() <= matop && kLine.getClose() > matop) {
-            float downLen = matop - kLine.getOpen();
-            float upLen = kLine.getClose() - matop;
+            double downLen = matop - kLine.getOpen();
+            double upLen = kLine.getClose() - matop;
             if (upLen / downLen >= 2) {
                 stockState.dayPos = ZERO_STAND_MA120_UPENTITY_LARGER;
             } else if (downLen / upLen >= 2) {
@@ -1004,14 +1004,14 @@ public class KLineUtil {
                 stockState.dayPos = ZERO_MA120;
             }
         } else if (kLine.getClose() < mabottom) {
-            float fraction = KLineUtil.compareMax(kLine.getClose(), mabottom);
+            double fraction = KLineUtil.compareMax(kLine.getClose(), mabottom);
             if (fraction > 5) {
                 stockState.dayPos = DOWNMA120_DOWNMA250LARGER;
             } else {
                 stockState.dayPos = DOWNMA120_DOWNMA250SMALLER;
             }
         } else if (kLine.getOpen() > mabottom) {
-            float fraction = KLineUtil.compareMax(kLine.getClose(), mabottom);
+            double fraction = KLineUtil.compareMax(kLine.getClose(), mabottom);
             if (fraction > 5) {
                 stockState.dayPos = UPMA250_DOWNMA120LARGER;
             } else {
@@ -1022,7 +1022,7 @@ public class KLineUtil {
         }
     }
 
-    public static void getStockState(Kline kLine, StockState stockState, float matop, float mabottom, boolean ma250Large) {
+    public static void getStockState(Kline kLine, StockState stockState, double matop, double mabottom, boolean ma250Large) {
         if (ma250Large) {
             getStockState_250LARGE(kLine, stockState, matop, mabottom);
         } else {
@@ -1031,8 +1031,8 @@ public class KLineUtil {
     }
 
 
-    public static float min(float a, float b, float c, float d) {
-        float v = 999999;
+    public static double min(double a, double b, double c, double d) {
+        double v = 999999;
         if (a != 0) {
             if (a < v) {
                 v = a;
@@ -1062,8 +1062,8 @@ public class KLineUtil {
 
     }
 
-    public static float min(float a, float b, float c, float d, float e) {
-        float v = 999999;
+    public static double min(double a, double b, double c, double d, double e) {
+        double v = 999999;
         if (a != 0) {
             if (a < v) {
                 v = a;
@@ -1099,7 +1099,7 @@ public class KLineUtil {
 
     }
 
-    public static boolean isAllLarge(List<Float> vs, float v) {
+    public static boolean isAllLarge(List<Double> vs, double v) {
         for (int i = 0; i < vs.size(); i++) {
             if (vs.get(i) < v) {
                 return false;
@@ -1108,7 +1108,7 @@ public class KLineUtil {
         return true;
     }
 
-    public static boolean isAnySmall(List<Float> vs, float v) {
+    public static boolean isAnySmall(List<Double> vs, double v) {
         for (int i = 0; i < vs.size(); i++) {
             if (vs.get(i) < v) {
                 return true;
@@ -1117,7 +1117,7 @@ public class KLineUtil {
         return false;
     }
 
-    public static boolean isAnySmall(float[] vs, float v) {
+    public static boolean isAnySmall(double[] vs, double v) {
         for (int i = 0; i < vs.length; i++) {
             if (vs[i] < v) {
                 return true;
@@ -1126,7 +1126,7 @@ public class KLineUtil {
         return false;
     }
 
-    public static boolean isAnySmallAbs(float[] vs, float v) {
+    public static boolean isAnySmallAbs(double[] vs, double v) {
         for (int i = 0; i < vs.length; i++) {
             if (Math.abs(vs[i]) < v) {
                 return true;

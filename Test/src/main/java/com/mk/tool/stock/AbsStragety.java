@@ -2,7 +2,7 @@ package com.mk.tool.stock;
 
 import com.huaien.core.util.DateUtil;
 import com.huaien.core.util.FileManager;
-import com.mk.data.GetGuben;
+import com.mk.data.eastmoney.GetGuben;
 import com.mk.trace.TimeTJ;
 import com.mk.util.StringUtil;
 
@@ -54,6 +54,9 @@ public class AbsStragety {
 
     static {
         MAP.put("IsBottom", new IsBottom());
+        MAP.put("IsBottomDeep", new IsBottomDeep());
+        MAP.put("IsBottomHor", new IsBottomHor());
+        MAP.put("IsBottomGetNextZT", new IsBottomGetNextZT());
         MAP.put("IsZhangting", new IsZhangting());
     }
 
@@ -76,8 +79,8 @@ public class AbsStragety {
     }
 
 
-    public static float getMax(List<Kline> days, int offset, int dayNum) {
-        float max = 0;
+    public static double  getMax(List<Kline> days, int offset, int dayNum) {
+        double max = 0;
         for (int i = offset; i >= offset - dayNum; i--) {
             Kline kline = days.get(i);
             if (kline.getMax() > max) {
@@ -87,14 +90,14 @@ public class AbsStragety {
         return max;
     }
 
-    public static float compareFraction(float src, float dst) {
-        float v = 0;
+    public static double compareFraction(double src, double dst) {
+        double v = 0;
         v = 100 * (src - dst) / dst;
         return v;
     }
 
 
-    public static boolean isIn(float src, float v1, float v2) {
+    public static boolean isIn(double src, double v1, double v2) {
         return src > v1 && src < v2;
     }
 
@@ -214,9 +217,9 @@ public class AbsStragety {
 
     public static void prsItem(String file, String singleDate, String stragetyName, int usemonth, int useweek, LineContext context) {
         try {
-            float totalV = GetGuben.retriveOrGet(getCode(file));
+            double totalV = GetGuben.retriveOrGet(getCode(file));
             context.setTotalV(totalV);
-//            Log.log(file+" "+singleDate);
+            Log.log(file+":"+singleDate);
 
             if (file.startsWith("8")) {
                 return;
@@ -314,7 +317,7 @@ public class AbsStragety {
             return;
         }
         Kline kline0 = days.get(idx);
-        float ma250 = kline0.getMA250();
+        double ma250 = kline0.getMA250();
         Kline maxLine = kline0.getMaxBefore2(30);
 
         List<Weekline> weeks = DateUtil.initANdGetAllWeekKLines(days, date, days.size() - 1);
@@ -327,7 +330,7 @@ public class AbsStragety {
         Weekline prev = last.prev();
         Weekline prev2 = prev.prev();
 
-        float weekMa120 = last.getMA120();
+        double weekMa120 = last.getMA120();
         boolean flag = false;
 //        if (last.getOpen() < weekMa120 && last.getClose() > weekMa120) {
 //            flag = true;
@@ -356,7 +359,7 @@ public class AbsStragety {
         if ((prev.getMax() < next.getMin())) {
             return;
         }
-        float tmp1 = KLineUtil.compareMax(last.getClose(), weekMa120);
+        double tmp1 = KLineUtil.compareMax(last.getClose(), weekMa120);
         if (nextFlag && prevFlag) {
             if (last.getZhangfu() > 2 && last.getZhenfu() > 8) {
                 Log.log("prs==========>Y " + file + "	" + date + "  " + KLineUtil.compareMax(kline0.getOpen(), maxLine.getMax()));

@@ -1,14 +1,10 @@
 package com.mk.tool.stock;
 
 import com.huaien.core.util.DateUtil;
-import com.mk.data.GetBankuai;
-import com.mk.data.GetGuben;
-import com.mk.model.Col;
+import com.mk.data.eastmoney.GetGuben;
 import com.mk.model.Row;
 import com.mk.model.Table;
 import com.mk.report.LineReport;
-import com.mk.tool.stock.decision.Decision05;
-import com.mk.tool.stock.tree.ReConstructTreeGraph;
 import com.mk.util.StringUtil;
 
 import java.util.List;
@@ -186,7 +182,7 @@ public class IsBottom extends Stragety {
         Table table = getTable(file, INFO, date, kline0, minuteLine, context);
         table.initIndex();
 
-        float v5 = table.rows.get(1).getFloat(table.getColumn("大涨幅度"));
+        double v5 = table.rows.get(1).getFloat(table.getColumn("大涨幅度"));
         int v5Idx = table.rows.get(1).getInt(table.getColumn("大涨Idx"));
         int type5 = 0;
         if (v5 < 5) {
@@ -267,7 +263,7 @@ public class IsBottom extends Stragety {
             int a = 0;
         }
 
-        float df = kline0.getPrevDF3(10);
+        double df = kline0.getPrevDF3(10);
         if (df > 5) {
             return false;
         }
@@ -287,7 +283,7 @@ public class IsBottom extends Stragety {
     public static void ok(String file, String INFO, String date, Kline kline0, Weekline weekline, Kline nextN, String msg, LineContext context) {
         boolean flag = filterRow(file, INFO, date, kline0, null, msg, context);
         if (context.getkModel() != null && context.getkModel().getRow() != null) {
-            float mtZf = context.getkModel().getRow().getFloat("mtZf");
+            double mtZf = context.getkModel().getRow().getFloat("mtZf");
             if (!StragetyBottom.isBottom) {
                 if (mtZf < 1.5) {
                     return;
@@ -302,7 +298,7 @@ public class IsBottom extends Stragety {
     public static void okReal(Table table, String file, String INFO, String date, Kline kline0, Weekline weekline, Kline nextN, String msg, LineContext context) {
         String dateCur = date;
         date = DateUtil.getNextWorkDate(date);
-        float zt = kline0.getClose() * 1.1f;
+        double zt = kline0.getClose() * 1.1f;
         try {
             Row row = IsZhangting.getRow(file, INFO, date, kline0, null, context);
             Row rowRaw = null;
@@ -365,7 +361,7 @@ public class IsBottom extends Stragety {
     public static void filter(String file, List<Kline> days, String date, List<Weekline> weeks, List<MonthKline> moths, int usemonth, int useweek, Kline kline, LineContext context) {
         StockAllMinuteLine stockAllMinuteLine = context.getStockAllMinuteLine();
         Kline lineMin = kline.getMin(60);
-        float frac = KLineUtil.compareMax(lineMin.getClose(), kline.getClose());
+        double frac = KLineUtil.compareMax(lineMin.getClose(), kline.getClose());
         boolean realBottomFlag = false;
         if (frac < 3) {
             realBottomFlag = true;
@@ -535,19 +531,19 @@ public class IsBottom extends Stragety {
         Weekline prev1Week = KLineUtil.prevWeekline(kline0, 1);
         Weekline prev2Week = KLineUtil.prevWeekline(kline0, 2);
 
-        float prevW1ZF = prev1Week.getZhangfu2();
-        float prevW2ZF = prev2Week.getZhangfu2();
-        float prevM1ZF = kline0.monthKline.prev(1).getZhangfu2();
-        float prevM2ZF = kline0.monthKline.prev(2).getZhangfu2();
-        float totalAbsM = Math.abs(prevM1ZF + prevM2ZF);
-        float minAll = Integer.MAX_VALUE;
-        float minWeek = Integer.MAX_VALUE;
-        float minMon = Integer.MAX_VALUE;
+        double prevW1ZF = prev1Week.getZhangfu2();
+        double prevW2ZF = prev2Week.getZhangfu2();
+        double prevM1ZF = kline0.monthKline.prev(1).getZhangfu2();
+        double prevM2ZF = kline0.monthKline.prev(2).getZhangfu2();
+        double totalAbsM = Math.abs(prevM1ZF + prevM2ZF);
+        double minAll = Integer.MAX_VALUE;
+        double minWeek = Integer.MAX_VALUE;
+        double minMon = Integer.MAX_VALUE;
         Kline Kline = kline0;
-        float hand = kline0.getHand(context.getTotalV());
-        float handPrev = kline0.prev().getHand(context.getTotalV());
-        float handPrev2 = kline0.prev(2).getHand(context.getTotalV());
-        float hands[] = new float[]{handPrev2, handPrev, hand};
+        double hand = kline0.getHand(context.getTotalV());
+        double handPrev = kline0.prev().getHand(context.getTotalV());
+        double handPrev2 = kline0.prev(2).getHand(context.getTotalV());
+        double hands[] = new double[]{handPrev2, handPrev, hand};
 
         if (Math.abs(Kline.monthKline.prev(1).getZhangfu2()) < Math.abs(minMon)) {
             minMon = Kline.monthKline.prev(1).getZhangfu2();
@@ -572,7 +568,7 @@ public class IsBottom extends Stragety {
         if (Math.abs(minMon) < Math.abs(minAll)) {
             minAll = minMon;
         }
-        float minAllAbs = Math.abs(minAll);
+        double minAllAbs = Math.abs(minAll);
         if (minAllAbs < 2.5f) {
         } else if (minAllAbs > 2.5f && minAllAbs <= 3.0f) {
             if (hand > 1 || handPrev > 1 || handPrev2 > 1) {
@@ -594,12 +590,12 @@ public class IsBottom extends Stragety {
         }
 /////////////////////////////////////////////////////////////////////////////
         //IMPORTANT 3 zhangfu
-        float[] zfms = kline0.monthKline.prev().getPrevZhangFu(34);
+        double[] zfms = kline0.monthKline.prev().getPrevZhangFu(34);
         if (zfms == null) {
             zfms = kline0.monthKline.prev().getPrevZhangFu(18);
         }
         int monthLen = 0;
-        float monzhf = 0;
+        double monzhf = 0;
         if (zfms != null) {
             monzhf = zfms[0];
             monthLen = (int) zfms[1];
@@ -696,12 +692,12 @@ public class IsBottom extends Stragety {
 
         boolean prevMonFlag = kline0.monthKline.prev().getZhangfu() < 3.5;
         boolean localHorFlag = false;
-        float vs[] = null;
+        double vs[] = null;
         if (kline0.getWeekDay() == 5) {
-            float vs2[] = new float[]{kline0.weekline.prev().getZhangfu(), kline0.weekline.prev(2).getZhangfu(), kline0.weekline.prev(3).getZhangfu(), kline0.weekline.prev(4).getZhangfu(), kline0.weekline.prev(5).getZhangfu()};
+            double vs2[] = new double[]{kline0.weekline.prev().getZhangfu(), kline0.weekline.prev(2).getZhangfu(), kline0.weekline.prev(3).getZhangfu(), kline0.weekline.prev(4).getZhangfu(), kline0.weekline.prev(5).getZhangfu()};
             vs = vs2;
         } else {
-            float vs2[] = new float[]{kline0.weekline.prev().getZhangfu(), kline0.weekline.prev(2).getZhangfu(), kline0.weekline.prev(3).getZhangfu(), kline0.weekline.prev(4).getZhangfu(), kline0.weekline.prev(5).getZhangfu()};
+            double vs2[] = new double[]{kline0.weekline.prev().getZhangfu(), kline0.weekline.prev(2).getZhangfu(), kline0.weekline.prev(3).getZhangfu(), kline0.weekline.prev(4).getZhangfu(), kline0.weekline.prev(5).getZhangfu()};
             vs = vs2;
         }
         if (StringUtil.getSmallThanCountAbs(vs, 2f) >= 3) {
@@ -722,7 +718,7 @@ public class IsBottom extends Stragety {
             zfFlag = true;
         }
 
-        float twoZf = kline0.getZhangfu() + prev.getZhangfu();
+        double twoZf = kline0.getZhangfu() + prev.getZhangfu();
         if (twoZf > 4 && prev.getZhangfu() > 4.1) {
             if (localHorFlag || localBottomFlag) {
             } else {
@@ -736,8 +732,8 @@ public class IsBottom extends Stragety {
             if (kline0.allMA103060120OK()) {
 
             } else {
-                float frac250 = KLineUtil.compareMaxSign(kline0.getClose(), kline0.getMA250());
-                float frac2502 = KLineUtil.compareMaxSign(kline0.getMin(), kline0.getMA250());
+                double frac250 = KLineUtil.compareMaxSign(kline0.getClose(), kline0.getMA250());
+                double frac2502 = KLineUtil.compareMaxSign(kline0.getMin(), kline0.getMA250());
                 if (Math.abs(frac250) < 2.5f || Math.abs(frac2502) < 2.5f) {
                 } else {
                     if (localHorFlag && StringUtil.getSmallThanCountAbs(kline0.getZhanfus(4), 2) >= 3) {
@@ -763,7 +759,7 @@ public class IsBottom extends Stragety {
             boolean flag = false;
             Weekline weekline = kline0.weekline;
             List<Kline.MAI> alist = weekline.prev().isStandMAI(1);
-            float prevZF = weekline.prev().getZhangfu();
+            double prevZF = weekline.prev().getZhangfu();
             if (alist.size() > 0) {
                 Kline.MAI mai = alist.get(0);
                 if (prevZF < 2.9) {
@@ -794,12 +790,12 @@ public class IsBottom extends Stragety {
 
         //small zhangfu
         if (kline0.getZhangfu() <= 0) {
-            float azf0 = kline0.getSmallZhangu();
+            double azf0 = kline0.getSmallZhangu();
             if (azf0 < 0.5) {
                 zfFlag = true;
             }
-            float zf0 = kline0.getZhangfu();
-            float zf1 = kline0.prev().getZhangfu();
+            double zf0 = kline0.getZhangfu();
+            double zf1 = kline0.prev().getZhangfu();
             if (Math.abs(zf0) < 2 && Math.abs(zf1) < 2 && zf1 > 0 && (zf1 + zf0) > 0) {
                 zfFlag = true;
             }
@@ -816,7 +812,7 @@ public class IsBottom extends Stragety {
                 zfFlag = true;
             }
         } else {
-            float zf0 = kline0.getZhangfu();
+            double zf0 = kline0.getZhangfu();
             if (localBottomFlag) {
                 zfFlag = true;
             }
@@ -854,7 +850,7 @@ public class IsBottom extends Stragety {
         boolean aboutMA = false;
         boolean allAboutM250 = false;
         ///////////////////////////////////////////////////////////////////////////////
-        float v3060[] = kline0.isStandMA3060();
+        double v3060[] = kline0.isStandMA3060();
 
         boolean dflag = false;
         boolean wflag = false;
@@ -869,8 +865,8 @@ public class IsBottom extends Stragety {
             dflag = true;
         }
         if (!dflag) {
-            float ms[] = kline0.monthKline.isStandMA60120250();
-            float vWeek[] = kline0.weekline.isStandMA60120250Fix();
+            double ms[] = kline0.monthKline.isStandMA60120250();
+            double vWeek[] = kline0.weekline.isStandMA60120250Fix();
             if (vWeek[0] > 0 && vWeek[0] < 2.7) {
                 wflag = true;
             } else if (vWeek[1] > 0 && vWeek[1] < 3.0) {
@@ -927,7 +923,7 @@ public class IsBottom extends Stragety {
             aboutMA = true;
             context.setDayStandMA250(true);
         } else {
-            float lastMonth = kline0.monthKline.prev().getEntityZhangfu();
+            double lastMonth = kline0.monthKline.prev().getEntityZhangfu();
             if (lastMonth < 0) {
                 if (isWeekStandMA250) {
                     if (lastMonth < -9.5f) {
@@ -946,9 +942,9 @@ public class IsBottom extends Stragety {
         }
 
 
-        float ret[] = kline0.weekline.spaceDownTouchMAI250();
+        double ret[] = kline0.weekline.spaceDownTouchMAI250();
         if (ret[1] == 250 && ret[0] > 6) {
-            float ret2[] = kline0.monthKline.spaceDownTouchMAI250();
+            double ret2[] = kline0.monthKline.spaceDownTouchMAI250();
             if (ret2[1] == 250 && ret2[0] <= 6) {
                 aboutMA = true;
             } else if (ret2[1] == 120 && ret2[0] <= 6) {
@@ -957,7 +953,7 @@ public class IsBottom extends Stragety {
                 boolean ff = false;
                 for (int i = 0; i < 5; i++) {
                     Weekline tmp = kline0.weekline.prev(i + 1);
-                    float ret3[] = tmp.spaceDownTouchMAI250();
+                    double ret3[] = tmp.spaceDownTouchMAI250();
                     if (ret2[0] <= 8 && ret3[1] == 250 && ret3[0] <= 3) {
                         if (tmp.getOpen() > tmp.getMA10()) {
                             ff = true;
@@ -972,7 +968,7 @@ public class IsBottom extends Stragety {
             aboutMA = true;
         }
         if (ret[1] == 120 && ret[0] > 6) {
-            float ret2[] = kline0.monthKline.spaceDownTouchMAI250();
+            double ret2[] = kline0.monthKline.spaceDownTouchMAI250();
             if (ret2[1] == 250 && ret2[0] <= 6) {
                 aboutMA = true;
             } else if (ret2[1] == 120 && ret2[0] <= 6) {
@@ -981,7 +977,7 @@ public class IsBottom extends Stragety {
                 boolean ff = false;
                 for (int i = 0; i < 5; i++) {
                     Weekline tmp = kline0.weekline.prev(i + 1);
-                    float ret3[] = tmp.spaceDownTouchMAI250();
+                    double ret3[] = tmp.spaceDownTouchMAI250();
                     if (ret2[0] <= 9 && ret3[1] == 250 && ret3[0] <= 3) {
                         if (tmp.getOpen() > tmp.getMA10()) {
                             ff = true;
@@ -1006,16 +1002,16 @@ public class IsBottom extends Stragety {
             aboutMA = false;
         }
 
-        float ret0[] = kline0.weekline.spaceDownTouchMAI250();
+        double ret0[] = kline0.weekline.spaceDownTouchMAI250();
         if (ret0[1] == 60 && ret[0] < 2.5f) {
             aboutMA = true;
         }
 
 
         if (!allAboutM250) {
-            float retw250[] = kline0.weekline.spaceDownTouchMAI2502();
-            float retw60[] = kline0.weekline.spaceDownTouchMAI_(60);
-            float retw120[] = kline0.spaceDownTouchMAI_(120);
+            double retw250[] = kline0.weekline.spaceDownTouchMAI2502();
+            double retw60[] = kline0.weekline.spaceDownTouchMAI_(60);
+            double retw120[] = kline0.spaceDownTouchMAI_(120);
             boolean deadCrpss = kline0.isDeadCrpsses(30, 60, 0.25f);
             if (deadCrpss) {
                 boolean downFlag = false;
@@ -1056,8 +1052,8 @@ public class IsBottom extends Stragety {
         }
 
 
-        float ret2[] = kline0.weekline.spaceDownTouchMAI250ByEntityMin();
-        float retd[] = kline0.spaceDownTouchMAI250ByEntityMin();
+        double ret2[] = kline0.weekline.spaceDownTouchMAI250ByEntityMin();
+        double retd[] = kline0.spaceDownTouchMAI250ByEntityMin();
         if (ret2[1] == 250 && ret2[0] < 2) {
             if (retd[1] == 250 && retd[0] < 2) {
                 int weekIdx = DateUtil.getWeek(DateUtil.stringToDate3(date));
@@ -1070,12 +1066,12 @@ public class IsBottom extends Stragety {
             }
         }
         if ((retd[1] == 250 || retd[1] == 120) && retd[0] < 3) {
-            float retw[] = kline0.weekline.spaceALlDownTouchMAI250ByEntityMin();
+            double retw[] = kline0.weekline.spaceALlDownTouchMAI250ByEntityMin();
             boolean fflag = false;
             if (retw[1] == 250 && retw[0] < 2) {
                 fflag = true;
             } else if (retw[1] == 60 && retw[0] < 2) {
-                float frac = KLineUtil.compareMax(kline0.weekline.getMA60(), kline0.weekline.getMA250());
+                double frac = KLineUtil.compareMax(kline0.weekline.getMA60(), kline0.weekline.getMA250());
                 if (frac < 4.5f) {
                     fflag = true;
                 }
@@ -1113,7 +1109,7 @@ public class IsBottom extends Stragety {
 
         if (localBottomFlag || aboutMA || allAboutM250) {
         } else {
-            float df = kline0.getMaxDF(15);
+            double df = kline0.getMaxDF(15);
             if (isWeekStandMA250) {
                 if (df > 4.9f) {
                     return;
@@ -1121,7 +1117,7 @@ public class IsBottom extends Stragety {
             } else {
                 if (df <= 3.3f) {
                 } else {
-                    float df2 = kline0.getMaxDF(9);
+                    double df2 = kline0.getMaxDF(9);
                     if (df2 > 1.5) {
                         return;
                     }
@@ -1155,7 +1151,7 @@ public class IsBottom extends Stragety {
         {
             //3 603348
             boolean fflag63 = kline0.allIsLessAbsThanExcept(9, 2, 3.0f, 0, 1.0f, 2, 3.0f, 3);
-            float zf2 = kline0.getPrevZhenFExcept(9, 1, 5);
+            double zf2 = kline0.getPrevZhenFExcept(9, 1, 5);
             if (fflag63 && zf2 < 4) {
                 context.setMsg("Hor(9,2,3)~2(" + zf2 + ")");
                 addOK(file, days, date, weeks, moths, usemonth, useweek, context, kline0);
@@ -1165,7 +1161,7 @@ public class IsBottom extends Stragety {
         {
             //3 002693
             boolean fflag63 = kline0.allIsLessAbsThanExcept(14, 2, 3.0f, 0, 1.0f, 2, 3.0f, 4);
-            float zf2 = kline0.getPrevZhenFExcept(7, 1, 5);
+            double zf2 = kline0.getPrevZhenFExcept(7, 1, 5);
             if (fflag63 && zf2 < 2) {
                 context.setMsg("Hor(7,3,2)~2(" + zf2 + ")");
                 addOK(file, days, date, weeks, moths, usemonth, useweek, context, kline0);
@@ -1176,7 +1172,7 @@ public class IsBottom extends Stragety {
         if (isWeekStandMA250) {
             boolean fflag5 = kline0.allIsLessAbsThan(7, 1, 2.0f);
             if (fflag5) {
-                float zf2 = kline0.getPrevZhenF(7);
+                double zf2 = kline0.getPrevZhenF(7);
                 if (zf2 < 7) {
                     context.setMsg("isWeekStandMA250  Hor(7,1,2)~2(" + zf2 + ")");
                     addOK(file, days, date, weeks, moths, usemonth, useweek, context, kline0);
@@ -1201,7 +1197,7 @@ public class IsBottom extends Stragety {
         {
             //3 000851
             boolean fflag63 = kline0.allIsLessAbsThanExcept(14, 2, 3.0f, 0, 1.0f, 2, 3.0f, 4);
-            float zf2 = kline0.getPrevZhenF(14);
+            double zf2 = kline0.getPrevZhenF(14);
             if (fflag63 && zf2 < 10) {
                 context.setMsg("Hor(10,3,2)-10");
                 addOK(file, days, date, weeks, moths, usemonth, useweek, context, kline0);

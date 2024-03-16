@@ -2,6 +2,7 @@ package com.mk.util;
 
 import com.mk.tool.stock.Kline;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class StringUtil {
@@ -9,7 +10,7 @@ public class StringUtil {
     public static String STR2 = "数据来源:通达信";
 
     public static int getInt(boolean flag) {
-        return flag?1:0;
+        return flag ? 1 : 0;
     }
 
     public static boolean isNull(String v) {
@@ -49,20 +50,6 @@ public class StringUtil {
         return String.format("%." + len + "f", v);
     }
 
-    public static String format(float v) {
-        if (v > 0) {
-            return String.format("+%.1f", v);
-        }
-        return String.format("%.1f", v);
-    }
-
-    public static String format2_(float v) {
-        if (v > 0) {
-            return String.format("+%.2f", v);
-        }
-        return String.format("%.2f", v);
-    }
-
     public static String format(double v) {
         if (v > 0) {
             return String.format("+%.1f", v);
@@ -70,13 +57,27 @@ public class StringUtil {
         return String.format("%.1f", v);
     }
 
-    public static String format2(float v) {
+    public static String format2_(double v) {
+        if (v > 0) {
+            return String.format("+%.2f", v);
+        }
         return String.format("%.2f", v);
     }
 
-    public static String format3(float v, int len) {
-        return spaceString(String.format("%.2f", v), len);
+//    public static String format(double v) {
+//        if (v > 0) {
+//            return String.format("+%.1f", v);
+//        }
+//        return String.format("%.1f", v);
+//    }
+
+    public static String format2(double v) {
+        return String.format("%.2f", v);
     }
+
+//    public static String format3(double v, int len) {
+//        return spaceString(String.format("%.2f", v), len);
+//    }
 
     public static String spaceString(String v, int len) {
         int dlt = len - v.length();
@@ -86,11 +87,11 @@ public class StringUtil {
         return v;
     }
 
-    public static String format(float v, int len) {
-        return String.format("%." + len + "f", v);
-    }
+//    public static String format(double v, int len) {
+//        return String.format("%." + len + "f", v);
+//    }
 
-    public static String format4(float v, int len, int len2) {
+    public static String format4(double v, int len, int len2) {
         return spaceString(String.format("%." + len + "f", v), len2);
     }
 
@@ -98,11 +99,11 @@ public class StringUtil {
         return String.format("%02d", v);
     }
 
-    public static String formatVs(float[] fs) {
+    public static String formatVs(double[] fs) {
         StringBuffer sbf = new StringBuffer();
         sbf.append("[");
         int i = 0;
-        for (float v : fs) {
+        for (double v : fs) {
             i++;
             if (i > 1) {
                 sbf.append(", ");
@@ -156,13 +157,13 @@ public class StringUtil {
         return sbf.toString();
     }
 
-    public static int getSmallThanCount(float v1, float v2, float v3, float v) {
-        return getSmallThanCount(new float[]{v1, v2, v3}, v);
+    public static int getSmallThanCount(double v1, double v2, double v3, double v) {
+        return getSmallThanCount(new double[]{v1, v2, v3}, v);
     }
 
-    public static int getSmallThanCount(float[] vs, float v) {
+    public static int getSmallThanCount(double[] vs, double v) {
         int num = 0;
-        for (float item : vs) {
+        for (double item : vs) {
             if (item < v) {
                 num++;
             }
@@ -170,9 +171,9 @@ public class StringUtil {
         return num;
     }
 
-    public static int getSmallThanCountAbs(float[] vs, float v) {
+    public static int getSmallThanCountAbs(double[] vs, double v) {
         int num = 0;
-        for (float item : vs) {
+        for (double item : vs) {
             if (Math.abs(item) < v) {
                 num++;
             }
@@ -188,4 +189,19 @@ public class StringUtil {
         }
     }
 
+    public static double toFix(double v) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return Double.parseDouble(String.format("%.2f", v));
+    }
+
+    public static String getCNFromU(String unicodeString) {
+        StringBuffer stringBuffer = new StringBuffer();
+        String chineseString = unicodeString.replace("\\u", "").replace("", "");
+        for (int i = 0; i < chineseString.length(); i++) {
+            char ch = (char) Integer.parseInt(chineseString.substring(i, i + 4), 16);
+            stringBuffer.append(ch);
+            System.out.print(ch);
+        }
+        return stringBuffer.toString();
+    }
 }

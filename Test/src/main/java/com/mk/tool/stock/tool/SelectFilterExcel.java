@@ -15,13 +15,13 @@ public class SelectFilterExcel {
     public static StringBuffer resultBuffer = new StringBuffer();
 
 
-    public static void print(float[] vs, boolean abs) {
-        for (float v : vs) {
+    public static void print(double [] vs, boolean abs) {
+        for (double v : vs) {
             //System.out.println(v);
         }
     }
 
-    public static void filter(float[] vs, float[] vs2, boolean flag, boolean flag2) {
+    public static void filter(double[] vs, double[] vs2, boolean flag, boolean flag2) {
         for (int i = 0; i < vs.length; i++) {
             if (flag && vs[i] > 0 && flag2 && vs2[i] > 0) {
                 //System.out.println("" + vs[i] + " " + vs2[i]);
@@ -38,9 +38,9 @@ public class SelectFilterExcel {
         }
     }
 
-    public static float min(float[] vs, boolean abs) {
-        float min = Float.MAX_VALUE;
-        for (float v : vs) {
+    public static double min(double[] vs, boolean abs) {
+        double min = Float.MAX_VALUE;
+        for (double v : vs) {
             if (abs) {
                 v = Math.abs(v);
             }
@@ -51,15 +51,15 @@ public class SelectFilterExcel {
         return min;
     }
 
-    public static float count(float[] vs) {
+    public static double count(double[] vs) {
         return vs.length;
     }
 
 
 
-    public static float max(float[] vs, boolean abs) {
-        float min = Float.MIN_VALUE;
-        for (float v : vs) {
+    public static double max(double[] vs, boolean abs) {
+        double min = Float.MIN_VALUE;
+        for (double v : vs) {
             if (abs) {
                 v = Math.abs(v);
             }

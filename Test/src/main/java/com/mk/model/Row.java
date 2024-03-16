@@ -70,18 +70,18 @@ public class Row {
 
         String data = cols.get(table.getColumn(name)).data.replace("+", "").trim();
         if(data.contains(".")) {
-            return (int) Float.parseFloat(data);
+            return (int) Double.parseDouble(data);
         }
         return Integer.parseInt(data);
     }
 
 
-    public float getFloat(String name) {
+    public double getFloat(String name) {
         if(cols.size()==0) {
             return -999;
         }
         try {
-            return Float.parseFloat(cols.get(table.getColumn(name)).data.replace("+", ""));
+            return Double.parseDouble(cols.get(table.getColumn(name)).data.replace("+", ""));
         }catch (Exception e) {
             return 0;
         }
@@ -94,7 +94,7 @@ public class Row {
         return Boolean.parseBoolean(cols.get(table.getColumn(name)).data.replace("+", ""));
     }
 
-    public float getFloat(int i) {
+    public double getFloat(int i) {
         if(cols.size()==0) {
             return -999;
         }
@@ -109,42 +109,42 @@ public class Row {
             return 0;
         }
         try {
-            return Float.parseFloat(data);
+            return Double.parseDouble(data);
         }catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
     }
 
-    public float getFloatSplit0(int i) {
+    public double getFloatSplit0(int i) {
         if(cols.size()==0) {
             return -999;
         }
         String ret = cols.get(i).data.replace("+", "");
-        return Math.abs(Float.parseFloat(ret.trim().split("/")[0]));
+        return Math.abs(Double.parseDouble(ret.trim().split("/")[0]));
     }
 
-    public float getFloat0(int i) {
+    public double getFloat0(int i) {
         if(cols.size()==0) {
             return -999;
         }
         String v = cols.get(i).data.split("/")[0].replace("+", "");
-        return Float.parseFloat(v);
+        return Double.parseDouble(v);
     }
-    public float getFloat1(int i) {
+    public double getFloat1(int i) {
         if(cols.size()==0) {
             return -999;
         }
         String v = cols.get(i).data.split("/")[1].replace("+", "");
-        return Float.parseFloat(v);
+        return Double.parseDouble(v);
     }
 
-    public float getFloat2(int i) {
+    public double getFloat2(int i) {
         if(cols.size()==0) {
             return -999;
         }
         String v = cols.get(i).data.split("\\(")[0].replace("+", "");
-        return Float.parseFloat(v);
+        return Double.parseDouble(v);
     }
 
 
@@ -170,11 +170,11 @@ public class Row {
         }
     }
 
-    public float getFloatAbs(int i) {
+    public double getFloatAbs(int i) {
         if(cols.size()==0) {
             return -999;
         }
-        return Math.abs(Float.parseFloat(cols.get(i).data));
+        return Math.abs(Double.parseDouble(cols.get(i).data));
     }
 
     public int getColLen() {

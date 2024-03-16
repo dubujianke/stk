@@ -49,7 +49,7 @@ public class KNStragetyWeek {
         }
 
         if (flag) {
-            float max = kline.getMaxBefore(20);
+            double max = kline.getMaxBefore(20);
             if (max > kline.getOpen()) {
                 if (Math.abs(max - kline.getOpen()) / kline.getOpen() * 100 > 3) {
                     flag = false;
@@ -60,8 +60,8 @@ public class KNStragetyWeek {
     }
 
 
-    public static float getMax(List<Kline> days, int offset, int dayNum) {
-        float max = 0;
+    public static double getMax(List<Kline> days, int offset, int dayNum) {
+        double max = 0;
         for (int i = offset; i >= offset - dayNum; i--) {
             Kline kline = days.get(i);
             if (kline.getMax() > max) {
@@ -71,14 +71,14 @@ public class KNStragetyWeek {
         return max;
     }
 
-    public static float compareFraction(float src, float dst) {
-        float v = 0;
+    public static double compareFraction(double src, double dst) {
+        double v = 0;
         v = 100 * (src - dst) / dst;
         return v;
     }
 
 
-    public static boolean isIn(float src, float v1, float v2) {
+    public static boolean isIn(double src, double v1, double v2) {
         return src > v1 && src < v2;
     }
 
@@ -112,10 +112,10 @@ public class KNStragetyWeek {
             return;
         }
 
-        float zhangfu = kline0.getZhangfu();
-        float zhangfu2 = kline1.getZhangfu();
-        float tf = zhangfu+zhangfu2;
-        float min = kline4.getMin();
+        double zhangfu = kline0.getZhangfu();
+        double zhangfu2 = kline1.getZhangfu();
+        double tf = zhangfu+zhangfu2;
+        double min = kline4.getMin();
         if(kline0.getZhangfu()>10 && kline1.getZhangfu()>10 && tf>30) {
             if(kline2.getZhangfu()<-6 && kline3.getZhangfu()<-6 && kline4.getZhangfu()<-6) {
                 if(KLineUtil.compareMax(min, kline1.getMax()) > 30) {

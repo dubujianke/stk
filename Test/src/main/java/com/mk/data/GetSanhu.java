@@ -18,7 +18,7 @@ import java.util.List;
 public class GetSanhu {
     public static class DV {
         public String date;
-        public float v;
+        public double v;
     }
 
     private static int getRowIdx(List<String> titles) {
@@ -77,7 +77,7 @@ public class GetSanhu {
                 if(v.equalsIgnoreCase("-")) {
                     return null;
                 }
-                float vv = Float.parseFloat(v);
+                double vv = Double.parseDouble(v);
                 int a = 0;
                 dv.date = date0;
                 dv.v = vv;

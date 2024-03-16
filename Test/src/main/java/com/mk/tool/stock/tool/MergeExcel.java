@@ -43,7 +43,7 @@ public class MergeExcel {
 
 //                    String data = row.getStr("周涨幅").trim();
 //                    String[] vs = data.split(" ");
-//                    float v1 = Float.parseFloat(vs[0]);
+//                    double v1 = Double.parseDouble(vs[0]);
 //                    int v2 = Integer.parseInt(vs[1]);
 //                    if (v2 < 8 && v1 > 19) {
 //                        row.setCol(row.getTable().getColumn("周涨幅"), "" + vs[0]);
@@ -60,13 +60,13 @@ public class MergeExcel {
     }
 
 
-    public static void print(float[] vs, boolean abs) {
-        for (float v : vs) {
+    public static void print(double[] vs, boolean abs) {
+        for (double v : vs) {
             //System.out.println(v);
         }
     }
 
-    public static void filter(float[] vs, float[] vs2, boolean flag, boolean flag2) {
+    public static void filter(double[] vs, double[] vs2, boolean flag, boolean flag2) {
         for (int i = 0; i < vs.length; i++) {
             if (flag && vs[i] > 0 && flag2 && vs2[i] > 0) {
                 //System.out.println("" + vs[i] + " " + vs2[i]);
@@ -83,9 +83,9 @@ public class MergeExcel {
         }
     }
 
-    public static float min(float[] vs, boolean abs) {
-        float min = Float.MAX_VALUE;
-        for (float v : vs) {
+    public static double min(double[] vs, boolean abs) {
+        double min = Float.MAX_VALUE;
+        for (double v : vs) {
             if (abs) {
                 v = Math.abs(v);
             }
@@ -96,13 +96,13 @@ public class MergeExcel {
         return min;
     }
 
-    public static float count(float[] vs) {
+    public static double count(double[] vs) {
         return vs.length;
     }
 
-    public static int countFlag(float[] vs, boolean flag) {
+    public static int countFlag(double[] vs, boolean flag) {
         int num = 0;
-        for (float v : vs) {
+        for (double v : vs) {
             if (flag && v > 0) {
                 num++;
             }
@@ -113,9 +113,9 @@ public class MergeExcel {
         return num;
     }
 
-    public static float minFlag(float[] vs, boolean flag, boolean abs) {
-        float min = Float.MAX_VALUE;
-        for (float v : vs) {
+    public static double minFlag(double[] vs, boolean flag, boolean abs) {
+        double min = Float.MAX_VALUE;
+        for (double v : vs) {
             if (flag && v >= 0) {
                 if (abs) {
                     v = Math.abs(v);
@@ -136,9 +136,9 @@ public class MergeExcel {
         return min;
     }
 
-    public static float maxFlag(float[] vs, boolean flag, boolean abs) {
-        float min = Float.MIN_VALUE;
-        for (float v : vs) {
+    public static double maxFlag(double[] vs, boolean flag, boolean abs) {
+        double min = Float.MIN_VALUE;
+        for (double v : vs) {
             if (flag && v <= 0) {
                 if (abs) {
                     v = Math.abs(v);
@@ -159,9 +159,9 @@ public class MergeExcel {
         return min;
     }
 
-    public static float max(float[] vs, boolean abs) {
-        float min = Float.MIN_VALUE;
-        for (float v : vs) {
+    public static double max(double[] vs, boolean abs) {
+        double min = Float.MIN_VALUE;
+        for (double v : vs) {
             if (abs) {
                 v = Math.abs(v);
             }
@@ -176,7 +176,7 @@ public class MergeExcel {
         //System.out.println("-------------------------");
     }
 
-    public static void printV(float[] vs) {
+    public static void printV(double[] vs) {
 //        //System.out.println("amin:"+min(vs, true));
 //        //System.out.println("amax:"+max(vs, true));
 

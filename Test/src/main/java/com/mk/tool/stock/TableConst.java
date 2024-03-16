@@ -36,10 +36,9 @@ public class TableConst {
             row.add(new Col("wcrash"));
             row.add(new Col("gap250"));
             row.add(new Col("gap120"));
-//            row.add(new Col("gap120250"));
             row.add(new Col("gap60"));
             row.add(new Col("gap30"));
-
+            row.add(new Col("gap10"));
 
             row.add(new Col("k250"));
             row.add(new Col("k120"));
@@ -93,7 +92,8 @@ public class TableConst {
             row.add(new Col("w60_250guaili"));
             row.add(new Col("w120_250guaili"));
 
-            //gap3060	gap30120	gap30250	gap60120	gap60250
+            //gap1030 gap3060	gap30120	gap30250	gap60120	gap60250
+            row.add(new Col("gap1030"));
             row.add(new Col("gap3060"));
             row.add(new Col("gap30120"));
             row.add(new Col("gap30250"));
@@ -402,12 +402,19 @@ public class TableConst {
             row.add(new Col("PrevMA60Month(2)" ));
             row.add(new Col("PrevMA60Month(1)" ));
             row.add(new Col("PrevMA60Month(0)" ));
-            //PrevMA250Month(0) > -4 err
-            //PrevMA60Month(0)  > -4.8 err
-            //PrevMA60Month(1)  > -3.5 err
-
             row.add(new Col("bottomup" ));
 
+
+            row.add(new Col("8dayzt" ));
+            row.add(new Col("concept_num" ));
+            row.add(new Col("concept" ));
+            row.add(new Col("底部距MA250" ));
+            row.add(new Col("上次涨停距离" ));
+            row.add(new Col("底部上涨" ));
+            row.add(new Col("未来第1天涨幅" ));
+            row.add(new Col("未来第2天涨幅" ));
+            row.add(new Col("未来第3天涨幅" ));
+            row.add(new Col("未来3天涨幅" ));
         } catch (Exception e) {
             e.printStackTrace();
 //                            throw new RuntimeException(e);

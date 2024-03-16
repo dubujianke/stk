@@ -20,7 +20,7 @@ import java.util.List;
 public class GetSSQ {
     public static class DV {
         public String date;
-        public float v;
+        public double v;
     }
 
 

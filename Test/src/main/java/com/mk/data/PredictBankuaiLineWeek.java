@@ -19,9 +19,9 @@ public class PredictBankuaiLineWeek {
         if (weeks != null) {
             int monIdx = kline.getIdx();
             Kline current = weeks.get(kline.getIdx());
-            float prevZf = current.getPrevZF(6);
-            float ma60 = current.getMA60();
-            float temp2 = current.getMAXMA60Frac();
+            double  prevZf = current.getPrevZF(6);
+            double  ma60 = current.getMA60();
+            double  temp2 = current.getMAXMA60Frac();
             int atype = 0;
             Kline prevMonth = mkline.prev();
             int trendType10 = prevMonth.getMA10TrendType(10);
@@ -33,12 +33,12 @@ public class PredictBankuaiLineWeek {
 
             if (prevMonth.getZhangfu() > 3 && isFirstWeek) {
                 Kline prevMonth2 = prevMonth.prev();
-                float ma10Prev2 = prevMonth2.getMA10();
-                float ma10Prev = prevMonth.getMA10();
-                float dlt = ma10Prev - ma10Prev2;
+                double  ma10Prev2 = prevMonth2.getMA10();
+                double  ma10Prev = prevMonth.getMA10();
+                double  dlt = ma10Prev - ma10Prev2;
                 //hengpan
                 if (trendType10 == 0 && trendType30 == 2) {
-                    float offset = KLineUtil.compareMax(prevMonth.getClose(), prevMonth.getMA30());
+                    double  offset = KLineUtil.compareMax(prevMonth.getClose(), prevMonth.getMA30());
                     if (offset > 8) {
                         atype = Constant.MA10HOR_MA30FAR;
                         Log.log(code + " " + "MA10HOR_MA30FAR");
@@ -46,18 +46,18 @@ public class PredictBankuaiLineWeek {
                     }
                 }
 
-//                float fracD = 100 * dlt / mkline.close;
+//                double  fracD = 100 * dlt / mkline.close;
 //                if (fracD < 1) {
 //                    atype = Constant.MA10FAR;
 //                    Log.log(code + " " + "MA10FAR");
 //                    return;
 //                }
-                float curMA10 = mkline.getMA10();
-                float dlt2 = curMA10;
-                float dlt3 = mkline.getMA60();
+                double  curMA10 = mkline.getMA10();
+                double  dlt2 = curMA10;
+                double  dlt3 = mkline.getMA60();
                 if (prevMonth.getClose() > curMA10 && prevMonth.getClose() > mkline.getMA60()) {
-                    float minDlr = Math.max(dlt2, dlt3);
-                    float dlt4 = KLineUtil.compareMax(prevMonth.getClose(), minDlr);
+                    double  minDlr = Math.max(dlt2, dlt3);
+                    double  dlt4 = KLineUtil.compareMax(prevMonth.getClose(), minDlr);
                     if (dlt4 > 3) {
                         atype = Constant.MON_MA10FAR;
                         Log.log(code + " " + "MA10FAR");
@@ -87,7 +87,7 @@ public class PredictBankuaiLineWeek {
             Kline aprevLine = current.prev();
             if (current.isShadownUp(50) && current.szWuli()) {
                 if (aprevLine.isTupoMA60(0.2f)) {
-                    float temp = current.getMA60Frac();
+                    double  temp = current.getMA60Frac();
 
                     if (temp > 1.5 && prevZf > 7) {
                         atype = Constant.WEEK_STANDMA60_SHADOWUP__PREVENT;
@@ -98,7 +98,7 @@ public class PredictBankuaiLineWeek {
             }
             if (current.getZhangfu() > 2 && current.szWuli()) {
                 if (aprevLine.isTupoMA60(0.2f)) {
-                    float temp = current.getMA60Frac();
+                    double  temp = current.getMA60Frac();
 
                     if (temp > 1.5 && prevZf > 7) {
                         atype = Constant.WEEK_UPMA60_SHADOWUP__PREVENT;
@@ -109,7 +109,7 @@ public class PredictBankuaiLineWeek {
             }
 
             if (aprevLine.isShadownUp(60) && current.getZhangfu() > 2) {
-//                float frac = KLineUtil.compareMax(current.open, aprevLine.close);
+//                double  frac = KLineUtil.compareMax(current.open, aprevLine.close);
                 if (current.touchClose(aprevLine.getMax(), 0.3f)) {
                     atype = Constant.PREVUPSHADOW_CURSZ;
                     Log.log(code + " " + "WEEK_PREVUPSHADOW_CURSZ");
@@ -117,7 +117,7 @@ public class PredictBankuaiLineWeek {
                 }
             }
 
-            float temp = current.getMA60Frac();
+            double temp = current.getMA60Frac();
 
             if (temp > 3 && aprevLine.getPrevZF(2) > 2 && current.getZhangfu() < 2 && prevZf > 7) {
 //                if(current.szWuli()) {
@@ -128,8 +128,8 @@ public class PredictBankuaiLineWeek {
             }
 
             if (current.getPrevZhenF(4) < 6 && current.getZhangfu() < 0.5) {
-                float prevZf2 = current.prev().getPrevZF(6);
-                float frac = KLineUtil.compareMaxSign(current.getClose(), current.getMA10());
+                double prevZf2 = current.prev().getPrevZF(6);
+                double frac = KLineUtil.compareMaxSign(current.getClose(), current.getMA10());
                 if (prevZf2 > 7 && frac > 1) {
                     atype = Constant.UP_AND_HOR;
                     Log.log(code + " " + "UP_AND_HOR");
@@ -139,19 +139,19 @@ public class PredictBankuaiLineWeek {
 
             Kline.ZFModel zfModel = current.getPrevZhenFContinus(4);
             if (zfModel.isHor()) {
-                float prevZf2 = current.prev().getPrevZF(zfModel.n + 4);
-                float prevDf2 = current.prev().getPrevDF(zfModel.n + 4);
+                double prevZf2 = current.prev().getPrevZF(zfModel.n + 4);
+                double prevDf2 = current.prev().getPrevDF(zfModel.n + 4);
                 if (prevZf2 > prevDf2 && (prevZf2 - prevDf2) > prevDf2) {
                     int cnt = KLineUtil.getNIsDownMAI(current, 6);
                     if (cnt > 0) {
-                        float frac = KLineUtil.compareMaxSign(current.getClose(), current.getMA10());
+                        double frac = KLineUtil.compareMaxSign(current.getClose(), current.getMA10());
                         if (prevZf2 > 18 && frac > 3) {
                             Log.log(code + " " + "UP_AND_HOR");
                             return;
                         }
                     }
                 }
-                float frac = KLineUtil.compareMaxSign(current.getClose(), current.getMA10());
+                double frac = KLineUtil.compareMaxSign(current.getClose(), current.getMA10());
                 if (prevZf2 > 18 && frac > 3) {
                     //MA60横盘 乖离减少到0后， 距离MA10还有3个点距离
                     atype = Constant.UP_AND_HOR;
@@ -161,8 +161,8 @@ public class PredictBankuaiLineWeek {
             }
 
             if (zfModel.isHor()) {
-                float prevZf2 = current.prev().getPrevZF(zfModel.n + 4);
-                float prevDf2 = current.prev().getPrevDF(zfModel.n + 4);
+                double prevZf2 = current.prev().getPrevZF(zfModel.n + 4);
+                double prevDf2 = current.prev().getPrevDF(zfModel.n + 4);
                 if (prevDf2 > prevZf2 && (prevDf2 - prevZf2) > prevZf2) {
                     int cnt = KLineUtil.getNIsDownMAI(current, 6);
                     if (cnt >= 2) {
@@ -180,11 +180,11 @@ public class PredictBankuaiLineWeek {
             List<MaxPoint> points = maxSection60.getRangeAllMAX(monIdx - 60, monIdx);
             KLineUtil.sortDescMonthlinePoint(points);
 
-            float frac = KLineUtil.compareMaxSign(current.getClose(), current.getMA10());
+            double frac = KLineUtil.compareMaxSign(current.getClose(), current.getMA10());
             if (frac > 5) {
                 if (points.size() > 0) {
                     MaxPoint point = points.get(0);
-                    float frac45 = KLineUtil.compareMax(point.kline.getMax(), current.getMax());
+                    double frac45 = KLineUtil.compareMax(point.kline.getMax(), current.getMax());
                     if (frac45 > 5) {
                         atype = Constant.MON_MA10FAR;
                         Log.log(code + " " + "MA10FAR");
@@ -199,14 +199,14 @@ public class PredictBankuaiLineWeek {
             }
 
             if (trendType10 == 0 && trendType30 == 0 && trendType60 == 2) {
-                float offset = KLineUtil.compareMax(prevMonth.getClose(), prevMonth.getMA30());
+                double offset = KLineUtil.compareMax(prevMonth.getClose(), prevMonth.getMA30());
                 if (offset > 4) {
                     atype = Constant.MA10HOR_MA30FAR;
                     Log.log(code + " " + "MA10HOR_MA30FAR");
                     return;
                 }
             }else if (trendType60 == 0 && trendType30 == 1 && trendType60 == 0) {
-                float tmp = KLineUtil.compareMax(prevMonth.getClose(), prevMonth.getMA30());
+                double tmp = KLineUtil.compareMax(prevMonth.getClose(), prevMonth.getMA30());
                 if(prevMonth.isShadownUp(60)  && prevMonth.getClose() <prevMonth.getMA30()) {
                     atype = Constant.MA30_PREVENT;
                     Log.log(code + " " + "MA30_PREVENT");
@@ -214,7 +214,7 @@ public class PredictBankuaiLineWeek {
                 }
             }else if (trendType60 == 0 && trendType30 == 0 && trendType10 == 0) {
                 boolean isGuaili0 = prevMonth.isGuaili0(10);
-                float offset = KLineUtil.compareMax(prevMonth.getClose(), prevMonth.getMA60());
+                double offset = KLineUtil.compareMax(prevMonth.getClose(), prevMonth.getMA60());
                 if (isGuaili0 && offset > 4) {
                     atype = Constant.MA10HOR_MA30FAR;
                     Log.log(code + " " + "MA10HOR_MA30FAR");
@@ -238,7 +238,7 @@ public class PredictBankuaiLineWeek {
             if (points.size() == 1) {
                 MaxPoint point = points.get(0);
                 if (point.flag2 == MPoint.MIN) {
-                    float frac3 = KLineUtil.compareMax(current.getMax(), point.kline.getMin());
+                    double frac3 = KLineUtil.compareMax(current.getMax(), point.kline.getMin());
                     if (frac3 > 60) {
                         //too  high
                         int a2 = 0;
@@ -253,7 +253,7 @@ public class PredictBankuaiLineWeek {
 
             MaxPoint mp = currentPoint.prevMax();
             Kline currentMonth = currentPoint.kline;
-            float mfrac = KLineUtil.compareMax(currentPoint.kline.getMax(), mp.kline.getMax());
+            double mfrac = KLineUtil.compareMax(currentPoint.kline.getMax(), mp.kline.getMax());
             boolean flagQG = false;
 
             int type = MPoint.HOR;
@@ -262,9 +262,9 @@ public class PredictBankuaiLineWeek {
                 flagQG = true;
             }
 
-            float gailv = 0.5f;
+            double gailv = 0.5f;
             //zg > 30
-            float zf = KLineUtil.prevNZhangfu(kline, 3, true);
+            double zf = KLineUtil.prevNZhangfu(kline, 3, true);
             //上涨无量
             boolean isSZWuliang = kline.isSZWuliang();
 

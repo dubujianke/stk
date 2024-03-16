@@ -19,11 +19,11 @@ public class MinuteLine implements Serializable {
     private int idx;
 
     private String time;
-    public float price;
+    public double  price;
     public int vol;
-    public float avgPrice;
+    public double  avgPrice;
     private String date;
-    private float chanage;
+    private double  chanage;
 
     public MinuteLine prev() {
         if (getIdx() - 1 < 0) {
@@ -69,11 +69,11 @@ public class MinuteLine implements Serializable {
         this.globalIdx = globalIdx;
     }
 
-    public float getPrice() {
+    public double  getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double  price) {
         this.price = price;
     }
 
@@ -96,11 +96,11 @@ public class MinuteLine implements Serializable {
         this.vol = vol;
     }
 
-    public float getAvgPrice() {
+    public double  getAvgPrice() {
         return avgPrice;
     }
 
-    public void setAvgPrice(float avgPrice) {
+    public void setAvgPrice(double avgPrice) {
         this.avgPrice = avgPrice;
     }
 
@@ -129,8 +129,8 @@ public class MinuteLine implements Serializable {
         setDate(dt[0]);
         String time = transTime2(getDate() + " " + dt[1] + ":00");
         setTime(time);
-        setPrice(Float.parseFloat(items[2]));
-        setAvgPrice(Float.parseFloat(items[7]));
+        setPrice(Double.parseDouble(items[2]));
+        setAvgPrice(Double.parseDouble(items[7]));
         setVol(Integer.parseInt(items[5]));
     }
 
@@ -141,8 +141,8 @@ public class MinuteLine implements Serializable {
         setDate(dt[0]);
         String time = transTime2(getDate() + " " + dt[1].substring(0, 2) + ":" + dt[1].substring(2) + ":00");
         setTime(time);
-        setPrice(Float.parseFloat(items[1]));
-        setAvgPrice(Float.parseFloat(items[2]));
+        setPrice(Double.parseDouble(items[1]));
+        setAvgPrice(Double.parseDouble(items[2]));
         setVol(Integer.parseInt(items[3]));
     }
 
@@ -152,12 +152,12 @@ public class MinuteLine implements Serializable {
         setDate(items[0]);
         String time = transTime(getDate() + " " + items[1] + "00");
         setTime(time);
-        setPrice(Float.parseFloat(items[5]));
+        setPrice(Double.parseDouble(items[5]));
         setVol(Integer.parseInt(items[6]) / 100);
     }
 
     public String toString() {
-        float dltPrice = 0;
+        double dltPrice = 0;
         if (prev() != null) {
             dltPrice = price - prev().price;
         }
@@ -212,12 +212,12 @@ public class MinuteLine implements Serializable {
         return false;
     }
 
-    public boolean isUPAVG(Kline kline, float frac, int i) {
+    public boolean isUPAVG(Kline kline, double frac, int i) {
         MinuteLine prev1 = prev(i);
-        float open = kline.prev().getClose();
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(this.price, open);
-        float dlt0 = curV - prev1V;
+        double open = kline.prev().getClose();
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(this.price, open);
+        double dlt0 = curV - prev1V;
         if (prev1.price < prev1.avgPrice && this.price > avgPrice) {
             if (dlt0 > frac) {
                 return true;
@@ -226,11 +226,11 @@ public class MinuteLine implements Serializable {
         return false;
     }
 
-    public boolean isUPAVG(Kline kline, float frac) {
-        float prevClose = kline.prev().getClose();
-        float prev1V = KLineUtil.compareMaxSign(prev().price, prevClose);
-        float curV = KLineUtil.compareMaxSign(this.price, prevClose);
-        float dlt0 = curV - prev1V;
+    public boolean isUPAVG(Kline kline, double frac) {
+        double prevClose = kline.prev().getClose();
+        double prev1V = KLineUtil.compareMaxSign(prev().price, prevClose);
+        double curV = KLineUtil.compareMaxSign(this.price, prevClose);
+        double dlt0 = curV - prev1V;
         if (prev().price < prev().avgPrice && this.price > avgPrice) {
             if (dlt0 > frac) {
                 return true;
@@ -239,8 +239,8 @@ public class MinuteLine implements Serializable {
         return false;
     }
 
-    public static boolean isEq(float v1, float v2) {
-        float v = Math.abs(v1 - v2);
+    public static boolean isEq(double v1, double v2) {
+        double v = Math.abs(v1 - v2);
         return v <= 0.01f;
     }
 
@@ -255,7 +255,7 @@ public class MinuteLine implements Serializable {
             return null;
         }
         //当前大于1
-        float frac = this.getZF(kline);
+        double frac = this.getZF(kline);
         if(frac<1) {
             return null;
         }
@@ -269,10 +269,10 @@ public class MinuteLine implements Serializable {
 
         int vol = getTotalVol(20);
 
-        float fracMin = min.getZF(kline);
-        float fracTempMax = temp.getZF(kline);
-        float dltTotal = frac - fracMin;
-        float dltTotal2 = frac - fracTempMax;
+        double fracMin = min.getZF(kline);
+        double fracTempMax = temp.getZF(kline);
+        double dltTotal = frac - fracMin;
+        double dltTotal2 = frac - fracTempMax;
         int num = getIdx() - min.getIdx();
         if(dltTotal2<2.5) {
             return null;
@@ -289,7 +289,7 @@ public class MinuteLine implements Serializable {
 
     public MinuteLine getMinPrice(int num) {
         MinuteLine min = null;
-        float price = Integer.MAX_VALUE;
+        double price = Integer.MAX_VALUE;
         for (int i = 0; i < num; i++) {
             MinuteLine minuteLine = prev(i);
             if (minuteLine == null) {
@@ -305,7 +305,7 @@ public class MinuteLine implements Serializable {
 
     public MinuteLine getMazPrice(int num) {
         MinuteLine min = null;
-        float price = -Integer.MAX_VALUE;
+        double price = -Integer.MAX_VALUE;
         for (int i = 0; i < num; i++) {
             MinuteLine minuteLine = prev(i);
             if (minuteLine == null) {
@@ -389,18 +389,18 @@ public class MinuteLine implements Serializable {
         MinuteLine prev4 = cur.prev(4);
         MinuteLine prev5 = cur.prev(5);
 
-        float open = kline.prev().getClose();
-        float prev5V = KLineUtil.compareMaxSign(prev5.price, open);
-        float prev4V = KLineUtil.compareMaxSign(prev4.price, open);
-        float prev3V = KLineUtil.compareMaxSign(prev3.price, open);
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt4 = prev4V - prev5V;
-        float dlt3 = prev3V - prev4V;
-        float dlt2 = prev2V - prev3V;
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
+        double open = kline.prev().getClose();
+        double prev5V = KLineUtil.compareMaxSign(prev5.price, open);
+        double prev4V = KLineUtil.compareMaxSign(prev4.price, open);
+        double prev3V = KLineUtil.compareMaxSign(prev3.price, open);
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt4 = prev4V - prev5V;
+        double dlt3 = prev3V - prev4V;
+        double dlt2 = prev2V - prev3V;
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
         int timeSecond = Integer.parseInt(getTime());
 
         if (timeSecond >= 936) {
@@ -430,7 +430,7 @@ public class MinuteLine implements Serializable {
         if (MCNT > 1) {
             return null;
         }
-        float total = dlt0 + dlt1 + dlt2 + dlt3 + dlt4;
+        double total = dlt0 + dlt1 + dlt2 + dlt3 + dlt4;
         if (total < 1.2) {
             return null;
         }
@@ -480,16 +480,16 @@ public class MinuteLine implements Serializable {
         MinuteLine prev3 = cur.prev(3);
         MinuteLine prev4 = cur.prev(4);
 
-        float open = kline.prev().getClose();
-        float prev4V = KLineUtil.compareMaxSign(prev4.price, open);
-        float prev3V = KLineUtil.compareMaxSign(prev3.price, open);
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt3 = prev3V - prev4V;
-        float dlt2 = prev2V - prev3V;
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
+        double open = kline.prev().getClose();
+        double prev4V = KLineUtil.compareMaxSign(prev4.price, open);
+        double prev3V = KLineUtil.compareMaxSign(prev3.price, open);
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt3 = prev3V - prev4V;
+        double dlt2 = prev2V - prev3V;
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
         int timeSecond = Integer.parseInt(getTime());
 
         if (timeSecond >= 938) {
@@ -500,11 +500,11 @@ public class MinuteLine implements Serializable {
         if (dlt2 <= 0 || dlt1 <= 0 || dlt0 <= 0 || dlt3 <= 0) {
             return null;
         }
-        float total = dlt0 + dlt1 + dlt2 + dlt3;
+        double total = dlt0 + dlt1 + dlt2 + dlt3;
         if (total < 2.0) {
             return null;
         }
-        float frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
+        double frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
         if (frac < 2) {
             return null;
         }
@@ -561,14 +561,14 @@ public class MinuteLine implements Serializable {
         MinuteLine prev2 = cur.prev(2);
         MinuteLine prev3 = cur.prev(3);
 
-        float open = kline.prev().getClose();
-        float prev3V = KLineUtil.compareMaxSign(prev3.price, open);
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt2 = prev2V - prev3V;
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
+        double open = kline.prev().getClose();
+        double prev3V = KLineUtil.compareMaxSign(prev3.price, open);
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt2 = prev2V - prev3V;
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
         int timeSecond = Integer.parseInt(getTime());
 
         if (timeSecond >= 938) {
@@ -579,11 +579,11 @@ public class MinuteLine implements Serializable {
         if (dlt2 <= 0 || dlt1 <= 0 || dlt0 <= 0) {
             return null;
         }
-        float total = dlt0 + dlt1 + dlt2;
+        double total = dlt0 + dlt1 + dlt2;
         if (total < 2.0) {
             return null;
         }
-        float frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
+        double frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
         if (frac < 2) {
             return null;
         }
@@ -660,10 +660,10 @@ public class MinuteLine implements Serializable {
         }
         MinuteLine prev1 = cur.prev();
 
-        float open = kline.prev().getClose();
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt0 = curV - prev1V;
+        double open = kline.prev().getClose();
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt0 = curV - prev1V;
 
         boolean volFlag = false;
         int timeSecond = Integer.parseInt(getTime());
@@ -702,8 +702,8 @@ public class MinuteLine implements Serializable {
     public MinuteLine getFirstSpeedUpOpen(Kline kline, int fracVolNum1, int fracVolNum2, int fracVolNum3, LineContext context) {
         MinuteResult minuteResult = new MinuteResult();
         MinuteLine cur = this;
-        float open = kline.prev().getClose();
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
+        double open = kline.prev().getClose();
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
         if (curV > 2) {
             if (context.getkModel() != null) {
                 if (context.getkModel().getSpace250() < 1) {
@@ -727,12 +727,12 @@ public class MinuteLine implements Serializable {
         MinuteLine prev1 = cur.prev();
         MinuteLine prev2 = cur.prev(2);
 
-        float open = kline.prev().getClose();
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
+        double open = kline.prev().getClose();
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
 
         boolean volFlag = false;
         int timeSecond = Integer.parseInt(getTime());
@@ -745,7 +745,7 @@ public class MinuteLine implements Serializable {
             return null;
         }
 
-        float total = dlt0 + dlt1;
+        double total = dlt0 + dlt1;
         if (timeSecond == 932) {
             int specialHor = context.getInt("specialHor");
             if (specialHor == 1 && StragetyZTBottom.isTDX && prev2V > 1.0 && getVol() > 1000 && prev1.getVol() > 1000 && prev2.getVol() > 1000) {
@@ -760,7 +760,7 @@ public class MinuteLine implements Serializable {
         if (total < 2.5) {
             return null;
         }
-        float frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
+        double frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
         if (frac < 3) {
             return null;
         }
@@ -793,14 +793,14 @@ public class MinuteLine implements Serializable {
         MinuteLine prev2 = cur.prev(2);
         MinuteLine prev3 = cur.prev(3);
 
-        float open = kline.prev().getClose();
-        float prev3V = KLineUtil.compareMaxSign(prev3.price, open);
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt2 = prev2V - prev3V;
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
+        double open = kline.prev().getClose();
+        double prev3V = KLineUtil.compareMaxSign(prev3.price, open);
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt2 = prev2V - prev3V;
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
 
         boolean volFlag = false;
         int timeSecond = Integer.parseInt(getTime());
@@ -812,11 +812,11 @@ public class MinuteLine implements Serializable {
         if (dlt2 > dlt1 || dlt1 > dlt0) {
             return null;
         }
-        float total = dlt0 + dlt1 + dlt2;
+        double total = dlt0 + dlt1 + dlt2;
         if (total < 1.0) {
             return null;
         }
-        float frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
+        double frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
         if (frac < 2) {
             return null;
         }
@@ -850,14 +850,14 @@ public class MinuteLine implements Serializable {
         MinuteLine prev2 = cur.prev(2);
         MinuteLine prev3 = cur.prev(3);
 
-        float open = kline.prev().getClose();
-        float prev3V = KLineUtil.compareMaxSign(prev3.price, open);
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt2 = prev2V - prev3V;
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
+        double open = kline.prev().getClose();
+        double prev3V = KLineUtil.compareMaxSign(prev3.price, open);
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt2 = prev2V - prev3V;
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
 
         boolean volFlag = false;
         int timeSecond = Integer.parseInt(getTime());
@@ -871,11 +871,11 @@ public class MinuteLine implements Serializable {
         if (dlt2 > dlt1 || dlt1 > dlt0) {
             return null;
         }
-        float total = dlt0 + dlt1 + dlt2;
+        double total = dlt0 + dlt1 + dlt2;
         if (total < 1.0) {
             return null;
         }
-        float frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
+        double frac = KLineUtil.compareMax(cur.price, kline.prev().getClose());
         if (frac < 2) {
             return null;
         }
@@ -918,14 +918,14 @@ public class MinuteLine implements Serializable {
         MinuteLine prev2 = cur.prev(2);
         MinuteLine prev3 = cur.prev(3);
 
-        float open = kline.prev().getClose();
-        float prev3V = KLineUtil.compareMaxSign(prev3.price, open);
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt2 = prev2V - prev3V;
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
+        double open = kline.prev().getClose();
+        double prev3V = KLineUtil.compareMaxSign(prev3.price, open);
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt2 = prev2V - prev3V;
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
 
         int timeSecond = Integer.parseInt(getTime());
 
@@ -944,8 +944,8 @@ public class MinuteLine implements Serializable {
         Kline prevKline = kline.prev();
         MinuteResult minuteResult = new MinuteResult();
         MinuteLine cur = this;
-        float price = getPrice();
-        float zf = KLineUtil.compareMax(price, prevKline.getClose());
+        double price = getPrice();
+        double zf = KLineUtil.compareMax(price, prevKline.getClose());
         if (cur.getTime().equalsIgnoreCase("0930")) {
             if (zf > 9) {
                 context.setFirsetIsZT(true);
@@ -969,11 +969,11 @@ public class MinuteLine implements Serializable {
         //open is jump to MA
         if (cur.getTime().equalsIgnoreCase("0930")) {
             Kline prevKline = kline.prev();
-            float ma250 = prevKline.getMA250();
-            float ma30 = prevKline.getMA30();
+            double ma250 = prevKline.getMA250();
+            double ma30 = prevKline.getMA30();
             if (prevKline.getClose() < ma250 && prevKline.getClose() < ma30) {
                 if (price > ma30 && price > ma250) {
-                    float frac = KLineUtil.compareMax(price, prevKline.getClose());
+                    double frac = KLineUtil.compareMax(price, prevKline.getClose());
                     if (frac > 3) {
                         return null;
                     }
@@ -990,13 +990,13 @@ public class MinuteLine implements Serializable {
             Kline prev1 = kline.prev(1);
             if (prev3.getZhangfu() > 9.5) {
                 if (prev2.getZhangfu() < -3 && prev1.getZhangfu() < -1) {
-                    float jf = prev2.getZhangfu() + prev1.getZhangfu();
+                    double jf = prev2.getZhangfu() + prev1.getZhangfu();
                     if (jf < -6) {
-                        float ma250 = prev1.getMA250();
+                        double ma250 = prev1.getMA250();
                         if (prev1.getMin() <= ma250 && prev1.getClose() >= ma250) {
                             if (price > prev1.getMA250() && price > prev1.getMA10()) {
-                                float ma10 = prev1.getNextSupposeMA10(kline.getOpen());
-                                float frac = KLineUtil.compareMax(price, ma10);
+                                double ma10 = prev1.getNextSupposeMA10(kline.getOpen());
+                                double frac = KLineUtil.compareMax(price, ma10);
                                 if (frac < 2.5) {
                                     return cur;
                                 }
@@ -1014,12 +1014,12 @@ public class MinuteLine implements Serializable {
             return null;
         }
 
-        float open = kline.prev().getClose();
+        double open = kline.prev().getClose();
         //in 2minutes >=3.9
         if (cur.getTime().equalsIgnoreCase("0931")) {
             MinuteLine prev1 = cur.prev();
-            float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-            float curV = KLineUtil.compareMaxSign(cur.price, open);
+            double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+            double curV = KLineUtil.compareMaxSign(cur.price, open);
             if (prev1V > 1 && curV > 3.9) {
                 if (getVol() > 2000) {
                     return cur;
@@ -1037,22 +1037,22 @@ public class MinuteLine implements Serializable {
         MinuteLine prev3 = cur.prev(3);
 
 
-        float prev3V = KLineUtil.compareMaxSign(prev3.price, open);
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt2 = prev2V - prev3V;
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
+        double prev3V = KLineUtil.compareMaxSign(prev3.price, open);
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt2 = prev2V - prev3V;
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
 
         if (dlt0 > 1.9) {
             int timeSecond = Integer.parseInt(cur.getTime());
             if (timeSecond >= 939) {
                 if (cur.getVol() > 2000) {
                     MinuteLine max = getMaxBefore();
-                    float dlt = cur.price - max.price;
+                    double dlt = cur.price - max.price;
                     if (dlt > 0) {
-                        float frac = KLineUtil.compareMaxSign1(dlt, kline.prev().getClose());
+                        double frac = KLineUtil.compareMaxSign1(dlt, kline.prev().getClose());
                         if (frac > 1) {
                             return cur;
                         }
@@ -1101,7 +1101,7 @@ public class MinuteLine implements Serializable {
 //            return null;
 //        }
 
-        float total = dlt0 + dlt1 + dlt2;
+        double total = dlt0 + dlt1 + dlt2;
         if (volFlag) {
             if (total < 0.7) {
                 return null;
@@ -1165,15 +1165,15 @@ public class MinuteLine implements Serializable {
         if (kline.prev() == null) {
             int a = 0;
         }
-        float open = kline.prev().getClose();
-        float prev3V = KLineUtil.compareMaxSign(prev3.price, open);
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt2 = prev2V - prev3V;
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
-        float total = dlt0 + dlt1 + dlt2;
+        double open = kline.prev().getClose();
+        double prev3V = KLineUtil.compareMaxSign(prev3.price, open);
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt2 = prev2V - prev3V;
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
+        double total = dlt0 + dlt1 + dlt2;
 
         boolean volFlag = false;
         int timeSecond = Integer.parseInt(getTime());
@@ -1187,7 +1187,7 @@ public class MinuteLine implements Serializable {
         return null;
     }
 
-    public float getZF2(Kline kline) {
+    public double getZF2(Kline kline) {
         return KLineUtil.compareMaxSign(price, kline.prev().close);
     }
 
@@ -1208,8 +1208,8 @@ public class MinuteLine implements Serializable {
         int horNum = 0;
         int downNum = 0;
         int volNum = 0;
-        float downFrac = 0;
-        float dltTotal = 0;
+        double downFrac = 0;
+        double dltTotal = 0;
         for (int i = 0; i < 3; i++) {
             MinuteLine prev = cur.prev(i);
             if (prev == null) {
@@ -1226,13 +1226,13 @@ public class MinuteLine implements Serializable {
                 horNum++;
             } else {
                 downNum++;
-                float dFrac = prevInfo.dlt;
+                double dFrac = prevInfo.dlt;
                 if (downFrac > dFrac) {
                     downFrac = dFrac;
                 }
             }
         }
-        float zf = cur.getZF(kline.prev());
+        double zf = cur.getZF(kline.prev());
         boolean flag = cur.isABSMax(kline.prev(), 1);
         if (dltTotal < 1.5 || cur.getVol() < 1000 || zf < 2.8 || !flag) {
             return null;
@@ -1261,8 +1261,8 @@ public class MinuteLine implements Serializable {
         int horNum = 0;
         int downNum = 0;
         int volNum = 0;
-        float downFrac = 0;
-        float dltTotal = 0;
+        double downFrac = 0;
+        double dltTotal = 0;
         for (int i = 0; i < 7; i++) {
             MinuteLine prev = cur.prev(i);
             if (prev == null) {
@@ -1279,7 +1279,7 @@ public class MinuteLine implements Serializable {
                 horNum++;
             } else {
                 downNum++;
-                float dFrac = prevInfo.dlt;
+                double dFrac = prevInfo.dlt;
                 if (downFrac > dFrac) {
                     downFrac = dFrac;
                 }
@@ -1312,8 +1312,8 @@ public class MinuteLine implements Serializable {
         int horNum = 0;
         int downNum = 0;
         int volNum = 0;
-        float downFrac = 0;
-        float dltTotal = 0;
+        double downFrac = 0;
+        double dltTotal = 0;
         for (int i = 0; i < 9; i++) {
             MinuteLine prev = cur.prev(i);
             if (prev == null) {
@@ -1330,7 +1330,7 @@ public class MinuteLine implements Serializable {
                 horNum++;
             } else {
                 downNum++;
-                float dFrac = prevInfo.dlt;
+                double dFrac = prevInfo.dlt;
                 if (downFrac > dFrac) {
                     downFrac = dFrac;
                 }
@@ -1363,7 +1363,7 @@ public class MinuteLine implements Serializable {
         int horNum = 0;
         int downNum = 0;
         int volNum = 0;
-        float downFrac = 0;
+        double downFrac = 0;
         for (int i = 0; i < 5; i++) {
             MinuteLine prev = cur.prev(i);
             if (prev == null) {
@@ -1379,7 +1379,7 @@ public class MinuteLine implements Serializable {
                 horNum++;
             } else {
                 downNum++;
-                float dFrac = prevInfo.dlt;
+                double dFrac = prevInfo.dlt;
                 if (downFrac > dFrac) {
                     downFrac = dFrac;
                 }
@@ -1410,15 +1410,15 @@ public class MinuteLine implements Serializable {
         if (kline.prev() == null) {
             int a = 0;
         }
-        float open = kline.prev().getClose();
-        float prev3V = KLineUtil.compareMaxSign(prev3.price, open);
-        float prev2V = KLineUtil.compareMaxSign(prev2.price, open);
-        float prev1V = KLineUtil.compareMaxSign(prev1.price, open);
-        float curV = KLineUtil.compareMaxSign(cur.price, open);
-        float dlt2 = prev2V - prev3V;
-        float dlt1 = prev1V - prev2V;
-        float dlt0 = curV - prev1V;
-        float total = dlt0 + dlt1 + dlt2;
+        double open = kline.prev().getClose();
+        double prev3V = KLineUtil.compareMaxSign(prev3.price, open);
+        double prev2V = KLineUtil.compareMaxSign(prev2.price, open);
+        double prev1V = KLineUtil.compareMaxSign(prev1.price, open);
+        double curV = KLineUtil.compareMaxSign(cur.price, open);
+        double dlt2 = prev2V - prev3V;
+        double dlt1 = prev1V - prev2V;
+        double dlt0 = curV - prev1V;
+        double total = dlt0 + dlt1 + dlt2;
 
         boolean volFlag = false;
         int timeSecond = Integer.parseInt(getTime());
@@ -1452,7 +1452,7 @@ public class MinuteLine implements Serializable {
             }
             //space250
             else if (cur.getVol() > 1000 && prev1.getVol() > 1000 && prev2.getVol() > 500) {
-                float space250 = Integer.MAX_VALUE;
+                double space250 = Integer.MAX_VALUE;
                 if (context.getkModel() != null) {
                     space250 = context.getkModel().getSpace250();
                 }
@@ -1530,7 +1530,7 @@ public class MinuteLine implements Serializable {
         if (prev() == null) {
             return 0;
         }
-        float prev = kline.prev().getClose();
+        double prev = kline.prev().getClose();
         double m0x = prev().idx;
         double m0y = LineType.getLevel(prev().getAvgPrice(), prev);
         double m1x = idx;
@@ -1588,7 +1588,7 @@ public class MinuteLine implements Serializable {
         return true;
     }
 
-    public boolean isABSMax(Kline kline, float dlt) {
+    public boolean isABSMax(Kline kline, double dlt) {
         int idx = 0;
         int timeSecond = Integer.parseInt(getTime());
         if (timeSecond < 945) {
@@ -1600,7 +1600,7 @@ public class MinuteLine implements Serializable {
                 break;
             }
 
-            float frac = KLineUtil.compareMaxSign(price, kline.close) - KLineUtil.compareMaxSign(minuteLine.price, kline.close);
+            double frac = KLineUtil.compareMaxSign(price, kline.close) - KLineUtil.compareMaxSign(minuteLine.price, kline.close);
             if (frac < dlt) {
                 return false;
             }
@@ -1611,7 +1611,7 @@ public class MinuteLine implements Serializable {
     public MinuteLine getMin() {
         int timeSecond = Integer.parseInt(getTime());
         MinuteLine min = null;
-        float price = Integer.MAX_VALUE;
+        double price = Integer.MAX_VALUE;
         for (int i = 0; i < 240; i++) {
             MinuteLine minuteLine = prev(i);
             if (minuteLine == null) {
@@ -1630,18 +1630,18 @@ public class MinuteLine implements Serializable {
         return "" + date + " " + time + "," + price + "," + avgPrice + "," + vol;
     }
 
-    public float getChanage() {
+    public double getChanage() {
         return chanage;
     }
 
-    public void setChanage(float chanage) {
+    public void setChanage(double chanage) {
         this.chanage = chanage;
     }
 
 
     public MinuteLine getMaxBefore() {
         int idx = 0;
-        float max = 0;
+        double max = 0;
         MinuteLine maxLine = null;
         int timeSecond = Integer.parseInt(getTime());
         for (int i = idx; i < 240; i++) {
@@ -1672,12 +1672,12 @@ public class MinuteLine implements Serializable {
         return true;
     }
 
-    public float getZF(Kline kline) {
-        float ret = KLineUtil.compareMaxSign(price, kline.getClose());
+    public double getZF(Kline kline) {
+        double ret = KLineUtil.compareMaxSign(price, kline.getClose());
         return ret;
     }
 
-    public boolean hasMax(Kline kline, float minZf) {
+    public boolean hasMax(Kline kline, double minZf) {
         for(int i=0; i<dayLineList.size(); i++) {
             if(this.getTime().equalsIgnoreCase("0941") && i==12) {
                 int a = 0;
@@ -1686,7 +1686,7 @@ public class MinuteLine implements Serializable {
             if(minuteLine==null) {
                 return false;
             }
-            float ret = KLineUtil.compareMaxSign(minuteLine.price, kline.getClose());
+            double ret = KLineUtil.compareMaxSign(minuteLine.price, kline.getClose());
             if(ret>minZf) {
                 return true;
             }
@@ -1705,7 +1705,7 @@ public class MinuteLine implements Serializable {
         info.vol = getVol();
         info.price = getPrice();
         info.frac = KLineUtil.compareMaxSign(this.getPrice(), kline.close);
-        float prev = 0;//KLineUtil.compareMaxSign(prev().getPrice(), kline.close);
+        double prev = 0;//KLineUtil.compareMaxSign(prev().getPrice(), kline.close);
         if (prev() != null) {
             prev = KLineUtil.compareMaxSign(prev().getPrice(), kline.close);
         }
@@ -1724,10 +1724,10 @@ public class MinuteLine implements Serializable {
     }
 
     static class Info {
-        public float price;
-        public float frac;
+        public double price;
+        public double frac;
         public int vol;
-        public float dlt;
+        public double dlt;
     }
 }
 

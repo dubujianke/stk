@@ -68,14 +68,14 @@ public class Decision57 {
             return false;
         }
 
-        float vw = row.getFloat(table.getColumn("大涨幅度"));
+        double vw = row.getFloat(table.getColumn("大涨幅度"));
         if (vw >= 7) {
             if (row.getFloat(table.getColumn("大涨Idx")) < 10) {
                 return false;
             }
         }
 
-        float v = row.getFloat(table.getColumn("涨幅"));
+        double v = row.getFloat(table.getColumn("涨幅"));
 ///////////////////////////////////////////////////////////
         //(大涨幅度 > 5  大涨幅度<=7)
         int p1 = row.getInt(table.getColumn("大涨Idx"));
@@ -143,7 +143,7 @@ public class Decision57 {
         String p3[] = row.getCol(table.getColumn("换手")).data.replace("[", "").replace("]", "").split(",");
         boolean handFlag = false;
         for (String item : p3) {
-            if (Float.parseFloat(item) <= 5) {
+            if (Double.parseDouble(item) <= 5) {
                 handFlag = true;
             }
         }
@@ -160,7 +160,7 @@ public class Decision57 {
         }
 
         String p4[] = row.getCol(table.getColumn("wprev(1)")).data.split("/");
-        if (Float.parseFloat(p4[1]) > 13.2) {
+        if (Double.parseDouble(p4[1]) > 13.2) {
             return false;
         }
 
@@ -178,7 +178,7 @@ public class Decision57 {
 
         boolean handFlag2 = false;
         for (String item : p3) {
-            if (Float.parseFloat(item) <= 2) {
+            if (Double.parseDouble(item) <= 2) {
                 handFlag2 = true;
             }
         }
@@ -190,7 +190,7 @@ public class Decision57 {
 
         int cnt_ = 0;
         for (String item : p3) {
-            if (Float.parseFloat(item) > 1.9) {
+            if (Double.parseDouble(item) > 1.9) {
                 cnt_++;
             }
         }
@@ -208,7 +208,7 @@ public class Decision57 {
         double zf0 = row.getFloat(table.getColumn("zhenf(0)"));
 
         if (zf2 < 3 && zf1 < 3 && zf0 < 3) {
-            float cur = row.getFloat(table.getColumn("cur"));
+            double cur = row.getFloat(table.getColumn("cur"));
             double totalF = zf0 + zf1 + zf2;
             if (zf0 < 1.9 && !(Math.abs(zf0 - 1.9) < 0.01)) {
                 return false;
@@ -217,7 +217,7 @@ public class Decision57 {
                 return false;
             }
             if (totalF < 7.0f) {
-                float v2 = row.getFloat(table.getColumn("gap250"));
+                double v2 = row.getFloat(table.getColumn("gap250"));
                 if (v2 >= -11.0 && v2 < -8.0) {
                 } else {
                     return false;
@@ -227,8 +227,8 @@ public class Decision57 {
 
         int d3060 = row.getInt(table.getColumn("30d60"));
         if (d3060 < 10 && d3060 > -1) {
-            float gap60 = row.getFloat(table.getColumn("gap60"));
-            float gap30 = row.getFloat(table.getColumn("gap30"));
+            double gap60 = row.getFloat(table.getColumn("gap60"));
+            double gap30 = row.getFloat(table.getColumn("gap30"));
             if (gap60 < 0 && gap60 > -6) {
                 return false;
             }

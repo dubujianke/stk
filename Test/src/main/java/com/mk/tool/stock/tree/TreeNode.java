@@ -22,8 +22,8 @@ public class TreeNode {
             boolean ret = tag.equalsIgnoreCase("True");
             return ret;
         }
-        float gini = this.getGini();
-        float v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
+        double gini = this.getGini();
+        double v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
         if (v <= value) {
             return left.process(row, rowIdx);
         } else {
@@ -32,7 +32,7 @@ public class TreeNode {
     }
 
     public boolean process__(Table row, int rowIdx) {
-        float gini = this.getGini();
+        double gini = this.getGini();
         if (StringUtil.isNull(columnName)) {
             boolean ret = tag.equalsIgnoreCase("True");
             if(Math.abs(gini)<0.01 && !ret) {
@@ -41,7 +41,7 @@ public class TreeNode {
             return true;
         }
 
-        float v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
+        double v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
         if (v <= value) {
             return left.process(row, rowIdx);
         } else {
@@ -50,7 +50,7 @@ public class TreeNode {
     }
 
 
-    public float getGini() {
+    public double getGini() {
         int idx = note.indexOf("gini");
         if(idx<0) {
             return 100;
@@ -58,7 +58,7 @@ public class TreeNode {
         String str = note.substring(idx+"gini".length());
         int idx2 = str.indexOf("\\n");
         str = str.substring(0, idx2).replace("=", "").trim();
-        return Float.parseFloat(str);
+        return Double.parseDouble(str);
     }
 
     public boolean subProcess(Table row, int rowIdx) {
@@ -67,7 +67,7 @@ public class TreeNode {
             return ret;
         }
 
-        float v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
+        double v = row.getRow(rowIdx).getFloat(row.getColumn(columnName));
 
         if (v <= value) {
             if (left == null) {
@@ -98,11 +98,11 @@ public class TreeNode {
         this.op = op;
     }
 
-    public float getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(double value) {
         this.value = value;
     }
 
@@ -110,7 +110,7 @@ public class TreeNode {
     public String tag;
     public String gini = "";
     private String op;//>= <= > < ==
-    private float value;
+    private double value;
 
     public TreeNode getLeft() {
         return left;
@@ -157,7 +157,7 @@ public class TreeNode {
     }
 
     public boolean isGini0() {
-        float vGini = Float.parseFloat(gini);
+        double vGini = Double.parseDouble(gini);
         if (vGini > 0) {
             return false;
         }

@@ -26,8 +26,8 @@ public class SelectAddColExcel {
         int dir1 = 0;
         int dir2 = 0;
 
-        float ma120Prev0 = mklinePrev0.getMA120();
-        float fracMa120Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma120Prev0);
+        double ma120Prev0 = mklinePrev0.getMA120();
+        double fracMa120Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma120Prev0);
         if (mklinePrev0.close > ma120Prev0 && mklinePrev0.open < ma120Prev0) {
             dir0 = 1;
         } else if (mklinePrev0.open > ma120Prev0 && mklinePrev0.close < ma120Prev0) {
@@ -35,8 +35,8 @@ public class SelectAddColExcel {
         }
         row.setCol(table.getColumn("PrevMA120Month(0)"), "" + fracMa120Prev0 + " (" + dir0 + ")");
 
-        float ma120Prev1 = mklinePrev1.getMA120();
-        float fracMa120Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma120Prev1);
+        double ma120Prev1 = mklinePrev1.getMA120();
+        double fracMa120Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma120Prev1);
         if (mklinePrev1.close > ma120Prev1 && mklinePrev1.open < ma120Prev1) {
             dir1 = 1;
         } else if (mklinePrev1.open > ma120Prev1 && mklinePrev1.close < ma120Prev1) {
@@ -44,8 +44,8 @@ public class SelectAddColExcel {
         }
         row.setCol(table.getColumn("PrevMA120Month(1)"), "" + fracMa120Prev1 + " (" + dir1 + ")");
 
-        float ma120Prev2 = mklinePrev2.getMA120();
-        float fracMa120Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma120Prev2);
+        double ma120Prev2 = mklinePrev2.getMA120();
+        double fracMa120Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma120Prev2);
         if (mklinePrev2.close > ma120Prev2 && mklinePrev2.open < ma120Prev2) {
             dir2 = 1;
         } else if (mklinePrev2.open > ma120Prev2 && mklinePrev2.close < ma120Prev2) {
@@ -62,8 +62,8 @@ public class SelectAddColExcel {
         int dir1 = 0;
         int dir2 = 0;
 
-        float ma60Prev0 = mklinePrev0.getMA60();
-        float fracMa60Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma60Prev0);
+        double ma60Prev0 = mklinePrev0.getMA60();
+        double fracMa60Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma60Prev0);
         if (mklinePrev0.close > ma60Prev0 && mklinePrev0.open < ma60Prev0) {
             dir0 = 1;
         } else if (mklinePrev0.open > ma60Prev0 && mklinePrev0.close < ma60Prev0) {
@@ -71,8 +71,8 @@ public class SelectAddColExcel {
         }
         row.setCol(table.getColumn("PrevMA60Month(0)"), "" + fracMa60Prev0 + " (" + dir0 + ")");
 
-        float ma60Prev1 = mklinePrev1.getMA60();
-        float fracMa60Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma60Prev1);
+        double ma60Prev1 = mklinePrev1.getMA60();
+        double fracMa60Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma60Prev1);
         if (mklinePrev1.close > ma60Prev1 && mklinePrev1.open < ma60Prev1) {
             dir1 = 1;
         } else if (mklinePrev1.open > ma60Prev1 && mklinePrev1.close < ma60Prev1) {
@@ -80,8 +80,8 @@ public class SelectAddColExcel {
         }
         row.setCol(table.getColumn("PrevMA60Month(1)"), "" + fracMa60Prev1 + " (" + dir1 + ")");
 
-        float ma60Prev2 = mklinePrev2.getMA60();
-        float fracMa60Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma60Prev2);
+        double ma60Prev2 = mklinePrev2.getMA60();
+        double fracMa60Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma60Prev2);
         if (mklinePrev2.close > ma60Prev2 && mklinePrev2.open < ma60Prev2) {
             dir2 = 1;
         } else if (mklinePrev2.open > ma60Prev2 && mklinePrev2.close < ma60Prev2) {
@@ -109,8 +109,8 @@ public class SelectAddColExcel {
         int dir1 = 0;
         int dir2 = 0;
 
-        float ma250Prev0 = mklinePrev0.getMA250();
-        float fracMa250Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma250Prev0);
+        double ma250Prev0 = mklinePrev0.getMA250();
+        double fracMa250Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma250Prev0);
         if (mklinePrev0.close > ma250Prev0 && mklinePrev0.open < ma250Prev0) {
             dir0 = 1;
         } else if (mklinePrev0.open > ma250Prev0 && mklinePrev0.close < ma250Prev0) {
@@ -118,8 +118,8 @@ public class SelectAddColExcel {
         }
 
 
-        float ma250Prev1 = mklinePrev1.getMA250();
-        float fracMa250Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma250Prev1);
+        double ma250Prev1 = mklinePrev1.getMA250();
+        double fracMa250Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma250Prev1);
         if (mklinePrev1.close > ma250Prev1 && mklinePrev1.open < ma250Prev1) {
             dir1 = 1;
         } else if (mklinePrev1.open > ma250Prev1 && mklinePrev1.close < ma250Prev1) {
@@ -128,8 +128,8 @@ public class SelectAddColExcel {
 
 
 
-        float ma250Prev2 = mklinePrev2.getMA250();
-        float fracMa250Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma250Prev2);
+        double ma250Prev2 = mklinePrev2.getMA250();
+        double fracMa250Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma250Prev2);
         if (mklinePrev2.close > ma250Prev2 && mklinePrev2.open < ma250Prev2) {
             dir2 = 1;
         } else if (mklinePrev2.open > ma250Prev2 && mklinePrev2.close < ma250Prev2) {
@@ -149,8 +149,8 @@ public class SelectAddColExcel {
         int dir1 = 0;
         int dir2 = 0;
 
-        float ma120Prev0 = mklinePrev0.getMA120();
-        float fracMa120Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma120Prev0);
+        double ma120Prev0 = mklinePrev0.getMA120();
+        double fracMa120Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma120Prev0);
         if (mklinePrev0.close > ma120Prev0 && mklinePrev0.open < ma120Prev0) {
             dir0 = 1;
         } else if (mklinePrev0.open > ma120Prev0 && mklinePrev0.close < ma120Prev0) {
@@ -159,8 +159,8 @@ public class SelectAddColExcel {
 
 
 
-        float ma120Prev1 = mklinePrev1.getMA120();
-        float fracMa120Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma120Prev1);
+        double ma120Prev1 = mklinePrev1.getMA120();
+        double fracMa120Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma120Prev1);
         if (mklinePrev1.close > ma120Prev1 && mklinePrev1.open < ma120Prev1) {
             dir1 = 1;
         } else if (mklinePrev1.open > ma120Prev1 && mklinePrev1.close < ma120Prev1) {
@@ -169,8 +169,8 @@ public class SelectAddColExcel {
 
 
 
-        float ma120Prev2 = mklinePrev2.getMA120();
-        float fracMa120Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma120Prev2);
+        double ma120Prev2 = mklinePrev2.getMA120();
+        double fracMa120Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma120Prev2);
         if (mklinePrev2.close > ma120Prev2 && mklinePrev2.open < ma120Prev2) {
             dir2 = 1;
         } else if (mklinePrev2.open > ma120Prev2 && mklinePrev2.close < ma120Prev2) {
@@ -189,8 +189,8 @@ public class SelectAddColExcel {
         int dir1 = 0;
         int dir2 = 0;
 
-        float ma60Prev0 = mklinePrev0.getMA60();
-        float fracMa60Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma60Prev0);
+        double ma60Prev0 = mklinePrev0.getMA60();
+        double fracMa60Prev0 = KLineUtil.compareMaxSign(kline0.getClose(), ma60Prev0);
         if (mklinePrev0.close > ma60Prev0 && mklinePrev0.open < ma60Prev0) {
             dir0 = 1;
         } else if (mklinePrev0.open > ma60Prev0 && mklinePrev0.close < ma60Prev0) {
@@ -199,8 +199,8 @@ public class SelectAddColExcel {
 
 
 
-        float ma60Prev1 = mklinePrev1.getMA60();
-        float fracMa60Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma60Prev1);
+        double ma60Prev1 = mklinePrev1.getMA60();
+        double fracMa60Prev1 = KLineUtil.compareMaxSign(mklinePrev1.getClose(), ma60Prev1);
         if (mklinePrev1.close > ma60Prev1 && mklinePrev1.open < ma60Prev1) {
             dir1 = 1;
         } else if (mklinePrev1.open > ma60Prev1 && mklinePrev1.close < ma60Prev1) {
@@ -209,8 +209,8 @@ public class SelectAddColExcel {
 
 
 
-        float ma60Prev2 = mklinePrev2.getMA60();
-        float fracMa60Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma60Prev2);
+        double ma60Prev2 = mklinePrev2.getMA60();
+        double fracMa60Prev2 = KLineUtil.compareMaxSign(mklinePrev2.getClose(), ma60Prev2);
         if (mklinePrev2.close > ma60Prev2 && mklinePrev2.open < ma60Prev2) {
             dir2 = 1;
         } else if (mklinePrev2.open > ma60Prev2 && mklinePrev2.close < ma60Prev2) {
@@ -271,8 +271,8 @@ public class SelectAddColExcel {
                     }
                     Kline kline0 = singleContext.getDays().get(idx);
 
-                    float price1 = kline0.prev().close*1.02f;
-                    float price2 = kline0.getMaxAfter(5);
+                    double price1 = kline0.prev().close*1.02f;
+                    double price2 = kline0.getMaxAfter(5);
                     row.setCol(table.getColumn("60d120"), ""+ kline0.getDeadCrossNum(60, 120));
                     row.setCol(table.getColumn("10d30"), ""+ kline0.getDeadCrossNum(10, 30));
                     row.setCol(table.getColumn("10d60"), ""+ kline0.getDeadCrossNum(10, 60));

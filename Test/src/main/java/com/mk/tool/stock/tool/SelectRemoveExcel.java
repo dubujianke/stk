@@ -15,8 +15,8 @@ public class SelectRemoveExcel {
     public static StringBuffer resultBuffer = new StringBuffer();
 
 
-    public static void print(float[] vs, boolean abs) {
-        for (float v : vs) {
+    public static void print(double[] vs, boolean abs) {
+        for (double v : vs) {
             //System.out.println(v);
         }
     }

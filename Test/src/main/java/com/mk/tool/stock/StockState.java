@@ -4,7 +4,7 @@ public class StockState {
     public int weekPos;
     public int dayPos;
     public boolean enable;
-    public float space;
+    public double space;
 
     public boolean isDayPosOne() {
         return KLineUtil.isOne(dayPos);

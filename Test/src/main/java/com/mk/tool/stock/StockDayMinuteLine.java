@@ -20,14 +20,14 @@ public class StockDayMinuteLine {
     private List<LineType> lineTypeList = new ArrayList<>();
     public List<MinuteLine> allLineList = new ArrayList();
 
-    public float getFitstZF(Kline kline) {
+    public double getFitstZF(Kline kline) {
         return allLineList.get(0).getZF(kline);
     }
 
     private LineType currentLineType;
 
 
-    public float total;
+    public double total;
     public int num;
 
     public LineType getLineType(int miunteLineIdx) {
@@ -145,7 +145,7 @@ public class StockDayMinuteLine {
         minuteLine.dayLineList = allLineList;
 
         num++;
-        float avg = total / num;
+        double avg = total / num;
         minuteLine.setAvgPrice(avg);
         allLineList.add(minuteLine);
 
@@ -195,8 +195,8 @@ public class StockDayMinuteLine {
                 if (minuteLine.getTime().equals(StragetyZTBottom.monitorMinute)) {
                     int a = 0;
                 }
-                float open = kline.prev().getClose();
-                float curV = KLineUtil.compareMaxSign(minuteLine.price, open);
+                double open = kline.prev().getClose();
+                double curV = KLineUtil.compareMaxSign(minuteLine.price, open);
                 if(curV<0 && Math.abs(curV)>3.3) {
                     return null;
                 }

@@ -14,7 +14,7 @@ public class MaxWeekSection {
         period = i;
     }
 
-    public float getMAX(Kline kline) {
+    public double  getMAX(Kline kline) {
         if (period == 10) {
             return kline.getMA10();
         }
@@ -32,7 +32,7 @@ public class MaxWeekSection {
 
     public static Weekline getMinLine(List<Weekline> all, int fromIdx, int toIdx) {
         int prevIdx = 0;
-        float min = 99999;
+        double min = 99999;
         Weekline minLine = null;
         for (int i = 0; i < all.size(); i++) {
             Weekline kline = all.get(i);
@@ -66,7 +66,7 @@ public class MaxWeekSection {
             if (idx < fromIdx || idx > toIdx) {
                 continue;
             }
-            float max = getMAX(kline);
+            double max = getMAX(kline);
             if (kline.touch(max, 1.5f)) {
                 if (list.size() == 0) {
                     MWeekPoint mPoint = new MWeekPoint();
@@ -103,7 +103,7 @@ public class MaxWeekSection {
             if (i ==0) {
                 Kline temp2 = (Kline) all.get(fromIdx);
                 Kline temp = (Kline) mPoint.list.get(0);
-                float v1 = temp2.getClose();
+                double v1 = temp2.getClose();
                 if(v1>temp.getMA120()) {
                     MaxPoint point2 = getMaxDay(all, temp2.getIdx(), mPoint.klineIdx);
                     point2.flag = 0;
@@ -135,7 +135,7 @@ public class MaxWeekSection {
 
                 Kline lastLine = (Kline) all.get(toIdx);
                 Kline currentLine = (Kline) mPoint.list.get(mPoint.list.size()/2);
-                float v1 = lastLine.getClose();
+                double v1 = lastLine.getClose();
                 if(v1>=currentLine.getMA60()) {
                     MaxPoint point2 = getMaxDay(all, mPoint.klineIdx, lastLine.getIdx());
                     point2.flag = 0;
@@ -185,7 +185,7 @@ public class MaxWeekSection {
                 int len = mPoint2.klineIdx - mPoint.klineIdx;
                 if(len>10) {
                     Kline temp = all.get((mPoint2.klineIdx + mPoint.klineIdx)/2);
-                    float v1 = temp.getClose();
+                    double v1 = temp.getClose();
                     if(v1>getMAX(temp)) {
                         MaxPoint point2 = getMaxDay(all, mPoint.klineIdx, mPoint2.klineIdx);
                         point2.flag = 0;
@@ -213,7 +213,7 @@ public class MaxWeekSection {
                 int len = mPoint2.klineIdx - mPoint.klineIdx;
                 if(len>10) {
                     Kline temp = all.get((mPoint2.klineIdx + mPoint.klineIdx)/2);
-                    float v1 = temp.getClose();
+                    double v1 = temp.getClose();
                     if(v1>temp.getMA120()) {
                         MaxPoint point2 = getMaxDay(all, mPoint.klineIdx, mPoint2.klineIdx);
                         point2.flag = 0;
@@ -261,7 +261,7 @@ public class MaxWeekSection {
             if (idx < fromIdx || idx > toIdx) {
                 continue;
             }
-            float max = getMAX(kline);
+            double max = getMAX(kline);
             if (kline.touch(max, 1.5f)) {
                 if (list.size() == 0) {
                     MWeekPoint mPoint = new MWeekPoint();
@@ -298,7 +298,7 @@ public class MaxWeekSection {
             if (i ==0) {
                 Weekline temp2 = (Weekline) all.get(fromIdx);
                 Weekline temp = (Weekline) mPoint.list.get(0);
-                float v1 = temp2.getClose();
+                double v1 = temp2.getClose();
                 if(v1>temp.getMA120()) {
                     MaxPoint point2 = getMax(all, temp2.getIdx(), mPoint.klineIdx);
                     point2.flag = 0;
@@ -330,7 +330,7 @@ public class MaxWeekSection {
 
                 Weekline lastLine = (Weekline) all.get(toIdx);
                 Weekline currentLine = (Weekline) mPoint.list.get(mPoint.list.size()/2);
-                float v1 = lastLine.getClose();
+                double v1 = lastLine.getClose();
                 if(v1>=currentLine.getMA120()) {
                     MaxPoint point2 = getMax(all, mPoint.klineIdx, lastLine.getIdx());
                     point2.flag = 0;
@@ -380,7 +380,7 @@ public class MaxWeekSection {
                 int len = mPoint2.klineIdx - mPoint.klineIdx;
                 if(len>10) {
                     Weekline temp = all.get((mPoint2.klineIdx + mPoint.klineIdx)/2);
-                    float v1 = temp.getClose();
+                    double v1 = temp.getClose();
                     if(v1>getMAX(temp)) {
                         MaxPoint point2 = getMax(all, mPoint.klineIdx, mPoint2.klineIdx);
                         point2.flag = 0;
@@ -408,7 +408,7 @@ public class MaxWeekSection {
                 int len = mPoint2.klineIdx - mPoint.klineIdx;
                 if(len>10) {
                     Weekline temp = all.get((mPoint2.klineIdx + mPoint.klineIdx)/2);
-                    float v1 = temp.getClose();
+                    double v1 = temp.getClose();
                     if(v1>temp.getMA120()) {
                         MaxPoint point2 = getMax(all, mPoint.klineIdx, mPoint2.klineIdx);
                         point2.flag = 0;
@@ -490,7 +490,7 @@ public class MaxWeekSection {
     }
 
     public static MaxPoint getMax(List<MaxPoint> all) {
-        float max = 0;
+        double max = 0;
         int idx = -1;
         for (int i = 0; i < all.size(); i++) {
             if (all.get(i).flag == 0) {
@@ -508,7 +508,7 @@ public class MaxWeekSection {
     }
 
     public static MaxPoint getMinPoint(List<MaxPoint> all) {
-        float min = 9999;
+        double min = 9999;
         int idx = -1;
         for (int i = 0; i < all.size(); i++) {
             if (all.get(i).flag == 1) {
@@ -547,7 +547,7 @@ public class MaxWeekSection {
     }
 
     public static MaxPoint getMaxDay(List<Kline> all, int from, int to) {
-        float max = 0;
+        double max = 0;
         int idx = 0;
         for (int i = from; i <= to; i++) {
             if (all.get(i).getMax() > max) {
@@ -563,7 +563,7 @@ public class MaxWeekSection {
     }
 
     public static MaxPoint getMinDay(List<Kline> all, int from, int to) {
-        float min = 99999;
+        double min = 99999;
         int idx = 0;
         for (int i = from; i <= to; i++) {
             if (all.get(i).getMin() < min) {
@@ -579,7 +579,7 @@ public class MaxWeekSection {
     }
 
     public static MaxPoint getMax(List<Weekline> all, int from, int to) {
-        float max = 0;
+        double max = 0;
         int idx = 0;
         for (int i = from; i <= to; i++) {
             if (all.get(i).getMax() > max) {
@@ -595,7 +595,7 @@ public class MaxWeekSection {
     }
 
     public static MaxPoint getMin(List<Weekline> all, int from, int to) {
-        float min = 99999;
+        double min = 99999;
         int idx = 0;
         for (int i = from; i <= to; i++) {
             if (all.get(i).getMin() < min) {

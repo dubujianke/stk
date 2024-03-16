@@ -78,7 +78,7 @@ public class LongShaownMonth {
         }
 
         if (flag) {
-            float max = kline.getMaxBefore(20);
+            double max = kline.getMaxBefore(20);
             if (max > kline.getOpen()) {
                 if (Math.abs(max - kline.getOpen()) / kline.getOpen() * 100 > 3) {
                     flag = false;
@@ -88,8 +88,8 @@ public class LongShaownMonth {
         return flag;
     }
 
-    public static float getMax(List<Kline> days, int offset, int dayNum) {
-        float max = 0;
+    public static double getMax(List<Kline> days, int offset, int dayNum) {
+        double max = 0;
         for (int i = offset; i >= offset - dayNum; i--) {
             Kline kline = days.get(i);
             if (kline.getMax() > max) {
@@ -99,14 +99,14 @@ public class LongShaownMonth {
         return max;
     }
 
-    public static float compareFraction(float src, float dst) {
-        float v = 0;
+    public static double compareFraction(double src, double dst) {
+        double v = 0;
         v = 100 * (src - dst) / dst;
         return v;
     }
 
 
-    public static boolean isIn(float src, float v1, float v2) {
+    public static boolean isIn(double src, double v1, double v2) {
         return src > v1 && src < v2;
     }
 
@@ -130,11 +130,11 @@ public class LongShaownMonth {
         for(int i=0; i<5; i++) {
             Log.log("CLOSE:"+weeks.get(weeks.size()-1-i).key+" "+ weeks.get(weeks.size() - 1 - i).getClose());
         }
-        float ma30 = last.getMA60();
-        float zhangfu = last.getZhangfu();
-        float zf = last.getZhenfu();
+        double ma30 = last.getMA60();
+        double zhangfu = last.getZhangfu();
+        double zf = last.getZhenfu();
         boolean flag = kline.isShadownMonthDownNoUp();
-        float mma120 = kline.monthKline.getMA120();
+        double mma120 = kline.monthKline.getMA120();
         if (flag && kline.monthKline.getOpen() > mma120) {
             Log.log("==========#>" + file + "	" + date);
         }

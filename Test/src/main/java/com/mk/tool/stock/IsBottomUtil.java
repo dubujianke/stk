@@ -15,8 +15,8 @@ public class IsBottomUtil extends Stragety {
             if (idx < 200) {
                 return false;
             }
-            float minValjue = 0;
-            float minIdx = 0;
+            double minValjue = 0;
+            double minIdx = 0;
 
             boolean flag = false;
             int offsetLen = 0;
@@ -45,28 +45,28 @@ public class IsBottomUtil extends Stragety {
                     MonthKline minMonth2 = (MonthKline) points.get(1).kline;
                     offsetLen = Math.abs(minMonth2.getIdx() - minMonth.getIdx() + 1);
                     if (monIdx == minMonth2.getIdx()) {
-                        float frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                        double frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
                         if (frac < 10) {
                             flag = true;
                         }
                         if (minMonth2.touch(minMonth2.getMA60())) {
                             flag = true;
                         }
-                        float frac2 = KLineUtil.compareMax(minMonth2.getMin(), minMonth2.getMA60());
+                        double frac2 = KLineUtil.compareMax(minMonth2.getMin(), minMonth2.getMA60());
                         if (minMonth2.getMin() < minMonth2.getMA60() && frac2 < 18) {
                             flag = true;
                         }
 
                         if (minMonth2.getIdx() > minMonth.getIdx()) {
-                            float tfrac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                            double tfrac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
                             if (frac < 20) {
                                 flag = true;
                             }
                         }
 
                     } else {
-                        float frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
-                        float frac2 = KLineUtil.compareMax(minMonth.getEntityMin(), minMonth2.getMin());
+                        double frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                        double frac2 = KLineUtil.compareMax(minMonth.getEntityMin(), minMonth2.getMin());
                         if (frac < 20) {
                             flag = true;
                         }
@@ -78,7 +78,7 @@ public class IsBottomUtil extends Stragety {
                         }
                         MonthKline maxLine = (MonthKline) current.getPrevMAXKline(NUM);
                         MonthKline minLine = (MonthKline) maxLine.getPrevMINKline(6);
-                        float afrac = KLineUtil.compareMax(maxLine.getMax(), minLine.getMin());
+                        double afrac = KLineUtil.compareMax(maxLine.getMax(), minLine.getMin());
                         if (afrac < 100) {
                             return false;
                         }
@@ -89,7 +89,7 @@ public class IsBottomUtil extends Stragety {
                         int durationLen = monIdx - maxLine.getIdx() - 1;
                         MonthKline minLine2 = (MonthKline) current.getPrevMINKline(durationLen);
 
-                        float jf = KLineUtil.compareMax(minLine2.getMin(), maxLine.getMax());
+                        double jf = KLineUtil.compareMax(minLine2.getMin(), maxLine.getMax());
                         int curDlt = current.getIdx() - minLine2.getIdx();
 
                         if (jf > 50 && curDlt <= 3) {
@@ -149,28 +149,28 @@ public class IsBottomUtil extends Stragety {
                     MonthKline minMonth2 = (MonthKline) points.get(1).kline;
                     offsetLen = Math.abs(minMonth2.getIdx() - minMonth.getIdx() + 1);
                     if (monIdx == minMonth2.getIdx()) {
-                        float frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                        double frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
                         if (frac < 10) {
                             flag = true;
                         }
                         if (minMonth2.touch(minMonth2.getMA60())) {
                             flag = true;
                         }
-                        float frac2 = KLineUtil.compareMax(minMonth2.getMin(), minMonth2.getMA60());
+                        double frac2 = KLineUtil.compareMax(minMonth2.getMin(), minMonth2.getMA60());
                         if (minMonth2.getMin() < minMonth2.getMA60() && frac2 < 18) {
                             flag = true;
                         }
 
                         if (minMonth2.getIdx() > minMonth.getIdx()) {
-                            float tfrac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                            double tfrac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
                             if (frac < 20) {
                                 flag = true;
                             }
                         }
 
                     } else {
-                        float frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
-                        float frac2 = KLineUtil.compareMax(minMonth.getEntityMin(), minMonth2.getMin());
+                        double frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                        double frac2 = KLineUtil.compareMax(minMonth.getEntityMin(), minMonth2.getMin());
                         if (frac < 20) {
                             flag = true;
                         }
@@ -233,14 +233,14 @@ public class IsBottomUtil extends Stragety {
         return true;
     }
 
-    public static boolean prsIsNDF(String file, Kline kline0, List<Kline> days, String date, int num, float frac) {
+    public static boolean prsIsNDF(String file, Kline kline0, List<Kline> days, String date, int num, double frac) {
         int idx = getIdx(days, date);
         if (idx < 200) {
             return false;
         }
 
         Weekline weekline = kline0.weekline;
-        float v = weekline.getPrevDF(num);
+        double v = weekline.getPrevDF(num);
         if (v < frac) {
             return false;
         }

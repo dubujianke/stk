@@ -13,7 +13,7 @@ public class MinuteModel {
     public boolean isMax;
     public MinuteLine maxLine;
     public boolean is3Dayu900;
-    public float total4Frac;
+    public double total4Frac;
     public Kline kline;
     MinuteLine aMinuteLine;
     private int idx;
@@ -48,7 +48,7 @@ public class MinuteModel {
             pointer = pointer.next();
         }
 
-        float dlt = minuteLine.getPrice() - pointer0.getPrice();
+        double dlt = minuteLine.getPrice() - pointer0.getPrice();
         total4Frac = 100.0f * (dlt) / kline.getClose();
         is3Dayu900 = cntV900 >= 3;
         return cnt >= 4;
@@ -65,10 +65,10 @@ public class MinuteModel {
         idx = minuteLine.getIdx();
         aMinuteLine = minuteLine;
         MinuteLine last = minuteLine;
-        float max = 0;
+        double max = 0;
         while (minuteLine != null) {
             int v = minuteLine.getVol();
-            float price = minuteLine.getPrice();
+            double price = minuteLine.getPrice();
             if (price > max) {
                 max = price;
                 maxLine = minuteLine;
@@ -105,15 +105,15 @@ public class MinuteModel {
         return vMap.get("900").v;
     }
 
-    public float get100P() {
+    public double get100P() {
         return (1.0f * 100 * get100() / count);
     }
 
-    public float get300P() {
+    public double get300P() {
         return (1.0f * 100 * get300() / count);
     }
 
-    public float get900P() {
+    public double get900P() {
         return (1.0f * 100 * get900() / count);
     }
 
@@ -121,9 +121,9 @@ public class MinuteModel {
         if (count < 60) {
             return false;
         }
-        float p100 = get100P();
-        float p300 = get300P();
-        float p900 = get900P();
+        double p100 = get100P();
+        double p300 = get300P();
+        double p900 = get900P();
         if (p300 > 80 && p900 > 90) {
             return true;
         }

@@ -314,7 +314,109 @@ public class HttpsUtils {
         return result.toString();
     }
 
+    public static String sendByHttpDFCF2(String url) {
+        CloseableHttpClient httpClient = null;
+        CloseableHttpResponse httpResponse = null;
+        try {
+            HttpGet httpPost = new HttpGet(url);
+            httpPost.addHeader("Content-type", "application/json; charset=utf-8");
+            httpPost.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
+            httpPost.setHeader("Accept-Encoding", "gzip, deflate, br, zstd");
+            httpPost.setHeader("Accept-Language", "zh-CN,zh;q=0.9");
+            httpPost.setHeader("Connection", "keep-alive");
+            httpPost.setHeader("Cookie", "qgqp_b_id=75492a8288c8d7d2aea204af46482c89; st_pvi=27914681087523; st_sp=2023-08-27%2007%3A34%3A42; st_inirUrl=https%3A%2F%2Fwww.baidu.com%2Flink");
+            httpPost.setHeader("Host", "datacenter.eastmoney.com");
+            httpPost.setHeader("Sec-Ch-Ua", "\"Chromium\";v=\"122\", \"Not(A:Brand\";v=\"24\", \"Google Chrome\";v=\"122\"");
+            httpPost.setHeader("Sec-Ch-Ua-Mobile", "?0");
+            httpPost.setHeader("Sec-Ch-Ua-Platform", "\"Windows\"");
+            httpPost.setHeader("content-type", "text/*");
+            httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36");
+            httpClient = HttpsUtils.createSSLClientDefault();
+            httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            if (httpEntity != null) {
+                Header contentEncodingHeader = httpEntity.getContentEncoding();
+                if (contentEncodingHeader != null) {
+                    HeaderElement[] encodings =contentEncodingHeader.getElements();
+                    for (int i = 0; i < encodings.length; i++) {
+                        if (encodings[i].getName().equalsIgnoreCase("gzip")) {
+                            httpEntity = new GzipDecompressingEntity(httpEntity);
+                            break;
+                        }
+                    }
+                    String output = EntityUtils.toString(httpEntity, Charset.forName("UTF-8").name());
+                    return output;
+                }else {
+                    String jsObject = EntityUtils.toString(httpEntity, "UTF-8");
+                    return jsObject;
+                }
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                httpResponse.close();
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    public static String sendByHttpTHS(String url) {
+        CloseableHttpClient httpClient = null;
+        CloseableHttpResponse httpResponse = null;
+        try {
+            HttpGet httpPost = new HttpGet(url);
+            httpPost.addHeader("Content-type", "application/json; charset=utf-8");
+            httpPost.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
+            httpPost.setHeader("Accept-Encoding", "gzip, deflate, br, zstd");
+            httpPost.setHeader("Accept-Language", "zh-CN,zh;q=0.9");
+            httpPost.setHeader("Connection", "keep-alive");
+            httpPost.setHeader("Cookie", "__bid_n=1863b4c6eee48d7f304207; FPTOKEN=sMt7wpi3ZHPxhFl3U+rBQpW3xvj2LSS73Uk786mKYBq3+kVr7PdSrI83DnjwxEgN+vOPZylQv2gkGDekJuG1ZBuQTMPJG3Myuzx/KokIovPpUyW3AbBu6WbAQ4m9RfDGAq6wEOaoSNdTv+gzQ1bmZf7IgXJbUvIbe6BogH6G2Q4T/qziIlwhF4RLAUrpSr2jN2pwwaYJnLq/Vx/q8qKzu+pOPrKVzFA1Vb0NaR9BH3RaSGcXBwbBGNWO66CcC68c6cl2CExOSPLFbAVrRCTU4jo1h7HVqU9LDaNJ8gmHfyAHJgr55KrpHQI8x+Fj+NGa6P2LqHmyGfx+BbuMAgUhw4roZtlgEIMQMXNTiv2KQQ67Q3YuOu0y0ZnQFfYBLPplneZ/S0SOgFM80IrCApjw3Q==|xVDBvZBOw9UZtEM+IxZllu3ssEYgVpL9kVZ19dKVVsY=|10|df7573dbc0114bd2965f9645bf242f17; cid=f6a575aac6de5adb5bf4c6bbe74e04a11687047431; searchGuide=sg; Hm_lvt_722143063e4892925903024537075d0d=1701008902; Hm_lvt_78c58f01938e4d85eaf619eae71b4ed1=1701008902; Hm_lvt_929f8b362150b1f77b477230541dbbc2=1701008902; reviewJump=nojump; usersurvey=1; v=AzFqHcn78COu4lw3l5LxB3SsQLbOHqWYT5NJpBNGLfgXOl8oW261YN_iWXGg");
+            httpPost.setHeader("Host", "basic.10jqka.com.cn");
+            httpPost.setHeader("Sec-Ch-Ua", "Chromium\";v=\"122\", \"Not(A:Brand\";v=\"24\", \"Google Chrome\";v=\"122");
+            httpPost.setHeader("Sec-Ch-Ua-Mobile", "?0");
+            httpPost.setHeader("Sec-Ch-Ua-Platform", "\"Windows\"");
+            httpPost.setHeader("content-type", "text/*");
+            httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36");
+            httpClient = HttpsUtils.createSSLClientDefault();
+            httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            if (httpEntity != null) {
+                Header contentEncodingHeader = httpEntity.getContentEncoding();
+                if (contentEncodingHeader != null) {
+                    HeaderElement[] encodings =contentEncodingHeader.getElements();
+                    for (int i = 0; i < encodings.length; i++) {
+                        if (encodings[i].getName().equalsIgnoreCase("gzip")) {
+                            httpEntity = new GzipDecompressingEntity(httpEntity);
+                            break;
+                        }
+                    }
+                    String output = EntityUtils.toString(httpEntity, Charset.forName("UTF-8").name());
+                    return output;
+                }else {
+                    String jsObject = EntityUtils.toString(httpEntity, "UTF-8");
+                    return jsObject;
+                }
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                httpResponse.close();
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public static String sendByHttpDFCF(String url) {
         CloseableHttpClient httpClient = null;

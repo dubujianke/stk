@@ -89,7 +89,7 @@
 //        }
 //
 //        if (flag) {
-//            float max = kline.getMaxBefore(20);
+//            double max = kline.getMaxBefore(20);
 //            if (max > kline.getOpen()) {
 //                if (Math.abs(max - kline.getOpen()) / kline.getOpen() * 100 > 3) {
 //                    flag = false;
@@ -99,8 +99,8 @@
 //        return flag;
 //    }
 //
-//    public static float getMax(List<Kline> days, int offset, int dayNum) {
-//        float max = 0;
+//    public static double getMax(List<Kline> days, int offset, int dayNum) {
+//        double max = 0;
 //        for (int i = offset; i >= offset - dayNum; i--) {
 //            Kline kline = days.get(i);
 //            if (kline.getMax() > max) {
@@ -110,14 +110,14 @@
 //        return max;
 //    }
 //
-//    public static float compareFraction(float src, float dst) {
-//        float v = 0;
+//    public static double compareFraction(double src, double dst) {
+//        double v = 0;
 //        v = 100 * (src - dst) / dst;
 //        return v;
 //    }
 //
 //
-//    public static boolean isIn(float src, float v1, float v2) {
+//    public static boolean isIn(double src, double v1, double v2) {
 //        return src > v1 && src < v2;
 //    }
 //
@@ -158,14 +158,14 @@
 ////                flag2 = true;
 ////            }
 //
-//            float ma5 = kline.monthKline.getMA5();
-//            float ma10 = kline.monthKline.getMA10();
-//            float ma20 = kline.monthKline.getMA20();
-//            float ma30 = kline.monthKline.getMA30();
-//            float ma60 = kline.monthKline.getMA60();
-//            float ma120 = kline.monthKline.getMA120();
-//            float open = kline.monthKline.getOpen();
-//            float close = kline.monthKline.getClose();
+//            double ma5 = kline.monthKline.getMA5();
+//            double ma10 = kline.monthKline.getMA10();
+//            double ma20 = kline.monthKline.getMA20();
+//            double ma30 = kline.monthKline.getMA30();
+//            double ma60 = kline.monthKline.getMA60();
+//            double ma120 = kline.monthKline.getMA120();
+//            double open = kline.monthKline.getOpen();
+//            double close = kline.monthKline.getClose();
 //            boolean f5 = close>ma5 && open <ma5;
 //            boolean f10 = close>ma10 && open <ma10;
 //            boolean f20 = close>ma20 && open <ma20;
@@ -175,7 +175,7 @@
 //            boolean f120 = close>ma120 && open <ma120;
 //            boolean hasMa120 = kline.monthKline.hasMA120();
 //            if(hasMa120) {
-//                float frac = KLineUtil.compareMax(ma120, ma60);
+//                double frac = KLineUtil.compareMax(ma120, ma60);
 //                if(frac>30) {
 //                    if (f5 && f10 && f20 && f30 && f60 && kline.monthKline.getShitiZhenfu()>10) {
 //                        if(add(file)) {

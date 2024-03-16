@@ -94,7 +94,7 @@
 //                if (next == null) {
 //                    break;
 //                }
-//                float frac1 = KLineUtil.compareMax(next.getMin(), kline0.getMax());
+//                double  frac1 = KLineUtil.compareMax(next.getMin(), kline0.getMax());
 //                if (frac1 > 7) {
 //                    int dayLen = DateUtil.getDayLen(DateUtil.stringToDate3(date), DateUtil.stringToDate3(next.getDate()));
 //                    if (dayLen < 3) {
@@ -108,7 +108,7 @@
 //                    continue;
 //                }
 //
-//                float frac = KLineUtil.compareMax(next.getMax(), next.prev().getClose());
+//                double  frac = KLineUtil.compareMax(next.getMax(), next.prev().getClose());
 //                if (frac < 8) {
 //                    continue;
 //                }
@@ -174,19 +174,19 @@
 //        }
 //
 //        Kline nextt = kline0.next();
-//        float zf = nextt.getZhenfu();
+//        double  zf = nextt.getZhenfu();
 //        if (zf > 7 && nextt.isShadownUp(30) && nextt.getZhangfu() > 0) {
 //            error(file, date, "");
 //            return;
 //        }
 //
-//        float ma120 = kline0.getMA120();
-//        float ma250 = kline0.getMA250();
+//        double  ma120 = kline0.getMA120();
+//        double  ma250 = kline0.getMA250();
 //        if (ma120 > ma250) {
 //            Kline kline_ = kline0.next(4);
 //            if (kline_ != null) {
-//                float ma120_ = kline_.getMA120();
-//                float ma250_ = kline_.getMA250();
+//                double  ma120_ = kline_.getMA120();
+//                double  ma250_ = kline_.getMA250();
 //                if (ma120_ < ma250_) {
 //                    error(file, date, "");
 //                    return;
@@ -224,7 +224,7 @@
 //            if (astockState.dayPos == KLineUtil.ONE) {
 //                Kline kline = kline0.monthKline;
 //                if (kline.getOpen() < kline.getMA30()) {
-//                    float ffv = KLineUtil.compareMax(kline.getOpen(), kline.getMA30());
+//                    double  ffv = KLineUtil.compareMax(kline.getOpen(), kline.getMA30());
 //                    if (ffv < 5) {
 //                        error(file, date, "month is to close to MA30");
 //                        return;
@@ -264,9 +264,9 @@
 //
 //            if (astockState.dayPos == ONE) {
 //                if (kline0.isGuailiMA120250ContiniusLarge(1, 3)) {
-//                    float ff = kline0.getSpace(120, 250);
+//                    double  ff = kline0.getSpace(120, 250);
 //                    if (ff > 0.03 && ff < 0.5) {
-//                        float ff2 = kline0.next().getSpace(120, 250);
+//                        double  ff2 = kline0.next().getSpace(120, 250);
 //                        if (ff2 < ff) {
 //
 //                        } else {
@@ -283,7 +283,7 @@
 //            if (astockState.dayPos == KLineUtil.ZERO_BOTTOM_STANDMA250_TOP_CROSSMA120_ENTITY_EQUAL) {
 //                Kline next250 = kline0.nextDownTouchMAI(36, 250);
 //                if (next250 != null) {
-//                    float vv = next250.getNextZF(10);
+//                    double  vv = next250.getNextZF(10);
 //                    if (vv > 10) {
 //                        error(file, date, "");
 //                        return;
@@ -292,7 +292,7 @@
 //            }
 //            if (astockState.dayPos == KLineUtil.ZERO_BOTTOM_STANDMA120_TOP_DOWNMA250_SPACE_LARGER) {
 //                Kline monthLine = kline0.monthKline;
-//                float flagx = monthLine.getMinspanceMA();
+//                double  flagx = monthLine.getMinspanceMA();
 //                if (flagx < 2) {
 //                    error(file, date, "");
 //                    return;
@@ -300,7 +300,7 @@
 //            }
 //            if (astockState.dayPos == KLineUtil.ZERO_STAND_MA120_UPENTITY_LARGER) {
 //                Kline monthLine = kline0.monthKline;
-//                float flagx = monthLine.getMinspanceMA();
+//                double  flagx = monthLine.getMinspanceMA();
 //                if (flagx < 2) {
 //                    error(file, date, "");
 //                    return;
@@ -328,8 +328,8 @@
 //        //POS 10, no fall down to ma10
 //        if (kline0.weekline != null) {
 //
-//            float ma30 = kline0.weekline.getMA30();
-//            float ma60 = kline0.weekline.getMA60();
+//            double  ma30 = kline0.weekline.getMA30();
+//            double  ma60 = kline0.weekline.getMA60();
 //            if (ma30 > kline0.weekline.getOpen()) {
 //                if (KLineUtil.compareMax(ma30, kline0.weekline.getOpen()) < 7) {
 //                    if (KLineUtil.compareMax(ma60, kline0.weekline.getOpen()) < 7) {
@@ -353,17 +353,17 @@
 //            }
 //
 //            if (astockState.isDayPosOne()) {
-//                float ma = kline0.guailiMI(120);
+//                double  ma = kline0.guailiMI(120);
 //                boolean flag = kline0.isALlLineOK();
 //                if (!flag && ma > 10) {
-//                    float ama60 = kline0.guailiMI(60);
+//                    double  ama60 = kline0.guailiMI(60);
 //                    if (ama60 < 7.3) {
 //                    } else {
 //                        return;
 //                    }
 //                }
 //
-//                float ttt = KLineUtil.compareMax(kline0.getMA30(), kline0.getMA60());
+//                double  ttt = KLineUtil.compareMax(kline0.getMA30(), kline0.getMA60());
 //                boolean chg = kline0.isGuailiChange();
 //                if (chg) {
 //
@@ -465,7 +465,7 @@
 //
 //
 //            if (astockState.dayPos == ZERO_STAND_MA120_DOWNENTITY_LARGER) {
-//                float vv = KLineUtil.compareMax(kline0.getClose(), kline0.getMA60());
+//                double  vv = KLineUtil.compareMax(kline0.getClose(), kline0.getMA60());
 //                if (kline0.getMA60() > kline0.getClose()) {
 //                    if (vv < 2) {
 //                        error(INFO, date, "");
@@ -476,14 +476,14 @@
 //
 //
 //            if (astockState.dayPos == DOWNMA250_DOWN_MA120SMALLER) {
-//                float vv = KLineUtil.compareMax(kline0.getMA120(), kline0.getMA250());
+//                double  vv = KLineUtil.compareMax(kline0.getMA120(), kline0.getMA250());
 //                if (vv < 6) {
 //                    error(INFO, date, "");
 //                    return;
 //                }
 //            }
 //            if (astockState.dayPos == DOWNMA120_DOWNMA250SMALLER) {
-//                float vv = KLineUtil.compareMax(kline0.getMA120(), kline0.getMA250());
+//                double  vv = KLineUtil.compareMax(kline0.getMA120(), kline0.getMA250());
 //                if (vv < 6) {
 //                    error(INFO, date, "");
 //                    return;
@@ -509,7 +509,7 @@
 ////            }
 //            //ZERO_BOTTOM_STANDMA250_TOP_CROSSMA120_DOWNENTITY_LARGER
 //            if (astockState.dayPos == ZERO_BOTTOM_STANDMA250_TOP_CROSSMA120_DOWNENTITY_LARGER) {
-//                float spacee = astockState.space;
+//                double spacee = astockState.space;
 //                if (spacee > 5) {
 //                    Kline.RET flag = kline0.hasNextFallToMA250(15, 1.5f);
 //                    if (flag.flag) {
@@ -586,14 +586,14 @@
 //        if (monthKline == null) {
 //            int a = 0;
 //        }
-//        float nZFmonth = monthKline.getPrevZFLHIncludeSelf(11);
-//        float guali = 0;
+//        double nZFmonth = monthKline.getPrevZFLHIncludeSelf(11);
+//        double guali = 0;
 //        nZFmonth = monthKline.getPrevZFLHIncludeSelfOpen(24);
 //
-//        float ma120 = monthKline.getMA120();
-//        float ma60 = monthKline.getMA60();
-//        float ma30 = monthKline.getMA30();
-//        float ma10 = monthKline.getMA10();
+//        double ma120 = monthKline.getMA120();
+//        double ma60 = monthKline.getMA60();
+//        double ma30 = monthKline.getMA30();
+//        double ma10 = monthKline.getMA10();
 //        aGuaili.ma1030 = KLineUtil.compareMax(ma10, ma30);
 //        aGuaili.ma3060 = KLineUtil.compareMax(ma30, ma60);
 //        aGuaili.ma60120 = KLineUtil.compareMax(ma60, ma120);
@@ -603,11 +603,11 @@
 //    public static Guaili weekguali(String INFO, String date, Kline kline0) {
 //        Guaili aGuaili = new Guaili();
 //        Weekline monthKline = kline0.weekline;
-//        float guali = 0;
-//        float ma120 = monthKline.getMA120();
-//        float ma60 = monthKline.getMA60();
-//        float ma30 = monthKline.getMA30();
-//        float ma10 = monthKline.getMA10();
+//        double guali = 0;
+//        double ma120 = monthKline.getMA120();
+//        double ma60 = monthKline.getMA60();
+//        double ma30 = monthKline.getMA30();
+//        double ma10 = monthKline.getMA10();
 //        aGuaili.ma1030 = KLineUtil.compareMax(ma10, ma30);
 //        aGuaili.ma3060 = KLineUtil.compareMax(ma30, ma60);
 //        aGuaili.ma60120 = KLineUtil.compareMax(ma60, ma120);
@@ -616,11 +616,11 @@
 //
 //    public static boolean isJiaji(String INFO, String date, Kline next) {
 //        Weekline monthKline = next.weekline;
-//        float guali = 0;
-//        float ma120 = monthKline.getMA120();
-//        float ma60 = monthKline.getMA60();
-//        float ma30 = monthKline.getMA30();
-//        float ma10 = monthKline.getMA10();
+//        double guali = 0;
+//        double ma120 = monthKline.getMA120();
+//        double ma60 = monthKline.getMA60();
+//        double ma30 = monthKline.getMA30();
+//        double ma10 = monthKline.getMA10();
 //        if (KLineUtil.compareMax(ma30, ma60) < 6) {
 //            if (next.getClose() > ma30 && next.getClose() < ma60) {
 //                return true;
@@ -694,7 +694,7 @@
 //                    } else if (wguailiFlagNextN_m30_m60_) {
 //                        return true;
 //                    } else if (wguailiFlagNextN_m60_m250_) {
-//                        float ma60 = kline0.getMA60();
+//                        double ma60 = kline0.getMA60();
 //                        if (KLineUtil.compareMaxSign(kline0.getClose(), ma60) < 2) {
 //                            return true;
 //                        }
@@ -709,7 +709,7 @@
 //            } else if (guailiFlagNextN_m30_m250) {
 //                return true;
 //            } else if (guailiFlagNextN_m30_m60) {
-//                float ma60 = nextN.getMA60();
+//                double ma60 = nextN.getMA60();
 //                if (KLineUtil.compareMaxSign(nextN.getClose(), ma60) < 2) {
 //                    return true;
 //                }
@@ -758,12 +758,12 @@
 //    public static boolean isTouchWeek(String file, String date, Kline kline, Weekline weekline, int useweek) {
 //        boolean weekFlag = false;
 //        if (useweek == 1) {
-//            float ma10 = weekline.getMA10();
-//            float ma30 = weekline.getMA30();
-//            float ma60 = weekline.getMA60();
-//            float ma120 = weekline.getMA120();
-//            float ma250 = weekline.getMA250();
-//            float min = kline.getMin();
+//            double ma10 = weekline.getMA10();
+//            double ma30 = weekline.getMA30();
+//            double ma60 = weekline.getMA60();
+//            double ma120 = weekline.getMA120();
+//            double ma250 = weekline.getMA250();
+//            double min = kline.getMin();
 //
 //            int trendType10 = weekline.getMA10TrendType(10);
 //            int trendType30 = weekline.getMA30TrendType(10);
@@ -776,7 +776,7 @@
 //            }
 //
 //            if (kline.getOpen() > ma30 && KLineUtil.compareMax(min, ma30) < 2) {
-//                float vv = KLineUtil.compareMax(min, ma30);
+//                double vv = KLineUtil.compareMax(min, ma30);
 //                if (vv > 0.5) {
 //                    weekFlag = true;
 //                }
@@ -802,7 +802,7 @@
 //
 //    //    Kline kline0
 //    public static boolean prsIsSmallN(String file, String INFO, String date, Kline kline0, Weekline weekline, Kline nextN, String msg, LineContext context) {
-//        float zf = kline0.getZhangfu();
+//        double zf = kline0.getZhangfu();
 //        if (zf > 9.5f) {
 //            return false;
 //        }
@@ -832,7 +832,7 @@
 //            return false;
 //        }
 //
-//        float angle60 = kline0.getSlant(60, 2);
+//        double angle60 = kline0.getSlant(60, 2);
 //        if (angle60 < 15) {
 //            error(file, date, "pos:10, ma30 is hor");
 //            return false;
@@ -898,7 +898,7 @@
 //    }
 //
 //    public static boolean prsIsZTS(String file, String INFO, String date, Kline kline0, Weekline weekline, Kline nextN, String msg, LineContext context) {
-//        float zf = kline0.getZhangfu();
+//        double zf = kline0.getZhangfu();
 //        if (zf > 0 || zf < -2) {
 //            return false;
 //        }
@@ -912,11 +912,11 @@
 //            return false;
 //        }
 //
-//        float ma250 = kline0.getMA250();
+//        double ma250 = kline0.getMA250();
 //        if (kline0.getMax() * 1.08 < ma250) {
 //            return false;
 //        }
-//        float nextZTV = kline0.getClose() * 1.1f;
+//        double nextZTV = kline0.getClose() * 1.1f;
 //        boolean flag = kline0.isNextZTOnMAI();
 //        if (!flag) {
 //            return false;
@@ -991,8 +991,8 @@
 ////        }
 //
 //
-//        float nextMA250 = nextLine.getMA250();
-//        float flag2 = KLineUtil.compareMaxSign(nextLine.getMin(), nextLine.getMA120());
+//        double nextMA250 = nextLine.getMA250();
+//        double flag2 = KLineUtil.compareMaxSign(nextLine.getMin(), nextLine.getMA120());
 //        if (flag2 >= 0 && flag2 < 0.5) {
 //            if (nextLine.getOpen() > nextMA250 && nextLine.getClose() < nextMA250) {
 //                if (kline0.weekline != null) {
@@ -1035,7 +1035,7 @@
 //            return;
 //        }
 //
-//        float jump = kline0.getJumpZF();
+//        double jump = kline0.getJumpZF();
 //        if (jump > 4.5) {
 //            error(INFO, date, "kline0 jump > 4.5");
 //            return;
@@ -1075,7 +1075,7 @@
 //            }
 //
 //            if (astockState.isDayPosOne()) {
-//                float guailiMA10MA30 = kline0.getGuaili(10, 30);
+//                double guailiMA10MA30 = kline0.getGuaili(10, 30);
 //                if (guailiMA10MA30 > 4.5) {
 //                    boolean fflag = false;
 //                    if (kline0.hasFallDownMAI(30, 3, 2.2f)) {
@@ -1161,10 +1161,10 @@
 //            error(file, date, "");
 //            return;
 //        }
-//        float dma30 = kline0.getMA30();
-//        float dma60 = kline0.getMA60();
-//        float dma120 = kline0.getMA120();
-//        float dma250 = kline0.getMA250();
+//        double dma30 = kline0.getMA30();
+//        double dma60 = kline0.getMA60();
+//        double dma120 = kline0.getMA120();
+//        double dma250 = kline0.getMA250();
 //        if (kline0.getOpen() > dma120 && kline0.getOpen() > dma60) {
 //            if (KLineUtil.compareMax(dma60, dma120) > 8) {
 //                error(file, date, "");
@@ -1187,7 +1187,7 @@
 //            error(file, date, "");
 //            return;
 //        }
-//        float nZFmonth = 0;
+//        double nZFmonth = 0;
 //        if (usemonth == 1) {
 //            MonthKline monthKline = kline0.monthKline;
 //            nZFmonth = monthKline.getPrevZFLHIncludeSelf(11);
@@ -1198,17 +1198,17 @@
 //            boolean isMonthEnd = kline0.isMonthEnd(2);
 //            if (isMonthEnd) {
 //                //月末涨幅大，次月回调
-//                float zf = monthKline.getZhangfu();
+//                double zf = monthKline.getZhangfu();
 //                if (zf > 15) {
 //                    error(file, date, "月末涨幅大，次月回调:" + zf);
 //                    return;
 //                }
 //            }
 //            nZFmonth = monthKline.getPrevZFLHIncludeSelfOpen(24);
-//            float ma120 = monthKline.getMA120();
-//            float ma60 = monthKline.getMA60();
-//            float ma30 = monthKline.getMA30();
-//            float ma10 = monthKline.getMA10();
+//            double ma120 = monthKline.getMA120();
+//            double ma60 = monthKline.getMA60();
+//            double ma30 = monthKline.getMA30();
+//            double ma10 = monthKline.getMA10();
 //            if (KLineUtil.compareMax(ma30, ma60) > 40) {
 //                error(file, date, "compareMax(ma30, ma60)> 50");
 //                return;
@@ -1228,19 +1228,19 @@
 ////                    return;
 ////                }
 ////            }
-////            float nZFWeek = 0;
+////            double nZFWeek = 0;
 ////            nZFWeek = weekline.getPrevZFLHIncludeSelf(7);
 ////            if (nZFWeek > 53) {
 ////                error(file, date, "");
 ////                return;
 ////            }
-////            float ma10 = weekline.getMA10();
-////            float ma30 = weekline.getMA30();
-////            float ma60 = weekline.getMA60();
-////            float ma120 = weekline.getMA120();
-////            float ma250 = weekline.getMA250();
+////            double ma10 = weekline.getMA10();
+////            double ma30 = weekline.getMA30();
+////            double ma60 = weekline.getMA60();
+////            double ma120 = weekline.getMA120();
+////            double ma250 = weekline.getMA250();
 ////            if (ma30 > 0) {
-////                float zf = KLineUtil.compareMax(ma10, ma30);
+////                double zf = KLineUtil.compareMax(ma10, ma30);
 ////                if (zf > 13) {
 ////                    error(file, date, "");
 ////                    return;
@@ -1248,7 +1248,7 @@
 ////            }
 ////        }
 //
-//        float nzhangfu = kline0.getPrevZFLH(1);
+//        double nzhangfu = kline0.getPrevZFLH(1);
 //        if (nzhangfu > 10) {
 //        } else {
 //            error(file, date, "");
@@ -1280,7 +1280,7 @@
 //                //special condition
 //                boolean flag3 = testGuaili(INFO, date, kline0, null, nextN);
 //                //跌幅不能太小
-//                float downFrac = KLineUtil.compareMaxSign(nextN.getClose(), kline0.getClose());
+//                double downFrac = KLineUtil.compareMaxSign(nextN.getClose(), kline0.getClose());
 //                boolean downFlag = true;
 //                if (downFrac >= 0) {
 //                    downFlag = false;
@@ -1304,7 +1304,7 @@
 //                continue;
 //            }
 //
-//            float nZF = kline0.getNextDF(i);
+//            double nZF = kline0.getNextDF(i);
 //            if (nZF > 0) {
 //                continue;
 //            }
@@ -1314,29 +1314,29 @@
 //                MonthKline monthKline = kline0.monthKline.prev();
 //                MonthKline monthKline2 = monthKline.prev();
 //                MonthKline monthKline3 = monthKline2.prev();
-//                float ma120 = monthKline.getMA120();
-//                float ma60 = monthKline.getMA60();
-//                float ma30 = monthKline.getMA30();
-//                float ma10 = monthKline.getMA10();
+//                double ma120 = monthKline.getMA120();
+//                double ma60 = monthKline.getMA60();
+//                double ma30 = monthKline.getMA30();
+//                double ma10 = monthKline.getMA10();
 //                if (ma30 > 0) {
-//                    float zf = KLineUtil.compareMax(ma10, ma30);
+//                    double zf = KLineUtil.compareMax(ma10, ma30);
 //                    if (zf > 30) {
 //                        if (useweek == 1) {
 //                            Weekline weekline = kline0.weekline;
-//                            float wma10 = weekline.getMA10();
-//                            float wma30 = weekline.getMA30();
-//                            float wma60 = weekline.getMA60();
-//                            float wma120 = weekline.getMA120();
-//                            float wma250 = weekline.getMA250();
+//                            double wma10 = weekline.getMA10();
+//                            double wma30 = weekline.getMA30();
+//                            double wma60 = weekline.getMA60();
+//                            double wma120 = weekline.getMA120();
+//                            double wma250 = weekline.getMA250();
 //                            if (wma30 > 0) {
-//                                float wzf = KLineUtil.compareMax(wma10, wma30);
+//                                double wzf = KLineUtil.compareMax(wma10, wma30);
 //                                if (wzf > 12) {
 //                                    error(file, date, "");
 //                                    return;
 //                                }
 //                            }
 //                            if (wma60 > 0) {
-//                                float wzf = KLineUtil.compareMax(wma10, wma60);
+//                                double wzf = KLineUtil.compareMax(wma10, wma60);
 //                                if (wzf > 15) {
 //                                    error(file, date, "");
 //                                    return;
@@ -1361,8 +1361,8 @@
 //                }
 //                boolean flag6 = false;
 //                if (stockState.dayPos == 10) {
-//                    float angle = kline0.getABSSlant(30, 2);
-//                    float angle60 = kline0.getABSSlant(60, 2);
+//                    double angle = kline0.getABSSlant(30, 2);
+//                    double angle60 = kline0.getABSSlant(60, 2);
 //                    if (angle < 15 && angle60 < 15) {
 //                        error(file, date, "pos:10, ma30 is hor");
 //                        return;
@@ -1370,8 +1370,8 @@
 //                }
 //                if (stockState.dayPos == 26) {
 //                    if (i == 3 && nZF < -5.9) {
-//                        float ftac = KLineUtil.compareMax(nextN.getMin(), nextN.getMA30());
-//                        float ftac2 = KLineUtil.compareMax(nextN.getMin(), nextN.getMA60());
+//                        double ftac = KLineUtil.compareMax(nextN.getMin(), nextN.getMA30());
+//                        double ftac2 = KLineUtil.compareMax(nextN.getMin(), nextN.getMA60());
 //                        weekFlag = isTouchWeek(file, date, nextN, nextN.weekline, useweek);
 //                        if ((ftac < 3.1 || ftac2 < 2.5) && weekFlag) {
 //                            flag6 = true;
@@ -1389,7 +1389,7 @@
 //                }
 //                if (stockState.dayPos == 10) {
 //                    if (i < 3 && nZF < -7) {
-//                        float frac = KLineUtil.compareMaxSign(nextN.getMA30(), nextN.getMA60());
+//                        double frac = KLineUtil.compareMaxSign(nextN.getMA30(), nextN.getMA60());
 //                        if (frac <= 0.7) {
 //                            flag6 = true;
 //                        }
@@ -1408,8 +1408,8 @@
 //                        boolean frac9 = nextN.isALlLineOK();
 //                        weekFlag = isTouchWeek(file, date, nextN, nextN.weekline, useweek);
 //
-//                        float ftac = KLineUtil.compareMax(nextN.getMin(), nextN.getMA30());
-//                        float ftac2 = KLineUtil.compareMax(nextN.getMin(), nextN.getMA60());
+//                        double ftac = KLineUtil.compareMax(nextN.getMin(), nextN.getMA30());
+//                        double ftac2 = KLineUtil.compareMax(nextN.getMin(), nextN.getMA60());
 //                        weekFlag = isTouchWeek(file, date, nextN, nextN.weekline, useweek);
 //                        if (frac9 && (ftac < 3.1 || ftac2 < 2.5) && weekFlag) {
 //                            flag6 = true;
@@ -1454,16 +1454,16 @@
 //            }
 //            if (usemonth == 1 && moths.size() > 30) {
 //                MonthKline monthKline = kline0.monthKline;
-//                float ma120 = monthKline.getMA120();
-//                float ma60 = monthKline.getMA60();
-//                float ma30 = monthKline.getMA30();
-//                float ma10 = monthKline.getMA10();
+//                double ma120 = monthKline.getMA120();
+//                double ma60 = monthKline.getMA60();
+//                double ma30 = monthKline.getMA30();
+//                double ma10 = monthKline.getMA10();
 //                if (ma10 < ma30 && ma10 < ma60 && ma60 < ma120 && monthKline.getOpen() < ma10) {
 //                    StockState stockState1 = kline0.getPOS();
 //                    if (stockState1.dayPos == 11) {
 //
 //                    } else {
-//                        float zhengfu = monthKline.getPrevZFLHNoSelf(4);
+//                        double zhengfu = monthKline.getPrevZFLHNoSelf(4);
 //                        if (zhengfu > 20) {
 //                            error(file, date, "4months zhengfu(" + zhengfu + ") >20:");
 //                            return;
@@ -1480,10 +1480,10 @@
 //                }
 //            }
 //
-//            float ma250 = kline0.getMA250();
+//            double ma250 = kline0.getMA250();
 //            if (i > 0 && i < 3) {
-//                float maxf = nextN.getMax();
-//                float ff = KLineUtil.compareMax(maxf, ma250);
+//                double maxf = nextN.getMax();
+//                double ff = KLineUtil.compareMax(maxf, ma250);
 //                if (ff < 1) {
 //                    error(file, date, "");
 //                    return;
@@ -1502,7 +1502,7 @@
 //                        Weekline weekline = nextN.weekline;
 //                        boolean flag3 = testGuaili(INFO, date, kline0, weekline, nextN);
 //                        //跌幅不能太小
-//                        float downFrac = KLineUtil.compareMaxSign(nextN.getClose(), kline0.getClose());
+//                        double downFrac = KLineUtil.compareMaxSign(nextN.getClose(), kline0.getClose());
 //                        boolean downFlag = true;
 //                        if (downFrac >= 0) {
 //                            downFlag = false;
@@ -1544,7 +1544,7 @@
 //                line = 250;
 //                flag = true;
 //            }
-//            float vFrac = 2.1f;
+//            double vFrac = 2.1f;
 //            if (useweek == 1) {
 //                if (stockState.dayPos == 10) {
 //                    vFrac = 2.1f;
@@ -1572,7 +1572,7 @@
 //                }
 //            }
 //
-//            float nZF2 = kline0.getPrevZF(3);
+//            double nZF2 = kline0.getPrevZF(3);
 //            if (nZF2 > 17) {
 //                error(file, date, "+17% in 3 days");
 //                return;
@@ -1592,7 +1592,7 @@
 //                    return;
 //                } else {
 //                    if (nZF < -7) {
-//                        float frac = KLineUtil.compareMaxSign(nextN.getMA30(), nextN.getMA60());
+//                        double frac = KLineUtil.compareMaxSign(nextN.getMA30(), nextN.getMA60());
 //                        if (frac <= 0.6) {
 //                            flag = true;
 //                        }
@@ -1605,11 +1605,11 @@
 //                        }
 //                        boolean flag3 = testGuaili(INFO, date, kline0, weekline, nextN);
 //                        if (nextN.getClose() < nextN.getMA10()) {
-//                            float frac = KLineUtil.compareMaxSign(nextN.getMin(), nextN.getMA30());
-//                            float frac1 = KLineUtil.compareMaxSign(nextN.getMin(), nextN.getMA60());
-//                            float frac2 = KLineUtil.compareMaxSign(nextN.getMin(), nextN.getMA120());
-//                            float frac3 = KLineUtil.compareMaxSign(nextN.getMin(), nextN.getMA250());
-//                            float minFrac = KLineUtil.getMin(frac, frac1, frac2, frac3);
+//                            double frac = KLineUtil.compareMaxSign(nextN.getMin(), nextN.getMA30());
+//                            double frac1 = KLineUtil.compareMaxSign(nextN.getMin(), nextN.getMA60());
+//                            double frac2 = KLineUtil.compareMaxSign(nextN.getMin(), nextN.getMA120());
+//                            double frac3 = KLineUtil.compareMaxSign(nextN.getMin(), nextN.getMA250());
+//                            double minFrac = KLineUtil.getMin(frac, frac1, frac2, frac3);
 //                            if (minFrac > 0 && minFrac < 2) {
 //                                if (flag3) {
 //                                    ok(file, INFO, date, kline0, null, nextN, "", context);

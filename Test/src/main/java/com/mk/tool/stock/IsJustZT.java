@@ -1,6 +1,6 @@
 //package com.mk.tool.stock;
 //
-//import com.mk.data.GetGuben;
+//import com.mk.data.eastmoney.GetGuben;
 //import com.mk.report.LineReport;
 //import com.mk.report.LineReports;
 //
@@ -61,7 +61,7 @@
 //        }
 //        Kline kline0 = days.get(idx);
 ////        if (kline0.hasDazhang(15, 5)) {
-////            float zf = kline0.getMinPrevEntityZhenFSelf(4, 0);
+////            double zf = kline0.getMinPrevEntityZhenFSelf(4, 0);
 ////            if (zf > 2) {
 ////                return;
 ////            }

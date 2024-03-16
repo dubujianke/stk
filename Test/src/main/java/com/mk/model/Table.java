@@ -126,24 +126,24 @@ public class Table {
     }
 
 
-    public float[] getColumn(String name, int from, int to) {
+    public double[] getColumn(String name, int from, int to) {
         initIndex();
         int len = to - from + 1;
-        float[] vs = new float[len];
+        double[] vs = new double[len];
         int col = getColumn(name);
         for (int i = 0; i < len; i++) {
-            vs[i] = Float.parseFloat(getCell(from + i - 1, col));
+            vs[i] = Double.parseDouble(getCell(from + i - 1, col));
         }
         return vs;
     }
 
 
-    public void filter(String name, String names[], int from, int to, float min) {
+    public void filter(String name, String names[], int from, int to, double min) {
         initIndex();
         int len = to - from + 1;
         int col = getColumn(name);
         for (int i = 0; i < len; i++) {
-            float v = Float.parseFloat(getCell(from + i - 1, col));
+            double v = Double.parseDouble(getCell(from + i - 1, col));
             String code = getCell(from + i - 1, 0);
             String date = getCell(from + i - 1, 2);
             if (Math.abs(v) < min) {
@@ -175,8 +175,8 @@ public class Table {
                     if (v2.equalsIgnoreCase("code")) {
                         return 1;
                     }
-                    float f1 = o1.getFloat(getColumn("涨幅"));
-                    float f2 = o2.getFloat(getColumn("涨幅"));
+                    double f1 = o1.getFloat(getColumn("涨幅"));
+                    double f2 = o2.getFloat(getColumn("涨幅"));
                     return (int) (100 * (f2 - f1));
                 } catch (Exception e) {
                     return 1;

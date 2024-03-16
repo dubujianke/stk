@@ -33,7 +33,7 @@ public class SelectReplaceColExcel {
 
                     String data = row.getStr("周涨幅").trim();
                     String[] vs = data.split(" ");
-                    float v1 = Float.parseFloat(vs[0]);
+                    double v1 = Double.parseDouble(vs[0]);
                     int v2 = Integer.parseInt(vs[1]);
                     if (v2 < 8 && v1 > 19) {
                         row.setCol(row.getTable().getColumn("周涨幅"), "" + vs[0]);

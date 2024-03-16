@@ -21,7 +21,7 @@
 //        return str.matches(regex);
 //    }
 //
-//    public float opt(String s) throws Exception {
+//    public double opt(String s) throws Exception {
 //        if (s == null || "".equals(s.trim())) {
 //            return 0f;
 //        }
@@ -35,7 +35,7 @@
 //                throw new Exception("operate error");
 //            }
 //            String vstr = s.trim();
-//            float v0 = getValue(vstr, kline, table);
+//            double v0 = getValue(vstr, kline, table);
 //            return v0;
 //        }
 //
@@ -47,7 +47,7 @@
 //                    if (a6 == -1) {
 //                        throw new Exception("括号不匹配");
 //                    } else {
-//                        float f = opt(s.substring(a5 + 1, a6).trim());
+//                        double f = opt(s.substring(a5 + 1, a6).trim());
 //                        s = s.replace(s.substring(a5, a6 + 1), String.valueOf(f));
 //                        return opt(s);
 //                    }
@@ -57,7 +57,7 @@
 //                if (a6 == -1) {
 //                    throw new Exception("括号不匹配");
 //                } else {
-//                    float f = opt(s.substring(a5 + 1, a6).trim());
+//                    double f = opt(s.substring(a5 + 1, a6).trim());
 //                    s = s.replace(s.substring(a5, a6 + 1), String.valueOf(f));
 //                    return opt(s);
 //                }
@@ -84,11 +84,11 @@
 //        return Integer.parseInt(s.trim());
 //    }
 //
-//    public float calValue(Kline kLine, Table weekline) {
+//    public double calValue(Kline kLine, Table weekline) {
 //        try {
 //            this.kline = kLine;
 //            this.table = weekline;
-//            float v = opt(code);
+//            double v = opt(code);
 //            return v;
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);

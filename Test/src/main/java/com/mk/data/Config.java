@@ -1,5 +1,6 @@
 package com.mk.data;
 
 public class Config {
-    public static final String ROOT = "./res/code/";
+    public static final String ROOT = "D:/stock/Test/res/code/";
+    public static final String ROOT2 = "D:/stock/Test/res/";
 }

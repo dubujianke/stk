@@ -16,20 +16,20 @@ public class SelectRemove2Excel {
         String[] items = str.split(",");
         int flag = 0;
         for (String item : items) {
-            if (Float.parseFloat(item) >= v) {
+            if (Double.parseDouble(item) >= v) {
                 flag++;
             }
         }
         return flag;
     }
 
-    public static float[] getCNTS(String str) {
+    public static double[] getCNTS(String str) {
         str = str.substring(1, str.length() - 1);
         String[] items = str.split(",");
-        float vs[] = new float[3];
+        double vs[] = new double[3];
         int idx = 0;
         for (String item : items) {
-            vs[idx] = Float.parseFloat(item);
+            vs[idx] = Double.parseDouble(item);
             idx++;
         }
         return vs;
@@ -64,11 +64,11 @@ public class SelectRemove2Excel {
                         if (tkidx >= 0) {
                             return false;
                         }
-                        float gb = row.getFloat(table.getColumn("月MIN涨幅"));
+                        double gb = row.getFloat(table.getColumn("月MIN涨幅"));
                         if (gb < -2.435) {
                             return false;
                         }
-                        float gb2 = row.getFloat(table.getColumn("上上月涨幅"));
+                        double gb2 = row.getFloat(table.getColumn("上上月涨幅"));
                         if (gb2 > 0) {
                             return false;
                         }
@@ -107,7 +107,7 @@ public class SelectRemove2Excel {
                     String[] items = str.split(",");
                     int flag = 0;
                     for (String item : items) {
-                        if (Float.parseFloat(item) >= 2) {
+                        if (Double.parseDouble(item) >= 2) {
                             flag++;
                         }
                     }
@@ -320,7 +320,7 @@ public class SelectRemove2Excel {
 
                     if (flagOne == 3) {
 //                    月压力
-                        float hands[] = getCNTS(str);
+                        double hands[] = getCNTS(str);
                         String wStr2 = row.getStr(table.getColumn("月压力")).trim();
                         if (!StringUtil.isNull(wStr2)) {
                             String wss[] = wStr2.split(",");
@@ -330,13 +330,13 @@ public class SelectRemove2Excel {
                                 wStr = wStr.trim().substring(1, wStr.length() - 1);
                                 String ws[] = wStr.split("\\s+");
                                 if (ws[0].equalsIgnoreCase("250")) {
-                                    float v = Float.parseFloat(ws[1]);
+                                    double v = Double.parseDouble(ws[1]);
                                     if (v > -8) {
                                         contain250Or120 = true;
                                     }
                                 }
                                 if (ws[0].equalsIgnoreCase("120")) {
-                                    float v = Float.parseFloat(ws[1]);
+                                    double v = Double.parseDouble(ws[1]);
                                     contain250Or120 = true;
                                 }
                             }
@@ -355,7 +355,7 @@ public class SelectRemove2Excel {
                                 wStr = wStr.substring(1, wStr.length() - 1);
                                 String ws[] = wStr.split("\\s+");
                                 if (hands[0] < 4 && hands[2] < 4 && ws[0].equalsIgnoreCase("250")) {
-                                    float v = Float.parseFloat(ws[1]);
+                                    double v = Double.parseDouble(ws[1]);
                                     if (v > -5.0) {
                                         errFlag = true;
                                     }
@@ -410,7 +410,7 @@ public class SelectRemove2Excel {
                         if (!StringUtil.isNull(wcur)) {
                             String wcurs[] = wcur.split("/");
                             boolean contain250Or120 = false;
-                            float v = Float.parseFloat(wcurs[0].trim());
+                            double v = Double.parseDouble(wcurs[0].trim());
                             if (v < -3.3) {
                                 contain250Or120 = true;
                             }
@@ -424,7 +424,7 @@ public class SelectRemove2Excel {
                         if (!StringUtil.isNull(wprev1)) {
                             String wcurs[] = wprev1.split("/");
                             boolean contain250Or120 = false;
-                            float v = Float.parseFloat(wcurs[0].trim());
+                            double v = Double.parseDouble(wcurs[0].trim());
                             if (v > 6.9) {
                                 contain250Or120 = true;
                             }
@@ -438,7 +438,7 @@ public class SelectRemove2Excel {
                         if (!StringUtil.isNull(wprev2)) {
                             String wcurs[] = wprev2.split("/");
                             boolean contain250Or120 = false;
-                            float v = Float.parseFloat(wcurs[0].trim());
+                            double v = Double.parseDouble(wcurs[0].trim());
                             if (v > 5) {
                                 contain250Or120 = true;
                             }

@@ -2,7 +2,7 @@ package com.mk.tool.stock;
 
 import com.huaien.core.util.DateUtil;
 import com.mk.data.GetBankuai;
-import com.mk.data.GetGuben;
+import com.mk.data.eastmoney.GetGuben;
 import com.mk.model.Col;
 import com.mk.model.Row;
 import com.mk.model.Table;
@@ -20,16 +20,16 @@ import java.util.Map;
  */
 public class IsZhangting2 extends Stragety {
     public static Table table;
-    public static float minZF = 1.3f;
+    public static double  minZF = 1.3f;
     public static void initTable() {
         table = new Table();
         table.addFirst(StragetyZTBottom.headerRow);
     }
 
 
-    public static float getMtZF(float open, MinuteLine minuteLine) {
+    public static double  getMtZF(double  open, MinuteLine minuteLine) {
         try {
-            float prev3 = 0;
+            double  prev3 = 0;
             String p3Str = "";
             String p3 = "";
             String p2 = "";
@@ -37,7 +37,7 @@ public class IsZhangting2 extends Stragety {
             String p0 = "";
             String mZf = "";
             MinuteLine minMinuteLine = minuteLine.getMin();
-            float minPrice = KLineUtil.compareMaxSign(minMinuteLine.price, open);
+            double  minPrice = KLineUtil.compareMaxSign(minMinuteLine.price, open);
             String minuteLineStr = "" + minPrice;
             MinuteLine mPrev3 = minuteLine.prev(3);
             MinuteLine mPrev2 = minuteLine.prev(2);
@@ -46,15 +46,15 @@ public class IsZhangting2 extends Stragety {
                 prev3 = KLineUtil.compareMaxSign(mPrev3.price, open);
                 p3Str = minuteLine.prev(3).getVolStr() + " ";
             }
-            float prev2 = KLineUtil.compareMaxSign(mPrev2.price, open);
-            float prev1 = KLineUtil.compareMaxSign(mPrev1.price, open);
-            float cur = KLineUtil.compareMaxSign(minuteLine.price, open);
+            double  prev2 = KLineUtil.compareMaxSign(mPrev2.price, open);
+            double prev1 = KLineUtil.compareMaxSign(mPrev1.price, open);
+            double cur = KLineUtil.compareMaxSign(minuteLine.price, open);
             p3 = p3Str;
             p2 = minuteLine.prev(2).getVolStr() + "/" + format(prev2 - prev3);
             p1 = minuteLine.prev(1).getVolStr() + "/" + format(prev1 - prev2);
             p0 = minuteLine.getVolStr() + "/" + format(cur - prev1);
             mZf = format(cur - prev3);
-            return Float.parseFloat(mZf);
+            return Double.parseDouble(mZf);
         } catch (Exception e) {
         }
         return 0;
@@ -64,8 +64,8 @@ public class IsZhangting2 extends Stragety {
     public static Row getRowZT(String file, String INFO, String date, Kline kline0Prev, MinuteLine minuteLine, LineContext context) {
         Kline Kline = kline0Prev.next();
         Kline KlinePrev = kline0Prev;
-        float open = KlinePrev.getClose();
-        float prev3 = 0;
+        double open = KlinePrev.getClose();
+        double prev3 = 0;
         String p3Str = "-";
 
         String p3 = "";
@@ -79,7 +79,7 @@ public class IsZhangting2 extends Stragety {
             }
         } else {
             MinuteLine minMinuteLine = minuteLine.getMin();
-            float minPrice = KLineUtil.compareMaxSign(minMinuteLine.price, open);
+            double minPrice = KLineUtil.compareMaxSign(minMinuteLine.price, open);
             MinuteLine mPrev3 = minuteLine.prev(3);
             MinuteLine mPrev2 = minuteLine.prev(2);
             MinuteLine mPrev1 = minuteLine.prev(1);
@@ -87,9 +87,9 @@ public class IsZhangting2 extends Stragety {
                 prev3 = KLineUtil.compareMaxSign(mPrev3.price, open);
                 p3Str = minuteLine.prev(3).getVolStr() + " ";
             }
-            float prev2 = KLineUtil.compareMaxSign(mPrev2.price, open);
-            float prev1 = KLineUtil.compareMaxSign(mPrev1.price, open);
-            float cur = KLineUtil.compareMaxSign(minuteLine.price, open);
+            double prev2 = KLineUtil.compareMaxSign(mPrev2.price, open);
+            double prev1 = KLineUtil.compareMaxSign(mPrev1.price, open);
+            double cur = KLineUtil.compareMaxSign(minuteLine.price, open);
             p3 = p3Str;
             p2 = minuteLine.prev(2).getVolStr() + "/" + format(prev2 - prev3);
             p1 = minuteLine.prev(1).getVolStr() + "/" + format(prev1 - prev2);
@@ -97,13 +97,13 @@ public class IsZhangting2 extends Stragety {
             mZf = format(cur - prev3);
         }
 
-        float zt = KlinePrev.getClose() * 1.1f;
+        double zt = KlinePrev.getClose() * 1.1f;
         List<Kline.StandResult> list = KlinePrev.monthKline.spaceUpTouchMA(zt);
         String zfStr = "";
         if (Kline != null) {
             if (minuteLine != null) {
                 MinuteLine lastMinuteLine = minuteLine.allLineList.get(minuteLine.allLineList.size() - 1);
-                float frac = KLineUtil.compareMaxSign(lastMinuteLine.price, KlinePrev.getClose());
+                double frac = KLineUtil.compareMaxSign(lastMinuteLine.price, KlinePrev.getClose());
                 zfStr = "" + frac;
             } else {
                 zfStr = "" + Kline.getZhangfu();
@@ -126,7 +126,7 @@ public class IsZhangting2 extends Stragety {
         } else {
             if (context.getkModel() != null && context.getkModel().getRow() != null) {
                 context.getkModel().getRow().getTable().initIndex();
-                float fistMinute = context.getkModel().getRow().getFloat("fistMinute");
+                double fistMinute = context.getkModel().getRow().getFloat("fistMinute");
                 fistMinuteStr = "" + fistMinute;
             } else {
             }
@@ -141,12 +141,12 @@ public class IsZhangting2 extends Stragety {
         }
 
         if (minuteLine != null) {
-            float cur = KLineUtil.compareMaxSign(minuteLine.price, open);
+            double cur = KLineUtil.compareMaxSign(minuteLine.price, open);
             row.setCol(table.getColumn("maxzf"), "" + cur);
 
             MinuteLine first = minuteLine.getFirst();
-            float firstV = KLineUtil.compareMaxSign(first.price, open);
-            float ma120 = kline0Prev.getMA120();
+            double firstV = KLineUtil.compareMaxSign(first.price, open);
+            double ma120 = kline0Prev.getMA120();
             int ma120Flag = 0;
             if (first.price > ma120 && kline0Prev.close < ma120) {
                 ma120Flag = 1;
@@ -160,9 +160,9 @@ public class IsZhangting2 extends Stragety {
         return row;
     }
 
-    public static float getFloat(LineContext context, String name) {
+    public static double getFloat(LineContext context, String name) {
         try {
-            float v = context.getkModel().getRow().getFloat(name);
+            double v = context.getkModel().getRow().getFloat(name);
             return v;
         } catch (Exception e) {
 
@@ -179,8 +179,8 @@ public class IsZhangting2 extends Stragety {
 
         String prevDate = DateUtil.getPrevWorkDate(date);
         String firstSpeedDown = "";
-        float open = KlinePrev.getClose();
-        float prev3 = 0;
+        double open = KlinePrev.getClose();
+        double prev3 = 0;
         String p3Str = "-";
 
         StockDayMinuteLine stockDayMinuteLine = KlinePrev.getStockDayMinuteLine();
@@ -203,7 +203,7 @@ public class IsZhangting2 extends Stragety {
             }
         } else {
             MinuteLine minMinuteLine = minuteLine.getMin();
-            float minPrice = KLineUtil.compareMaxSign(minMinuteLine.price, open);
+            double minPrice = KLineUtil.compareMaxSign(minMinuteLine.price, open);
             minuteLineStr = "" + minPrice;
             MinuteLine mPrev3 = minuteLine.prev(3);
             MinuteLine mPrev2 = minuteLine.prev(2);
@@ -212,9 +212,9 @@ public class IsZhangting2 extends Stragety {
                 prev3 = KLineUtil.compareMaxSign(mPrev3.price, open);
                 p3Str = minuteLine.prev(3).getVolStr() + " ";
             }
-            float prev2 = KLineUtil.compareMaxSign(mPrev2.price, open);
-            float prev1 = KLineUtil.compareMaxSign(mPrev1.price, open);
-            float cur = KLineUtil.compareMaxSign(minuteLine.price, open);
+            double prev2 = KLineUtil.compareMaxSign(mPrev2.price, open);
+            double prev1 = KLineUtil.compareMaxSign(mPrev1.price, open);
+            double cur = KLineUtil.compareMaxSign(minuteLine.price, open);
             p3 = p3Str;
             p2 = minuteLine.prev(2).getVolStr() + "/" + format(prev2 - prev3);
             p1 = minuteLine.prev(1).getVolStr() + "/" + format(prev1 - prev2);
@@ -249,31 +249,31 @@ public class IsZhangting2 extends Stragety {
         String space250MCur = StringUtil.spaceString(StringUtil.format(KlinePrev.monthKline.getSpace250(KlinePrev.getClose()), 1), 4);
         String space120MCur = StringUtil.spaceString(StringUtil.format(KlinePrev.monthKline.getSpace120(KlinePrev.getClose()), 1), 4);
 
-        float[] zfs = KLineUtil.prevWeekline(KlinePrev, 1).getPrevZhangFu(17);
-        float[] zfms = KlinePrev.monthKline.prev().getPrevZhangFu(34);
+        double[] zfs = KLineUtil.prevWeekline(KlinePrev, 1).getPrevZhangFu(17);
+        double[] zfms = KlinePrev.monthKline.prev().getPrevZhangFu(34);
         if (zfms == null) {
             zfms = KlinePrev.monthKline.prev().getPrevZhangFu(18);
         }
 
         if (zfs == null) {
-            zfs = new float[]{1000, 1000};
+            zfs = new double[]{1000, 1000};
         }
         String weekzf = StringUtil.format3(zfs[0], 5) + " " + StringUtil.format((int) zfs[1]);
         String monzhf_ = "";
         int monthLen = 0;
-        float meanMon = 0;
+        double meanMon = 0;
         if (zfms != null) {
             monthLen = (int) zfms[1];
             monzhf_ = StringUtil.format(zfms[0], 1);
             meanMon = zfms[0] / monthLen;
         }
         String minStr = "";
-        float hand = KlinePrev.getHand(context.getTotalV());
-        float handPrev = KlinePrev.prev().getHand(context.getTotalV());
-        float handPrev2 = KlinePrev.prev(2).getHand(context.getTotalV());
-        float hands[] = new float[]{handPrev2, handPrev, hand};
+        double hand = KlinePrev.getHand(context.getTotalV());
+        double handPrev = KlinePrev.prev().getHand(context.getTotalV());
+        double handPrev2 = KlinePrev.prev(2).getHand(context.getTotalV());
+        double hands[] = new double[]{handPrev2, handPrev, hand};
 
-        float zt = KlinePrev.getClose() * 1.1f;
+        double zt = KlinePrev.getClose() * 1.1f;
         List<Kline.StandResult> list = KlinePrev.monthKline.spaceUpTouchMA(zt);
         List<Kline.StandResult> listWeek = KlinePrev.weekline.spaceUpTouchMA(zt);
         List<Kline.StandResult> listDay = KlinePrev.spaceUpTouchMA(zt);
@@ -297,13 +297,13 @@ public class IsZhangting2 extends Stragety {
         if (Kline != null) {
             if (minuteLine != null) {
                 MinuteLine lastMinuteLine = minuteLine.allLineList.get(minuteLine.allLineList.size() - 1);
-                float frac = KLineUtil.compareMaxSign(lastMinuteLine.price, KlinePrev.getClose());
+                double frac = KLineUtil.compareMaxSign(lastMinuteLine.price, KlinePrev.getClose());
                 zfStr = "" + frac;
             } else {
                 zfStr = "" + Kline.getZhangfu();
             }
         }
-        float zhenfu = KlinePrev.getZhenfu();
+        double zhenfu = KlinePrev.getZhenfu();
         String gubenStr = StringUtil.spaceString(StringUtil.format3(guben, 0), 3);
         String space250Str = "" + space250;
         String weekzfStr = "" + weekzf;
@@ -321,9 +321,9 @@ public class IsZhangting2 extends Stragety {
         String prevweek1 = KLineUtil.prevWeekline(KlinePrev, 1).getZhangfuStr2();
         String prevweek2 = KLineUtil.prevWeekline(KlinePrev, 2).getZhangfuStr2();
         String weekTotal = StringUtil.spaceString(StringUtil.format(KLineUtil.prevWeekline(KlinePrev, 1).getZhangfu2() + KLineUtil.prevWeekline(KlinePrev, 2).getZhangfu2(), 1), 5);
-        float minAll = Integer.MAX_VALUE;
-        float minWeek = Integer.MAX_VALUE;
-        float minMon = Integer.MAX_VALUE;
+        double minAll = Integer.MAX_VALUE;
+        double minWeek = Integer.MAX_VALUE;
+        double minMon = Integer.MAX_VALUE;
         if (Math.abs(KlinePrev.monthKline.prev(1).getZhangfu2()) < Math.abs(minMon)) {
             minMon = KlinePrev.monthKline.prev(1).getZhangfu2();
         }
@@ -392,7 +392,7 @@ public class IsZhangting2 extends Stragety {
         row.add(new Col(space60));
         row.add(new Col(space30));//gap30
 
-        float price = KlinePrev.close;
+        double price = KlinePrev.close;
         row.add(new Col("" + KlinePrev.getPrevKR(price, 250, 5)));//k250
         row.add(new Col("" + KlinePrev.getPrevKR(price, 120, 5)));//
         row.add(new Col("" + KlinePrev.getPrevKR(price, 60, 5)));//
@@ -483,10 +483,10 @@ public class IsZhangting2 extends Stragety {
 
         //guaili price
         //price_(9)	price_(8)	price_(7)	price_(6)	price_(5)	price_(4)	price_(3)	price_(2)	price_(1)	price_(0)
-        float minPriceGuaili = 999;
+        double minPriceGuaili = 999;
         for (int i = 9; i >= 0; i--) {
             String aret = KlinePrev.prev(i).getGuaili(4);
-            float ret2 = Float.parseFloat(aret);
+            double ret2 = Double.parseDouble(aret);
             if (i <= 4 && minPriceGuaili > ret2) {
                 minPriceGuaili = ret2;
             }
@@ -527,7 +527,7 @@ public class IsZhangting2 extends Stragety {
 
 
         //wprev_(4)	wprev_(3)	wprev_(2)	wprev_(1)	wcur_	wprev(4)	wprev(3)	wprev(2)	wprev(1)	wcur
-        float minw = 999;
+        double minw = 999;
         for (int IDX = 5; IDX >= 1; IDX--) {
             String wps = StringUtil.format(KLineUtil.prevWeekline(KlinePrev, IDX).getZhangfu2()) + "/" + StringUtil.format(KLineUtil.prevWeekline(KlinePrev, IDX).getChangeHand(context));
             String wpss[] = wps.split("/");
@@ -537,7 +537,7 @@ public class IsZhangting2 extends Stragety {
         for (int IDX = 5; IDX >= 1; IDX--) {
             String wps = StringUtil.format(KLineUtil.prevWeekline(KlinePrev, IDX).getZhangfu2()) + "/" + StringUtil.format(KLineUtil.prevWeekline(KlinePrev, IDX).getChangeHand(context));
             String wpss[] = wps.split("/");
-            float ttt = Math.abs(Float.parseFloat(wpss[0]));
+            double ttt = Math.abs(Double.parseDouble(wpss[0]));
             if (Math.abs(minw) >= ttt) {
                 minw = ttt;
             }
@@ -631,7 +631,7 @@ public class IsZhangting2 extends Stragety {
                 for (String v : yl) {
                     String[] vs = v.trim().replace("(", "").replace(")", "").split("\\s+");
                     int period = Integer.parseInt(vs[0]);
-                    float vv = Float.parseFloat(vs[1]);
+                    double vv = Double.parseDouble(vs[1]);
                     yalis.put("" + period, new PeriodPressure("" + vv));
                 }
                 row.add(new Col(yalis.get("30").value));
@@ -661,7 +661,7 @@ public class IsZhangting2 extends Stragety {
                 for (String v : yl) {
                     String[] vs = v.trim().replace("(", "").replace(")", "").split("\\s+");
                     int period = Integer.parseInt(vs[0]);
-                    float vv = Float.parseFloat(vs[1]);
+                    double vv = Double.parseDouble(vs[1]);
                     yalis.put("" + period, new PeriodPressure("" + vv));
                 }
                 row.add(new Col(yalis.get("30").value));
@@ -691,7 +691,7 @@ public class IsZhangting2 extends Stragety {
                 for (String v : yl) {
                     String[] vs = v.trim().replace("(", "").replace(")", "").split("\\s+");
                     int period = Integer.parseInt(vs[0]);
-                    float vv = Float.parseFloat(vs[1]);
+                    double vv = Double.parseDouble(vs[1]);
                     yalis.put("" + period, new PeriodPressure("" + vv));
                 }
                 row.add(new Col(yalis.get("30").value));
@@ -721,7 +721,7 @@ public class IsZhangting2 extends Stragety {
                 for (String v : yl) {
                     String[] vs = v.trim().replace("(", "").replace(")", "").split("\\s+");
                     int period = Integer.parseInt(vs[0]);
-                    float vv = Float.parseFloat(vs[1]);
+                    double vv = Double.parseDouble(vs[1]);
                     yalis.put("" + period, new PeriodPressure("" + vv));
                 }
                 row.add(new Col(yalis.get("30").value));
@@ -750,7 +750,7 @@ public class IsZhangting2 extends Stragety {
                 for (String v : yl) {
                     String[] vs = v.trim().replace("(", "").replace(")", "").split("\\s+");
                     int period = Integer.parseInt(vs[0]);
-                    float vv = Float.parseFloat(vs[1]);
+                    double vv = Double.parseDouble(vs[1]);
                     yalis.put("" + period, new PeriodPressure("" + vv));
                 }
                 row.add(new Col(yalis.get("30").value));
@@ -832,7 +832,7 @@ public class IsZhangting2 extends Stragety {
         } else {
             if (context.getkModel() != null && context.getkModel().getRow() != null) {
                 context.getkModel().getRow().getTable().initIndex();
-                float fistMinute = getFloat(context, "fistMinute");
+                double fistMinute = getFloat(context, "fistMinute");
                 row.add(new Col("" + fistMinute));
             } else {
                 row.add(new Col(""));
@@ -857,7 +857,7 @@ public class IsZhangting2 extends Stragety {
 
         row.add(new Col("" + filterRowSpecialHorAfter(kline0Prev)));
         if (minuteLine != null) {
-            float cur = KLineUtil.compareMaxSign(minuteLine.price, open);
+            double cur = KLineUtil.compareMaxSign(minuteLine.price, open);
             row.add(new Col("" + cur));
         } else {
             row.add(new Col("-99"));
@@ -885,7 +885,7 @@ public class IsZhangting2 extends Stragety {
                 for (String v : yl) {
                     String[] vs = v.trim().replace("(", "").replace(")", "").split("\\s+");
                     int period = Integer.parseInt(vs[0]);
-                    float vv = Float.parseFloat(vs[1]);
+                    double vv = Double.parseDouble(vs[1]);
                     yalis.put("" + period, new PeriodPressure("" + vv));
                 }
                 row.add(new Col(yalis.get("30").value));
@@ -901,7 +901,7 @@ public class IsZhangting2 extends Stragety {
 
     public static int filterRowSpecialHorAfter(Kline kline0) {
         boolean flag1 = kline0.existHor(6);
-        float f1 = kline0.getSpace250();
+        double f1 = kline0.getSpace250();
         if (f1 > 0 && f1 < 2) {
             flag1 = true;
         }
@@ -924,11 +924,11 @@ public class IsZhangting2 extends Stragety {
             return 1;
         }
 
-        float m1 = kline0.monthKline.getZhangfu();
-        float z1 = kline0.monthKline.getZhenfu();
+        double m1 = kline0.monthKline.getZhangfu();
+        double z1 = kline0.monthKline.getZhenfu();
 
-        float m2 = kline0.monthKline.prev().getZhangfu();
-        float z2 = kline0.monthKline.prev().getZhenfu();
+        double m2 = kline0.monthKline.prev().getZhangfu();
+        double z2 = kline0.monthKline.prev().getZhenfu();
         if (m1 > 7 || m2 > 7) {
             return 0;
         }
@@ -952,8 +952,8 @@ public class IsZhangting2 extends Stragety {
         aRow.getTable().initIndex();
         int lft = (int) aRow.getInt("LFT");
         int rgt = (int) aRow.getInt("RGT");
-        float open = kline0.prev().getOpen();
-        float mtzf = IsZhangting2.getMtZF(open, minuteLine);
+        double open = kline0.prev().getOpen();
+        double mtzf = IsZhangting2.getMtZF(open, minuteLine);
         boolean ret = false;
         if (mtzf <= 1.835) {
             if (lft == 1) {
@@ -966,7 +966,7 @@ public class IsZhangting2 extends Stragety {
         }
 
 
-        float firstMinuteZF = minuteLine.allLineList.get(0).getZF(kline0.prev());
+        double firstMinuteZF = minuteLine.allLineList.get(0).getZF(kline0.prev());
         if (firstMinuteZF <= -0.8f) {
             return;
         }
@@ -994,9 +994,9 @@ public class IsZhangting2 extends Stragety {
         if (minuteLine.prev(3) == null) {
             return true;
         }
-        float open = kline.prev().getClose();
-        float prev3 = KLineUtil.compareMaxSign(minuteLine.prev(3).price, open);
-        float cur = KLineUtil.compareMaxSign(minuteLine.price, open);
+        double open = kline.prev().getClose();
+        double prev3 = KLineUtil.compareMaxSign(minuteLine.prev(3).price, open);
+        double cur = KLineUtil.compareMaxSign(minuteLine.price, open);
         if (cur - prev3 > StragetyZTBottom.MIN_3MINUTES_ZF) {
             return true;
         }
@@ -1010,16 +1010,16 @@ public class IsZhangting2 extends Stragety {
 
     public static String getSpeedUp(Kline kline, MinuteLine minuteLine) {
         try {
-            float open = kline.prev().getClose();
-            float prev3 = 0;
+            double open = kline.prev().getClose();
+            double prev3 = 0;
             String p3Str = "-";
             if (minuteLine.prev(3) != null) {
                 prev3 = KLineUtil.compareMaxSign(minuteLine.prev(3).price, open);
                 p3Str = minuteLine.prev(3).getVolStr() + " ";
             }
-            float prev2 = KLineUtil.compareMaxSign(minuteLine.prev(2).price, open);
-            float prev1 = KLineUtil.compareMaxSign(minuteLine.prev(1).price, open);
-            float cur = KLineUtil.compareMaxSign(minuteLine.price, open);
+            double prev2 = KLineUtil.compareMaxSign(minuteLine.prev(2).price, open);
+            double prev1 = KLineUtil.compareMaxSign(minuteLine.prev(1).price, open);
+            double cur = KLineUtil.compareMaxSign(minuteLine.price, open);
 
 
             return kline.getDate() + " " + minuteLine.getTime() + " " +
@@ -1035,7 +1035,7 @@ public class IsZhangting2 extends Stragety {
     }
 
 
-    public static String format(float v) {
+    public static String format(double v) {
         return String.format("%.2f", v);
     }
 
@@ -1075,7 +1075,7 @@ public class IsZhangting2 extends Stragety {
 
         MinuteLine minuteLine = realTimeFilter(file, days, date, weeks, moths, usemonth, useweek, kline, context);
         if (minuteLine != null) {
-            float retFrac = KLineUtil.compareMaxSign(minuteLine.price, kline.prev().close);
+            double retFrac = KLineUtil.compareMaxSign(minuteLine.price, kline.prev().close);
             if(retFrac>3.6) {
 //                return;
             }

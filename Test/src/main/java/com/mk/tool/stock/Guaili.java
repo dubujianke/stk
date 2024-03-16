@@ -4,9 +4,9 @@ public class Guaili {
     public boolean use3060;
     public boolean use60120;
 
-    public float ma1030;
-    public float ma3060;
-    public float ma60120;
+    public double ma1030;
+    public double ma3060;
+    public double ma60120;
 
     public boolean isOK() {
         if(ma1030>40) {

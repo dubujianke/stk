@@ -52,7 +52,7 @@ public class SelectCopyColExcel {
                     if (period == 250) {
                         contain250 = true;
                     }
-                    float vv = Float.parseFloat(vs[1]);
+                    double vv = Double.parseDouble(vs[1]);
                     row.setCol(table.getColumn(prefix + period), "" + vv);
                 }
                 if (!contain30) {

@@ -17,20 +17,20 @@ public class SelectRemove2Excel_ {
         String[] items = str.split(",");
         int flag = 0;
         for (String item : items) {
-            if (Float.parseFloat(item) >= v) {
+            if (Double.parseDouble(item) >= v) {
                 flag++;
             }
         }
         return flag;
     }
 
-    public static float[] getCNTS(String str) {
+    public static double[] getCNTS(String str) {
         str = str.substring(1, str.length() - 1);
         String[] items = str.split(",");
-        float vs[] = new float[3];
+        double vs[] = new double[3];
         int idx = 0;
         for (String item : items) {
-            vs[idx] = Float.parseFloat(item);
+            vs[idx] = Double.parseDouble(item);
             idx++;
         }
         return vs;

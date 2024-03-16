@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class MaxPoint {
     public int idx;
     public int pIdx;
-    public float value;
+    public double value;
     public Kline kline;
     public List<MaxPoint> points;
 

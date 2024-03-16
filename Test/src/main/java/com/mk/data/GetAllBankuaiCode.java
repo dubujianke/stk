@@ -21,8 +21,8 @@ import java.util.List;
 
 public class GetAllBankuaiCode {
     public static final String FILE = "res/bankuai.txt";
-
-
+    public static final String FILE_SELECT = "bankuai_select.txt";
+    public static  List<String> bankuaiSelectList;
     public static String getCode(String str) {
         String[] strs = str.split("/");
         return strs[strs.length-1];
@@ -73,6 +73,19 @@ public class GetAllBankuaiCode {
         }
     }
 
+    public static List<String> readSelect() throws IOException {
+        List<String> strs = FileUtil.readLines(Config.ROOT2+FILE_SELECT);
+//        for(String element : strs) {
+//            strs.add(element);
+//        }
+        bankuaiSelectList = strs;
+        return strs;
+    }
+
+    public static boolean containBankuai(String name) {
+        boolean flag = bankuaiSelectList.stream().anyMatch(v -> name.contains(v));
+        return flag;
+    }
 
     private static void log(String msg, String... vals) {
         //System.out.println(String.format(msg, vals));

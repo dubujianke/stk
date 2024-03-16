@@ -23,8 +23,8 @@ public class Grid {
     }
 
     private  boolean bottomUpFlag;
-    private float prev;
-    private float unitPercent;//1分钱对应的百分比
+    private double prev;
+    private double unitPercent;//1分钱对应的百分比
     private int unit;//1分钱对应的值
     private List<TypeCategory> list = new ArrayList();
     private Map<String, TypeCategory> map = new HashMap<>();
@@ -129,7 +129,7 @@ public class Grid {
 
     //cur
     public boolean prsLinesBottomUp(Kline kline, LineContext context) {
-        float dltTotal = 0;
+        double dltTotal = 0;
         MinuteLine last = allLineList.get(allLineList.size()-1);
         if(last.getZF(kline.prev())<0) {
             return false;
@@ -198,29 +198,29 @@ public class Grid {
         //System.out.println(theata);
     }
 
-    public int getLevelByPrice(float v) {
-        float dlt = v - prev;
+    public int getLevelByPrice(double v) {
+        double dlt = v - prev;
         return (int) KLineUtil.compareMaxSign5(dlt, prev);
     }
 
-    public int getLevelByDltPrice(float dlt) {
+    public int getLevelByDltPrice(double dlt) {
         return (int) KLineUtil.compareMaxSign5(dlt, prev);
     }
 
-    public float getPrev() {
+    public double getPrev() {
         return prev;
     }
 
 
-    public void setPrev(float prev) {
+    public void setPrev(double prev) {
         this.prev = prev;
-        float zt = 0.1f * prev;
+        double zt = 0.1f * prev;
         unitPercent = 0.01f / prev;
         unit = (int) (unitPercent * BEISHU);
     }
 
-    public float getPriceByLevel(int level) {
-        float ret = level / BEISHU * prev;
+    public double getPriceByLevel(int level) {
+        double ret = level / BEISHU * prev;
         return ret;
     }
 
@@ -233,11 +233,11 @@ public class Grid {
         this.unit = unit;
     }
 
-    public float getUnitPercent() {
+    public double getUnitPercent() {
         return unitPercent;
     }
 
-    public void setUnitPercent(float unitPercent) {
+    public void setUnitPercent(double unitPercent) {
         this.unitPercent = unitPercent;
     }
 

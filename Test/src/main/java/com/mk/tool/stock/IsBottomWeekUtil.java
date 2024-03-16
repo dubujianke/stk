@@ -14,8 +14,8 @@ public class IsBottomWeekUtil extends Stragety {
         if (idx < 200) {
             return false;
         }
-        float minValjue = 0;
-        float minIdx = 0;
+        double minValjue = 0;
+        double minIdx = 0;
 
         boolean flag = false;
         int offsetLen = 0;
@@ -44,28 +44,28 @@ public class IsBottomWeekUtil extends Stragety {
                 Weekline minMonth2 = (Weekline) points.get(1).kline;
                 offsetLen = Math.abs(minMonth2.getIdx() - minMonth.getIdx() + 1);
                 if (monIdx == minMonth2.getIdx()) {
-                    float frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                    double frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
                     if (frac < 10) {
                         flag = true;
                     }
                     if (minMonth2.touch(minMonth2.getMA60())) {
                         flag = true;
                     }
-                    float frac2 = KLineUtil.compareMax(minMonth2.getMin(), minMonth2.getMA60());
+                    double frac2 = KLineUtil.compareMax(minMonth2.getMin(), minMonth2.getMA60());
                     if (minMonth2.getMin() < minMonth2.getMA60() && frac2 < 18) {
                         flag = true;
                     }
 
                     if (minMonth2.getIdx() > minMonth.getIdx()) {
-                        float tfrac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                        double tfrac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
                         if (frac < 20) {
                             flag = true;
                         }
                     }
 
                 } else {
-                    float frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
-                    float frac2 = KLineUtil.compareMax(minMonth.getEntityMin(), minMonth2.getMin());
+                    double frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                    double frac2 = KLineUtil.compareMax(minMonth.getEntityMin(), minMonth2.getMin());
                     if (frac < 20) {
                         flag = true;
                     }
@@ -77,7 +77,7 @@ public class IsBottomWeekUtil extends Stragety {
                     }
                     Weekline maxLine = (Weekline) current.getPrevMAXKline(NUM);
                     Weekline minLine = (Weekline) maxLine.getPrevMINKline(6);
-                    float afrac = KLineUtil.compareMax(maxLine.getMax(), minLine.getMin());
+                    double afrac = KLineUtil.compareMax(maxLine.getMax(), minLine.getMin());
                     if (afrac < 100) {
                         return false;
                     }
@@ -88,7 +88,7 @@ public class IsBottomWeekUtil extends Stragety {
                     int durationLen = monIdx - maxLine.getIdx() - 1;
                     Weekline minLine2 = (Weekline) current.getPrevMINKline(durationLen);
 
-                    float jf = KLineUtil.compareMax(minLine2.getMin(), maxLine.getMax());
+                    double jf = KLineUtil.compareMax(minLine2.getMin(), maxLine.getMax());
                     int curDlt = current.getIdx() - minLine2.getIdx();
 
                     if (jf > 50 && curDlt <= 3) {
@@ -137,28 +137,28 @@ public class IsBottomWeekUtil extends Stragety {
                 Weekline minMonth2 = (Weekline) points.get(1).kline;
                 offsetLen = Math.abs(minMonth2.getIdx() - minMonth.getIdx() + 1);
                 if (weekIdx == minMonth2.getIdx()) {
-                    float frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                    double frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
                     if (frac < 10) {
                         flag = true;
                     }
                     if (minMonth2.touch(minMonth2.getMA60())) {
                         flag = true;
                     }
-                    float frac2 = KLineUtil.compareMax(minMonth2.getMin(), minMonth2.getMA60());
+                    double frac2 = KLineUtil.compareMax(minMonth2.getMin(), minMonth2.getMA60());
                     if (minMonth2.getMin() < minMonth2.getMA60() && frac2 < 18) {
                         flag = true;
                     }
 
                     if (minMonth2.getIdx() > minMonth.getIdx()) {
-                        float tfrac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                        double tfrac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
                         if (frac < 20) {
                             flag = true;
                         }
                     }
 
                 } else {
-                    float frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
-                    float frac2 = KLineUtil.compareMax(minMonth.getEntityMin(), minMonth2.getMin());
+                    double frac = KLineUtil.compareMax(minMonth.getMin(), minMonth2.getMin());
+                    double frac2 = KLineUtil.compareMax(minMonth.getEntityMin(), minMonth2.getMin());
                     offsetLen = Math.abs(minMonth2.getIdx() - minMonth.getIdx() + 1);
                     if(offsetLen<6) {
                         if (frac < 11) {
@@ -176,9 +176,9 @@ public class IsBottomWeekUtil extends Stragety {
 //                        Kline maxLine = kline0.getPrevMAXKline(220*10);
                         int maxIdx = maxLine.getIdx();
                         Kline minLine = kline0.getPrevMINKline(40);
-                        float frac1 = KLineUtil.compareMax(minLine.getMin(), maxLine.getMax());
+                        double frac1 = KLineUtil.compareMax(minLine.getMin(), maxLine.getMax());
                         if(frac1>=50) {
-                            float frac3 = KLineUtil.compareMax(kline0.getClose(), minMonth.getMin());
+                            double frac3 = KLineUtil.compareMax(kline0.getClose(), minMonth.getMin());
                             if(frac3>=270) {
                                 return false;
                             }

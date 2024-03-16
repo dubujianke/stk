@@ -34,7 +34,7 @@ public class PredictBankuaiLine {
             if(points.size() == 1) {
                 MaxPoint point = points.get(0);
                 if(point.flag2 == MPoint.MIN) {
-                    float frac = KLineUtil.compareMax(current.getMax(), point.kline.getMin());
+                    double frac = KLineUtil.compareMax(current.getMax(), point.kline.getMin());
                     //
                     if(frac>60) {
                         //too  high
@@ -50,7 +50,7 @@ public class PredictBankuaiLine {
 
             MaxPoint mp = currentPoint.prevMax();
             Kline currentMonth = currentPoint.kline;
-            float mfrac = KLineUtil.compareMax(currentPoint.kline.getMax(), mp.kline.getMax());
+            double mfrac = KLineUtil.compareMax(currentPoint.kline.getMax(), mp.kline.getMax());
             boolean flagQG =false;
 
             int type = MPoint.HOR;
@@ -59,9 +59,9 @@ public class PredictBankuaiLine {
                 flagQG = true;
             }
 
-            float gailv = 0.5f;
+            double gailv = 0.5f;
             //zg > 30
-            float zf = KLineUtil.prevNZhangfu(kline, 3, true);
+            double zf = KLineUtil.prevNZhangfu(kline, 3, true);
             //上涨无量
             boolean isSZWuliang = kline.isSZWuliang();
 

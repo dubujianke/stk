@@ -19,12 +19,12 @@
 //    }
 //
 //    public static String getSpeedUp(Kline kline, MinuteLine minuteLine) {
-//        float open = kline.prev().getClose();
+//        double open = kline.prev().getClose();
 //        try {
-//            float prev3 = KLineUtil.compareMaxSign(minuteLine.prev(3).price, open);
-//            float prev2 = KLineUtil.compareMaxSign(minuteLine.prev(2).price, open);
-//            float prev1 = KLineUtil.compareMaxSign(minuteLine.prev(1).price, open);
-//            float cur = KLineUtil.compareMaxSign(minuteLine.price, open);
+//            double prev3 = KLineUtil.compareMaxSign(minuteLine.prev(3).price, open);
+//            double prev2 = KLineUtil.compareMaxSign(minuteLine.prev(2).price, open);
+//            double prev1 = KLineUtil.compareMaxSign(minuteLine.prev(1).price, open);
+//            double cur = KLineUtil.compareMaxSign(minuteLine.price, open);
 //
 //            return kline.getDate() + "      " + minuteLine.getTime() + " " +
 //                    minuteLine.prev(3).getVol() + "/- " +
@@ -38,9 +38,9 @@
 //    }
 //
 //    public static String getSpeedUpFrac(Kline kline, MinuteLine minuteLine) {
-//        float open = kline.prev().getClose();
-//        float prev3 = KLineUtil.compareMaxSign(minuteLine.prev(3).price, open);
-//        float cur = KLineUtil.compareMaxSign(minuteLine.price, open);
+//        double open = kline.prev().getClose();
+//        double prev3 = KLineUtil.compareMaxSign(minuteLine.prev(3).price, open);
+//        double cur = KLineUtil.compareMaxSign(minuteLine.price, open);
 //
 //        return format(cur-prev3);
 //    }
@@ -48,7 +48,7 @@
 //
 //
 //
-//    public static String format(float v) {
+//    public static String format(double v) {
 //        return String.format("%.2f", v);
 //    }
 //

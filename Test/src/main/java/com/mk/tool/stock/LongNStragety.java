@@ -49,7 +49,7 @@ public class LongNStragety {
         }
 
         if (flag) {
-            float max = kline.getMaxBefore(20);
+            double  max = kline.getMaxBefore(20);
             if (max > kline.getOpen()) {
                 if (Math.abs(max - kline.getOpen()) / kline.getOpen() * 100 > 3) {
                     flag = false;
@@ -60,8 +60,8 @@ public class LongNStragety {
     }
 
 
-    public static float getMax(List<Kline> days, int offset, int dayNum) {
-        float max = 0;
+    public static double  getMax(List<Kline> days, int offset, int dayNum) {
+        double  max = 0;
         for (int i = offset; i >= offset - dayNum; i--) {
             Kline kline = days.get(i);
             if (kline.getMax() > max) {
@@ -71,14 +71,14 @@ public class LongNStragety {
         return max;
     }
 
-    public static float compareFraction(float src, float dst) {
-        float v = 0;
+    public static double  compareFraction(double  src, double  dst) {
+        double  v = 0;
         v = 100 * (src - dst) / dst;
         return v;
     }
 
 
-    public static boolean isIn(float src, float v1, float v2) {
+    public static boolean isIn(double  src, double  v1, double  v2) {
         return src > v1 && src < v2;
     }
 
@@ -90,12 +90,12 @@ public class LongNStragety {
         Kline day0 = days.get(idx);
         Kline day1 = days.get(idx - 1);
         Kline day2 = days.get(idx - 2);
-        float zf0 = day0.getZhangfu();
-        float zf1 = day1.getZhangfu();
-        float zf2 = day2.getZhangfu();
+        double  zf0 = day0.getZhangfu();
+        double  zf1 = day1.getZhangfu();
+        double  zf2 = day2.getZhangfu();
 
-        float recentMax = getMax(days, day2.getIdx() - 1, 30);
-        float tmp = compareFraction(day0.getOpen(), recentMax);
+        double  recentMax = getMax(days, day2.getIdx() - 1, 30);
+        double  tmp = compareFraction(day0.getOpen(), recentMax);
         boolean tmpFlag = isIn(recentMax, day0.getMin(), day0.getOpen());
         boolean volFlag = false;
         if (day0.getVolume() < day1.getVolume() && day1.getVolFraction() > 3 && tmpFlag) {

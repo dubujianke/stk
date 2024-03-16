@@ -96,7 +96,7 @@ public class TreeGraph {
                         treeNode.setOp(op);
                         treeNode.tag = tag;
                         treeNode.note = str;
-                        treeNode.setValue(Float.parseFloat(value));
+                        treeNode.setValue(Double.parseDouble(value));
                         map.put(first, treeNode);
                         if(root == null) {
                             root = treeNode;

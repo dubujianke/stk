@@ -39,8 +39,8 @@ public class Weekline extends Kline {
     public int maxIdx = 0;
 
     public void init(int idx) {
-        float max = 0;
-        float min = 99999;
+        double max = 0;
+        double min = 99999;
         if (mdays.size() == 0) {
             return;
         }
@@ -65,8 +65,8 @@ public class Weekline extends Kline {
     }
 
     public void init() {
-        float max = 0;
-        float min = 99999;
+        double max = 0;
+        double min = 99999;
         if (mdays.size() == 0) {
             return;
         }
@@ -111,15 +111,15 @@ public class Weekline extends Kline {
         return -1;
     }
 
-    public float getMin() {
+    public double getMin() {
         if (AbsStragety.CURDAY_OPEN) {
             return getOpen();
         }
         if (curDayIdx == -1) {
             return super.getMin();
         }
-        float max = 0;
-        float min = 99999;
+        double max = 0;
+        double min = 99999;
         if (mdays.size() == 0) {
             return 0;
         }
@@ -151,12 +151,12 @@ public class Weekline extends Kline {
         return min;
     }
 
-    public float getMax() {
+    public double getMax() {
         if (curDayIdx == -1) {
             return super.getMax();
         }
 
-        float max = 0;
+        double max = 0;
         if (mdays.size() == 0) {
             return 0;
         }
@@ -185,16 +185,16 @@ public class Weekline extends Kline {
         return max;
     }
 
-    public float getOpen() {
+    public double getOpen() {
 //        if (curDayIdx == -1) {
 //            return super.getOpen();
 //        }
 //        int idx = getByIdx(curDayIdx);
-//        float open = mdays.get(idx).getOpen();
+//        double open = mdays.get(idx).getOpen();
         return open;
     }
 
-    public float getClose() {
+    public double getClose() {
 //        if (AbsStragety.CURDAY_OPEN) {
 //            return getOpen();
 //        }
@@ -221,28 +221,28 @@ public class Weekline extends Kline {
     }
 
 
-    public float getZhangfu() {
+    public double getZhangfu() {
         Kline day0 = allLineList.get(getIdx());
         Kline day1 = allLineList.get(getIdx() - 1);
-        float ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
+        double ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
         return ret;
     }
 
-    public float getZhangfu2() {
+    public double getZhangfu2() {
         Weekline day0 = prev();
         Weekline day1 = this;
-        float ret = 100 * (day1.close - day0.close) / day0.close;
+        double ret = 100 * (day1.close - day0.close) / day0.close;
         return ret;
     }
 
-    public float getMonthEntityZhenfu() {
+    public double getMonthEntityZhenfu() {
         Kline day0 = allLineList.get(getIdx());
-        float ret = Math.abs(100 * (day0.getClose() - day0.getOpen()) / day0.getOpen());
+        double ret = Math.abs(100 * (day0.getClose() - day0.getOpen()) / day0.getOpen());
         return ret;
     }
 
-    public float getAvg20() {
-        float total = 0;
+    public double getAvg20() {
+        double total = 0;
         for (int i = 0; i < 20; i++) {
             Kline day = allLineList.get(getIdx());
             total += day.getClose();
@@ -251,8 +251,8 @@ public class Weekline extends Kline {
         return total;
     }
 
-    public float getMaxBefore(int num) {
-        float max = 0;
+    public double getMaxBefore(int num) {
+        double max = 0;
         int maxIdx = 0;
         for (int i = getIdx() - 2; i >= getIdx() - num; i--) {
             Kline day = allLineList.get(i);
@@ -269,7 +269,7 @@ public class Weekline extends Kline {
     }
 
 
-    public boolean isWrapAfter(float min, float max, int toOffset) {
+    public boolean isWrapAfter(double min, double max, int toOffset) {
         int len = toOffset - getIdx();
         if (len < 5) {
             return false;
@@ -309,18 +309,18 @@ public class Weekline extends Kline {
     }
 
 
-    public float getZhangfu(int num) {
+    public double getZhangfu(int num) {
         Kline day0 = allLineList.get(getIdx());
         Kline day1 = allLineList.get(getIdx() - num);
-        float ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
+        double ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
         return ret;
     }
 
-    public float getVolFraction() {
+    public double getVolFraction() {
         try {
             Kline day0 = allLineList.get(getIdx());
             Kline day1 = allLineList.get(getIdx() - 1);
-            float ret = day0.getVolume() / day1.getVolume();
+            double ret = day0.getVolume() / day1.getVolume();
             return ret;
         } catch (Exception e) {
 
@@ -362,7 +362,7 @@ public class Weekline extends Kline {
     }
 
 
-    public Weekline getPrevUpShadow(int n, float percent) {
+    public Weekline getPrevUpShadow(int n, double percent) {
         for (int i = 1; i <= n; i++) {
             Weekline item = prev(i);
             if (item.isShadownUp(percent)) {
@@ -373,11 +373,11 @@ public class Weekline extends Kline {
     }
 
 
-    public Weekline getPrevUpShadowWIthMATouch(int n, float percent, float minZF) {
+    public Weekline getPrevUpShadowWIthMATouch(int n, double percent, double minZF) {
         for (int i = 1; i <= n; i++) {
             Weekline item = prev(i);
             if (item.isShadownUp(percent)) {
-                float ma120 = item.getMA120();
+                double ma120 = item.getMA120();
                 if (item.touch(ma120)) {
                     if (minZF <= 0 || item.getZhenfu() >= minZF) {
                         return item;
@@ -397,15 +397,15 @@ public class Weekline extends Kline {
         return monStr;
     }
 
-    public float getZhangfuAbs() {
+    public double getZhangfuAbs() {
         Kline day0 = allLineList.get(getIdx());
         Kline day1 = allLineList.get(getIdx() - 1);
-        float ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
+        double ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
         return Math.abs(ret);
     }
 
-    public boolean hasDZ(int num, float frac) {
-        float fracV = this.getPrevZF2(num);
+    public boolean hasDZ(int num, double frac) {
+        double fracV = this.getPrevZF2(num);
         if (fracV > frac) {
             return true;
         }
@@ -432,17 +432,17 @@ public class Weekline extends Kline {
     }
 
     public String getZhangfuStr() {
-        float zf = getZhangfu();
+        double zf = getZhangfu();
         return StringUtil.spaceString(StringUtil.format(zf,1),5);
     }
 
     public String getZhangfuStr2() {
-        float zf = getZhangfu2();
+        double zf = getZhangfu2();
         return StringUtil.spaceString(StringUtil.format(zf,2),5);
     }
 
     public double getChangeHand(LineContext context) {
-        float total = 0;
+        double total = 0;
         for (int i = 0; i < mdays.size(); i++) {
             Kline kline = mdays.get(i);
             double hand = kline.getHandD(context.getTotalV());
@@ -452,7 +452,7 @@ public class Weekline extends Kline {
     }
 
     public boolean isCrashDownMAI2(int period) {
-        float ma120 = getMAI(period);
+        double ma120 = getMAI(period);
         if (open > ma120 && close < ma120  && KLineUtil.compareMax(close, open)>5 && KLineUtil.compareMax(close, min)<0.8f && KLineUtil.compareMax(close, ma120)>=0.5f) {
             return true;
         }

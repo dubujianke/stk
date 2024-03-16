@@ -107,8 +107,8 @@ public class NStragetiy {
 //        if(endList.size() > 2) {
 //            return false;
 //        }
-        float max = 0;
-        float min = 0;
+        double max = 0;
+        double min = 0;
 
 
         Kline line0 = endList.get(0);
@@ -127,12 +127,12 @@ public class NStragetiy {
             if(kline.getEntityMax()<=max && kline.getEntityMin()>= min) {
                 count++;
             }else {
-                float fraction = Kline.getIntersection(min, max, kline.getMin(), kline.getMax());
+                double fraction = Kline.getIntersection(min, max, kline.getMin(), kline.getMax());
                 if(fraction>95) {
                     count++;
                 }else {
-                    float min2 = kline.getMin();
-                    float fraction2 = kline.getZhangfu();
+                    double min2 = kline.getMin();
+                    double fraction2 = kline.getZhangfu();
                     if(fraction2<2) {
                         count++;
                     }else {
@@ -142,8 +142,8 @@ public class NStragetiy {
                 int a = 0;
             }
         }
-        float frac = 100*count/total;
-        float FRAC = 95;
+        double frac = 100*count/total;
+        double FRAC = 95;
         if(total<=13) {
             FRAC = 90;
         }

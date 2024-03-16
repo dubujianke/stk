@@ -56,51 +56,51 @@ public class KModel {
         this.nextDate = nextDate;
     }
 
-    public float getGuben() {
+    public double getGuben() {
         return guben;
     }
 
-    public void setGuben(float guben) {
+    public void setGuben(double guben) {
         this.guben = guben;
     }
 
-    public float getSpace250() {
+    public double getSpace250() {
         return space250;
     }
 
-    public void setSpace250(float space250) {
+    public void setSpace250(double space250) {
         this.space250 = space250;
     }
 
-    public float getNext() {
+    public double getNext() {
         return next;
     }
 
-    public void setNext(float next) {
+    public void setNext(double next) {
         this.next = next;
     }
 
-    public List<Float> getChgHands() {
+    public List<Double> getChgHands() {
         return chgHands;
     }
 
-    public void setChgHands(List<Float> chgHands) {
+    public void setChgHands(List<Double> chgHands) {
         this.chgHands = chgHands;
     }
 
-    public float getPrevmon1() {
+    public double getPrevmon1() {
         return prevmon1;
     }
 
-    public void setPrevmon1(float prevmon1) {
+    public void setPrevmon1(double prevmon1) {
         this.prevmon1 = prevmon1;
     }
 
-    public float getPrevmon2() {
+    public double getPrevmon2() {
         return prevmon2;
     }
 
-    public void setPrevmon2(float prevmon2) {
+    public void setPrevmon2(double prevmon2) {
         this.prevmon2 = prevmon2;
     }
 
@@ -125,12 +125,12 @@ public class KModel {
     private String stragety;
     private String date;
     private String nextDate;
-    private float guben;
-    private float space250;
-    private float next;
-    private List<Float> chgHands = new ArrayList<>();
-    private float prevmon1;
-    private float prevmon2;
+    private double guben;
+    private double space250;
+    private double next;
+    private List<Double> chgHands = new ArrayList<>();
+    private double prevmon1;
+    private double prevmon2;
     private boolean isCross;
     private List<MA> mas = new ArrayList<>();
 

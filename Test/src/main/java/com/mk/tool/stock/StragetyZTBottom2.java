@@ -22,11 +22,11 @@ import java.util.Map;
 public class StragetyZTBottom2 extends AbsStragety {
 
     public static String monitorMinute = "1051";
-    public static float MIN_3MINUTES_SMALLHAND_ZF = 1.21f;
-    public static float MIN_3MINUTES_LARGEHAND_ZF = 1.21f;
-    public static float MIN_3MINUTES_ZF = 1.21f;
-    public static float MIN_3MINUTES_ZF2 = 1.0f;
-    public static float MIN_ZF2 = 1.4f;
+    public static double  MIN_3MINUTES_SMALLHAND_ZF = 1.21f;
+    public static double  MIN_3MINUTES_LARGEHAND_ZF = 1.21f;
+    public static double  MIN_3MINUTES_ZF = 1.21f;
+    public static double  MIN_3MINUTES_ZF2 = 1.0f;
+    public static double  MIN_ZF2 = 1.4f;
     public static boolean isTDX = true;
     public static String absPath = "";
 
@@ -92,8 +92,8 @@ public class StragetyZTBottom2 extends AbsStragety {
     }
 
 
-    public static float maxzf = 2.0f;
-    public static float pulsezf = 1.8f;
+    public static double  maxzf = 2.0f;
+    public static double  pulsezf = 1.8f;
     public static int step = 0;
     public static boolean useTree = true;//last step
     public static String MONITOR_DATE = "";
@@ -341,22 +341,22 @@ public class StragetyZTBottom2 extends AbsStragety {
         String name = vs[0].trim();
         String value = vs[1].trim();
         if (name.equalsIgnoreCase("guben")) {
-            kModel.setGuben(Float.parseFloat(value));
+            kModel.setGuben(Double.parseDouble(value));
         }
         if (name.equalsIgnoreCase("space250")) {
-            kModel.setSpace250(Float.parseFloat(value));
+            kModel.setSpace250(Double.parseDouble(value));
         }
         if (name.equalsIgnoreCase("chgHands")) {
             String[] cvs = value.replace("[", "").replace("]", "").split(",");
             for (String cv : cvs) {
-                kModel.getChgHands().add(Float.parseFloat(cv));
+                kModel.getChgHands().add(Double.parseDouble(cv));
             }
         }
         if (name.equalsIgnoreCase("prevmon1")) {
-            kModel.setPrevmon1(Float.parseFloat(value));
+            kModel.setPrevmon1(Double.parseDouble(value));
         }
         if (name.equalsIgnoreCase("prevmon2")) {
-            kModel.setPrevmon2(Float.parseFloat(value));
+            kModel.setPrevmon2(Double.parseDouble(value));
         }
         if (name.equalsIgnoreCase("monTotal")) {
         }

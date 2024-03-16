@@ -40,7 +40,7 @@ public class LineType {
         return lineTypeList.get(idx - 1);
     }
 
-    public static int getNumer(float v) {
+    public static int getNumer(double v) {
         return (int) (v);
     }
 
@@ -53,9 +53,9 @@ public class LineType {
             int a = 0;
             a++;
         }
-        float prev = kline.prev().getClose();
+        double prev = kline.prev().getClose();
 
-        float dltPrice = 0;
+        double dltPrice = 0;
         int dltNumer = 0;
         if (prevMinuteLine != null) {
             dltPrice = minuteLine.price - minuteLine.prev().price;
@@ -84,8 +84,8 @@ public class LineType {
         return priceLevel;
     }
 
-    public static int getLevel(float price, float prev) {
-        float dltPrice = price - prev;
+    public static int getLevel(double price, double prev) {
+        double dltPrice = price - prev;
         int dlt = (int) ((int) KLineUtil.compareMaxSign5(dltPrice, prev));
         return dlt;
     }

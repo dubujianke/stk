@@ -66,13 +66,13 @@ public class GetLineDFCF {
                 JSONObject item = ret.getJSONObject(i);
                 String acode = item.getString("f12");
                 String name = item.getString("f14");
-                float open = 0;
+                double  open = 0;
                 open = item.getFloat("f17");
-                float close = item.getFloat("f2");
-                float max = item.getFloat("f15");
-                float min = item.getFloat("f16");
+                double close = item.getFloat("f2");
+                double max = item.getFloat("f15");
+                double min = item.getFloat("f16");
                 long vol = 100 * item.getLong("f5");
-                float changeHand = item.getFloat("f8");
+                double changeHand = item.getFloat("f8");
                 Kline kline = new Kline();
                 kline.setDate(strDate);
                 kline.setOpen(open);

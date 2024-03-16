@@ -43,8 +43,8 @@ public class MonthKline extends Kline{
 	public int maxIdx = 0;
 
 	public void init(int idx) {
-		float max = 0;
-		float min = 99999;
+		double max = 0;
+		double min = 99999;
 		if(mdays.size()==0) {
 			return;
 		}
@@ -69,8 +69,8 @@ public class MonthKline extends Kline{
 	}
 
 	public void init() {
-		float max = 0;
-		float min = 99999;
+		double max = 0;
+		double min = 99999;
 		if(mdays.size()==0) {
 			if(key.equalsIgnoreCase("2016-06")) {
 				int a = 0;
@@ -109,44 +109,44 @@ public class MonthKline extends Kline{
 		return getClose() > getOpen();
 	}
 
-	public float getZhangfu() {
+	public double getZhangfu() {
 		if(getIdx() - 1 < 0) {
 			return 0;
 		}
 		Kline day0 = allLineList.get(getIdx());
 		Kline day1 = allLineList.get(getIdx() - 1);
-		float ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
+		double ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
 		return ret;
 	}
 
 	public String getZhangfuStr() {
-		float zf = getZhangfu();
+		double zf = getZhangfu();
 		return StringUtil.spaceString(StringUtil.format(zf,1),5);
 	}
 
-	public float getZhangfu2() {
+	public double getZhangfu2() {
 		MonthKline day0 = prev();
 		MonthKline day1 = this;
 		if(day0 == null) {
 			return 1000;
 		}
-		float ret = 100 * (day1.close - day0.close) / day0.close;
+		double ret = 100 * (day1.close - day0.close) / day0.close;
 		return ret;
 	}
 
 	public String getZhangfuStr2() {
-		float zf = getZhangfu2();
+		double zf = getZhangfu2();
 		return StringUtil.spaceString(StringUtil.format(zf,2),5);
 	}
 
-	public float getMonthEntityZhenfu() {
+	public double getMonthEntityZhenfu() {
 		Kline day0 = allLineList.get(getIdx());
-		float ret = Math.abs(100 * (day0.getClose() - day0.getOpen()) / day0.getOpen());
+		double ret = Math.abs(100 * (day0.getClose() - day0.getOpen()) / day0.getOpen());
 		return ret;
 	}
 
-	public float getAvg20() {
-		float total = 0;
+	public double getAvg20() {
+		double total = 0;
 		for(int i=0; i<20; i++) {
 			Kline day = allLineList.get(getIdx());
 			total += day.getClose();
@@ -155,8 +155,8 @@ public class MonthKline extends Kline{
 		return total;
 	}
 
-	public float getMaxBefore(int num) {
-		float max = 0;
+	public double getMaxBefore(int num) {
+		double max = 0;
 		int maxIdx = 0;
 		for(int i = getIdx() -2; i>= getIdx() -num; i--) {
 			Kline day = allLineList.get(i);
@@ -173,7 +173,7 @@ public class MonthKline extends Kline{
 	}
 
 
-	public boolean isWrapAfter(float min, float max, int toOffset) {
+	public boolean isWrapAfter(double min, double max, int toOffset) {
 		int len = toOffset - getIdx();
 		if(len<5) {
 			return false;
@@ -213,18 +213,18 @@ public class MonthKline extends Kline{
 	}
 
 
-	public float getZhangfu(int num) {
+	public double getZhangfu(int num) {
 		Kline day0 = allLineList.get(getIdx());
 		Kline day1 = allLineList.get(getIdx() -num);
-		float ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
+		double ret = 100 * (day0.getClose() - day1.getClose()) / day1.getClose();
 		return ret;
 	}
 
-	public float getVolFraction() {
+	public double getVolFraction() {
 		try {
 			Kline day0 = allLineList.get(getIdx());
 			Kline day1 = allLineList.get(getIdx() - 1);
-			float ret = day0.getVolume() / day1.getVolume();
+			double ret = day0.getVolume() / day1.getVolume();
 			return ret;
 		} catch (Exception e) {
 
@@ -265,14 +265,14 @@ public class MonthKline extends Kline{
 	}
 
 
-	public float getPrevZF2(int n) {
-		float max = 0;
+	public double getPrevZF2(int n) {
+		double max = 0;
 		for (int i = 0; i < n; i++) {
 			Kline item = prev(i + 1);
 			if (item == null) {
 				break;
 			}
-			float v =item.getZhangfu();
+			double v =item.getZhangfu();
 			if (v > max) {
 				max = v;
 			}
@@ -281,8 +281,8 @@ public class MonthKline extends Kline{
 	}
 
 
-	public boolean hasDZ(int num, float frac) {
-		float fracV = this.getPrevZF2(num);
+	public boolean hasDZ(int num, double frac) {
+		double fracV = this.getPrevZF2(num);
 		if(fracV>frac) {
 			return true;
 		}
@@ -295,7 +295,7 @@ public class MonthKline extends Kline{
 
 
 	public double getChangeHand(LineContext context) {
-		float total = 0;
+		double total = 0;
 		for (int i = 0; i < mdays.size(); i++) {
 			Kline kline = mdays.get(i);
 			double hand = kline.getHandD(context.getTotalV());
@@ -305,7 +305,7 @@ public class MonthKline extends Kline{
 	}
 
 	public boolean isCrashDownMAI2(int period) {
-		float ma120 = getMAI(period);
+		double ma120 = getMAI(period);
 		if (open > ma120 && close < ma120  && KLineUtil.compareMax(close, open)>10 && KLineUtil.compareMax(close, min)<1f && KLineUtil.compareMax(close, ma120)>=0.5f) {
 			return true;
 		}
