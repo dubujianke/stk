@@ -1,6 +1,6 @@
 package com.huaien.core.util;
 
-import com.mk.tool.stock.*;
+import com.alading.tool.stock.*;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -35,6 +35,18 @@ public class DateUtil {
         try {
             SimpleDateFormat formatter;
             formatter = new SimpleDateFormat("yyyy/MM/dd");
+            String ctime = formatter.format(time);
+            return ctime;
+        } catch (Exception e) {
+        }
+        return "";
+    }
+
+
+    public static String dateToString4(Date time) {
+        try {
+            SimpleDateFormat formatter;
+            formatter = new SimpleDateFormat("HHmm");
             String ctime = formatter.format(time);
             return ctime;
         } catch (Exception e) {
@@ -398,6 +410,7 @@ public class DateUtil {
         }
         return ctime;
     }
+
 
     public static long sleepForAM(Date current) {
         Date ctime = getAMEndTime();
@@ -999,6 +1012,29 @@ public class DateUtil {
             date = DateUtil.dateToString(DateUtil.getBeforeDate(DateUtil.stringToDate4(date), 2));
         }
         return date;
+    }
+
+
+    public static Date strToTime(String time) {
+        SimpleDateFormat formatter;
+        formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date ctime = null;
+        try {
+            ctime = formatter.parse(time);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return ctime;
+    }
+
+
+    public static long BetweenMinutes(Date paramDate1, Date paramDate2) {
+        Calendar localCalendar = Calendar.getInstance();
+        localCalendar.setTime(paramDate1);
+        Calendar aCalendar = Calendar.getInstance();
+        aCalendar.setTime(paramDate2);
+        return (localCalendar.getTimeInMillis() - aCalendar.getTimeInMillis())/(1000*60);
     }
 
 }
