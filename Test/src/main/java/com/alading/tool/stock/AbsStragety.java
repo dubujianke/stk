@@ -337,7 +337,6 @@ public class AbsStragety {
             int a = 0;
         }
         Kline last = days.get(aIdx);
-//        double hand = last.getHand(context.getTotalV());
         if (usemonth == 1) {
             moths = singleContext.getMoths();
         }

@@ -320,6 +320,8 @@ public class SelectExcel {
         if (!gapFlag) {
             return false;
         }
+
+        //股价触碰均线
         boolean flag30 = isIn(gap30, -7.5, -11);
         boolean flag60 = isIn(gap60, -7.2, -14.5);
         boolean flag120 = isIn(gap120, -7.6, -16);
@@ -331,34 +333,8 @@ public class SelectExcel {
         if (!matchGap) {
             return false;
         }
-        //flag120 下方不允许60
-//        if(!flag60) {
-//            if (flag120 || flag250) {
-//                if (gap60 > 0) {
-//                    if (gap60 > 4) {
-//                        return false;
-//                    }
-//                } else if (gap60 < 0) {
-////                    return false;
-//                }
-//            }
-//        }
 
-
-        //flag120 下方不允许60
-//        if (flag250) {
-//            if (gap120 > 0) {
-//                if (gap120 > 4) {
-//                    return false;
-//                }
-//            } else if (gap120 < 0) {
-//                double abs = Math.abs(gap120);
-//                if (abs > 2.0) {
-//                    return false;
-//                }
-//            }
-//        }
-
+        //5天内必须有一个短线小于1
         boolean matchGap2 = false;
         double cur = row.getFloat(table.getColumn("cur"));
         double prev1 = row.getFloat(table.getColumn("prev(1)"));
@@ -372,11 +348,13 @@ public class SelectExcel {
             return false;
         }
 
+        //三日内有一个涨幅>8.5 skip
         double maxZf = kline0.getMaxZhangfu(3);
         if(maxZf>8.5) {
             return false;
         }
 
+        //10日线与30日线即将死叉 skip
         boolean isWillDCross = kline0.isWillDeadCross(10, 30);
         if(isWillDCross) {
             return false;
@@ -392,7 +370,7 @@ public class SelectExcel {
 //        }
 
 
-        //cmf
+        //cmf 筹码峰
         double cmf70 = row.getFloat(table.getColumn("70%cmf"));
         if (cmf70 > 0.23) {
             return false;
@@ -420,6 +398,7 @@ public class SelectExcel {
             }
         }
 
+        //当月不能触碰均线
         monthKline.setCurDayIdx(kline0.getIdx());
         if (monthKline.isTouchOnMAI(10) && monthKline.getOpen() < monthKline.getMA10()) {
             return false;
@@ -501,6 +480,7 @@ public class SelectExcel {
             return false;
         }
 
+        //死叉
         boolean dCrossFlag = false;
         int dcrossNum30 = kline0.getDeadCrossNum(10, 30);
         if (dcrossNum30 >= 0 && dcrossNum30 <= 10) {

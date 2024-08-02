@@ -76,8 +76,8 @@ public static String method = "IsBottomHor";
         AbsStragety.singleCode = "001255";
         List<String> dates = new ArrayList<>();
         int year = 2024;
-        int mon = 4;
-        int aday = 12;
+        int mon = 8;
+        int aday = 1;
         for (int m = mon; m <= mon; m++) {
             int month = m;
             int maxMonth = DateUtil.getDaysOfMonth(year, m);

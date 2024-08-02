@@ -128,9 +128,9 @@ public class IsBottomGetNextZT extends Stragety {
         if(guben>100) {
             return;
         }
-//        if(guben>300) {
-//            return;
-//        }
+        if(guben>300) {
+            return;
+        }
         if(kline0.next().getZhangfu()<9.5) {
             return;
         }
